@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WhoLends.Web
+namespace WhoLends
 {
     public class BundleConfig
     {

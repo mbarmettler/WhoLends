@@ -4,19 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="af85a0ff735a4bb1993a26ba92284b10" Name="Diagram1" ZoomLevel="124">
-        <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.875" PointX="0.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Roles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.UserClaims" Width="1.875" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.UserLogins" Width="1.75" PointX="5.25" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Users" Width="1.75" PointX="3" PointY="1.375" IsExpanded="true" />
-        <AssociationConnector Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+      <Diagram DiagramId="af85a0ff735a4bb1993a26ba92284b10" Name="Diagram1" ZoomLevel="107">
+        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.User" Width="1.75" PointX="3" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.LendItem" Width="1.5" PointX="8.5" PointY="1.5" FillColor="0, 192, 0" />
         <EntityTypeShape EntityType="Model.Lend" Width="1.5" PointX="8.5" PointY="4.25" FillColor="0, 192, 0" />
         <AssociationConnector Association="Model.LendUsers" />
         <AssociationConnector Association="Model.LendLendItem" />
-        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="11" PointY="5.125" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="6" PointY="4.75" FillColor="0, 192, 0" />
         <AssociationConnector Association="Model.LendLendReturn" />
         <AssociationConnector Association="Model.LendReturnAspNetUsers" />
         <AssociationConnector Association="Model.UsersRoles" />

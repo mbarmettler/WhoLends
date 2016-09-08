@@ -1,47 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
-    <EntitySetMapping Name="C__MigrationHistory">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.C__MigrationHistory)">
-        <MappingFragment StoreEntitySet="C__MigrationHistory">
-          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-          <ScalarProperty Name="Model" ColumnName="Model" />
-          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Roles)">
-        <MappingFragment StoreEntitySet="AspNetRoles">
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Role)">
+        <MappingFragment StoreEntitySet="Role">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserClaims">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.UserClaims)">
-        <MappingFragment StoreEntitySet="AspNetUserClaims">
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.User)">
+        <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserLogins">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.UserLogins)">
-        <MappingFragment StoreEntitySet="AspNetUserLogins">
-          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Users)">
-        <MappingFragment StoreEntitySet="AspNetUsers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -56,19 +28,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LendSet">
+    <EntitySetMapping Name="Lend">
       <EntityTypeMapping TypeName="IsTypeOf(Model.Lend)">
-        <MappingFragment StoreEntitySet="LendSet">
+        <MappingFragment StoreEntitySet="Lend">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+          <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
           <ScalarProperty Name="From" ColumnName="From" />
           <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LendItemSet">
+    <EntitySetMapping Name="LendItem">
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendItem)">
-        <MappingFragment StoreEntitySet="LendItemSet">
+        <MappingFragment StoreEntitySet="LendItem">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -77,45 +52,72 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LendReturnSet">
+    <EntitySetMapping Name="LendReturn">
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendReturn)">
-        <MappingFragment StoreEntitySet="LendReturnSet">
+        <MappingFragment StoreEntitySet="LendReturn">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LendId" ColumnName="LendId" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="LendAspNetUsers" TypeName="Model.LendUsers" StoreEntitySet="LendAspNetUsers">
-      <EndProperty Name="Lend">
-        <ScalarProperty Name="Id" ColumnName="Lend_Id" />
-      </EndProperty>
+    <AssociationSetMapping Name="LendAspNetUsers" TypeName="Model.LendUsers" StoreEntitySet="Lend">
       <EndProperty Name="Users">
-        <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+        <ScalarProperty Name="Id" ColumnName="Users_Id" />
+        <ScalarProperty Name="RoleId" ColumnName="Users_RoleId" />
+      </EndProperty>
+      <EndProperty Name="Lend">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="LendLendItem" TypeName="Model.LendLendItem" StoreEntitySet="LendItemSet">
+    <AssociationSetMapping Name="LendLendItem" TypeName="Model.LendLendItem" StoreEntitySet="LendItem">
       <EndProperty Name="Lend">
         <ScalarProperty Name="Id" ColumnName="Lend_Id" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="Lend_CreatedByUserId" />
+        <ScalarProperty Name="LendItemId" ColumnName="Lend_LendItemId" />
+        <ScalarProperty Name="LendReturnId" ColumnName="Lend_LendReturnId" />
       </EndProperty>
       <EndProperty Name="LendItem">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="LendLendReturn" TypeName="Model.LendLendReturn" StoreEntitySet="LendSet">
+    <AssociationSetMapping Name="LendLendReturn" TypeName="Model.LendLendReturn" StoreEntitySet="Lend">
       <EndProperty Name="LendReturn">
         <ScalarProperty Name="Id" ColumnName="LendReturn_Id" />
+        <ScalarProperty Name="LendId" ColumnName="LendReturn_LendId" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="LendReturn_CreatedByUserId" />
       </EndProperty>
       <EndProperty Name="Lend">
         <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="LendReturnAspNetUsers" TypeName="Model.LendReturnAspNetUsers" StoreEntitySet="LendReturnAspNetUsers">
+    <AssociationSetMapping Name="LendReturnAspNetUsers" TypeName="Model.LendReturnAspNetUsers" StoreEntitySet="LendReturn">
+      <EndProperty Name="Users">
+        <ScalarProperty Name="Id" ColumnName="Users_Id" />
+        <ScalarProperty Name="RoleId" ColumnName="Users_RoleId" />
+      </EndProperty>
       <EndProperty Name="LendReturn">
-        <ScalarProperty Name="Id" ColumnName="LendReturn_Id" />
+        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="LendId" ColumnName="LendId" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UsersRoles" TypeName="Model.UsersRoles" StoreEntitySet="User">
+      <EndProperty Name="Roles">
+        <ScalarProperty Name="Id" ColumnName="Roles_Id" />
       </EndProperty>
       <EndProperty Name="Users">
-        <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
