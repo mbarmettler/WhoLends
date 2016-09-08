@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Model.UsersRoles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="UserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="UserClaims" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="UserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="UserLogins" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="UserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="Users" ToRole="UserClaims" />
+    <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="Users" ToRole="UserLogins" />
+    <NavigationProperty Name="Lend" Relationship="Model.LendUsers" FromRole="Users" ToRole="Lend" />
+    <NavigationProperty Name="LendReturn" Relationship="Model.LendReturnAspNetUsers" FromRole="Users" ToRole="LendReturn" />
+    <NavigationProperty Name="Roles" Relationship="Model.UsersRoles" FromRole="Users" ToRole="Roles" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="Users" Type="Model.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserClaims" Type="Model.UserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="Users" Type="Model.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserLogins" Type="Model.UserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="Roles" EntityType="Model.Roles" />
+    <EntitySet Name="UserClaims" EntityType="Model.UserClaims" />
+    <EntitySet Name="UserLogins" EntityType="Model.UserLogins" />
+    <EntitySet Name="Users" EntityType="Model.Users" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserClaims" EntitySet="UserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserLogins" EntitySet="UserLogins" />
+    </AssociationSet>
+    <EntitySet Name="LendSet" EntityType="Model.Lend" />
+    <EntitySet Name="LendItemSet" EntityType="Model.LendItem" />
+    <AssociationSet Name="LendAspNetUsers" Association="Model.LendUsers">
+      <End Role="Lend" EntitySet="LendSet" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="LendLendItem" Association="Model.LendLendItem">
+      <End Role="Lend" EntitySet="LendSet" />
+      <End Role="LendItem" EntitySet="LendItemSet" />
+    </AssociationSet>
+    <EntitySet Name="LendReturnSet" EntityType="Model.LendReturn" />
+    <AssociationSet Name="LendLendReturn" Association="Model.LendLendReturn">
+      <End Role="Lend" EntitySet="LendSet" />
+      <End Role="LendReturn" EntitySet="LendReturnSet" />
+    </AssociationSet>
+    <AssociationSet Name="LendReturnAspNetUsers" Association="Model.LendReturnAspNetUsers">
+      <End Role="LendReturn" EntitySet="LendReturnSet" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UsersRoles" Association="Model.UsersRoles">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LendItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Lend" Relationship="Model.LendLendItem" FromRole="LendItem" ToRole="Lend" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="Quantity" Type="Int16" Nullable="false" />
+    <Property Name="Condition" Type="Model.Condition" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lend">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LendItemId" />
+      <PropertyRef Name="LendReturnId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LendItemId" Type="String" Nullable="false" />
+    <Property Name="UserId" Type="String" Nullable="false" />
+    <Property Name="LendReturnId" Type="String" Nullable="false" />
+    <Property Name="From" Type="DateTime" Nullable="false" />
+    <Property Name="To" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Model.LendUsers" FromRole="Lend" ToRole="Users" />
+    <NavigationProperty Name="LendItem" Relationship="Model.LendLendItem" FromRole="Lend" ToRole="LendItem" />
+    <NavigationProperty Name="LendReturn" Relationship="Model.LendLendReturn" FromRole="Lend" ToRole="LendReturn" />
+  </EntityType>
+  <Association Name="LendUsers">
+    <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
+    <End Type="Model.Users" Role="Users" Multiplicity="1" />
+  </Association>
+  <Association Name="LendLendItem">
+    <End Type="Model.Lend" Role="Lend" Multiplicity="1" />
+    <End Type="Model.LendItem" Role="LendItem" Multiplicity="*" />
+  </Association>
+  <EntityType Name="LendReturn">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="LendId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Lend" Relationship="Model.LendLendReturn" FromRole="LendReturn" ToRole="Lend" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Model.LendReturnAspNetUsers" FromRole="LendReturn" ToRole="Users" />
+    <Property Name="LendId" Type="String" Nullable="false" />
+    <Property Name="UserId" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="LendLendReturn">
+    <End Type="Model.Lend" Role="Lend" Multiplicity="1" />
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="1" />
+  </Association>
+  <EnumType Name="Condition">
+    <Member Name="Neuwertig" />
+    <Member Name="Gebraucht" />
+    <Member Name="Beschädigt" />
+  </EnumType>
+  <Association Name="LendReturnAspNetUsers">
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="*" />
+    <End Type="Model.Users" Role="Users" Multiplicity="1" />
+  </Association>
+  <Association Name="UsersRoles">
+    <End Type="Model.Users" Role="Users" Multiplicity="*" />
+    <End Type="Model.Roles" Role="Roles" Multiplicity="*" />
+  </Association>
+</Schema>
