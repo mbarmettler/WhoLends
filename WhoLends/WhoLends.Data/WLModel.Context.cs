@@ -7,26 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using WhoLends.Data;
-
-public partial class Entities : DbContext
+namespace WhoLends.Data
 {
-    public Entities()
-        : base("name=Entities")
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class Entities : DbContext
     {
+        public Entities()
+            : base("name=Entities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+    
+            modelBuilder.Entity<Lend>().ToTable("Lend");
+        }
+    
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Lend> Lend { get; set; }
+        public virtual DbSet<LendItem> LendItem { get; set; }
+        public virtual DbSet<LendReturn> LendReturn { get; set; }
     }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
-    }
-
-    public virtual DbSet<Role> Role { get; set; }
-    public virtual DbSet<User> User { get; set; }
-    public virtual DbSet<Lend> Lend { get; set; }
-    public virtual DbSet<LendItem> LendItem { get; set; }
-    public virtual DbSet<LendReturn> LendReturn { get; set; }
 }
