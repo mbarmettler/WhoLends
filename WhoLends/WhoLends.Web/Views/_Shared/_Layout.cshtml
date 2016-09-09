@@ -26,7 +26,7 @@
                     {*@
                         <li>@Html.ActionLink("Lends", "Index", "Lends")</li>
                         <li>@Html.ActionLink("LendsItem", "Index", "LendItems")</li>
-@*                    }*@
+                    @*}*@
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
@@ -35,24 +35,29 @@
     <div class="container body-content">
         @RenderBody()
 
-        <footer id="master" class="navbar-fixed-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4 col-md-4">
-                        <div id="bar">&nbsp;</div>
-                        <a id="back-to-top" href="#">back to top</a>
-                    </div>
-                    <div class="col-sm-4 col-md-4 footerMarginTop">
-                        <div id="bar">&nbsp;</div>
-                        <p>&copy; @DateTime.Now.Year - Copyright by MBDevs</p>
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div id="bar">&nbsp;</div>
-                        @Html.ActionLink("About", "About", "Home") | 
-                        @Html.ActionLink("Contact", "Contact", "Home")
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                    </div>
+        <footer id="master" class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">               
+                <div class="col-sm-4 col-md-4">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a id="back-to-top" href="#">
+                                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <ul class="nav navbar-nav collapse">
+                        <li>
+                            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true">@DateTime.Now.Year - Copyright by MBDevs</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
                 </div>
             </div>
         </footer>
