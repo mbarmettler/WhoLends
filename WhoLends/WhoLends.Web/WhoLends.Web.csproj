@@ -226,6 +226,10 @@
     <Content Include="Views\_Shared\_LoginPartial.cshtml" />
     <Content Include="Views\LendItems\LendItems.cshtml" />
     <Content Include="Views\LendItems\Detail.cshtml" />
+    <Content Include="Views\LendItems\Create.cshtml" />
+    <Content Include="Views\Lends\Create.cshtml" />
+    <Content Include="Views\Lends\Detail.cshtml" />
+    <Content Include="Views\Lends\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
