@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/08/2016 16:58:58
+-- Date Created: 09/12/2016 16:42:04
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -30,18 +30,18 @@ IF OBJECT_ID(N'[dbo].[FK_LendReturnAspNetUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_LendReturnAspNetUsers];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UsersRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_UsersRoles];
+    ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_UsersRoles];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Roles];
+IF OBJECT_ID(N'[dbo].[Role]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Role];
 GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[User]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[User];
 GO
 IF OBJECT_ID(N'[dbo].[Lend]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Lend];
@@ -79,7 +79,7 @@ CREATE TABLE [dbo].[User] (
     [LockoutEnabled] bit  NOT NULL,
     [AccessFailedCount] int  NOT NULL,
     [UserName] nvarchar(256)  NOT NULL,
-    [Roles_Id] int  NOT NULL
+    [Role_Id] int  NOT NULL
 );
 GO
 
@@ -92,11 +92,12 @@ CREATE TABLE [dbo].[Lend] (
     [From] datetime  NOT NULL,
     [To] datetime  NULL,
     [CreatedAt] datetime  NOT NULL,
-    [Users_Id] int  NOT NULL,
-    [Users_RoleId] nvarchar(max)  NOT NULL,
-    [LendReturn_Id] int  NOT NULL,
-    [LendReturn_LendId] nvarchar(max)  NOT NULL,
-    [LendReturn_CreatedByUserId] nvarchar(max)  NOT NULL
+    [LendItem_Id] int  NOT NULL,
+    [LendReturn_Id] int  NULL,
+    [LendReturn_LendId] int  NULL,
+    [LendReturn_CreatedByUserId] nvarchar(max)  NULL,
+    [User_Id] int  NOT NULL,
+    [User_RoleId] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -104,26 +105,22 @@ GO
 CREATE TABLE [dbo].[LendItem] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Description] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
     [Quantity] smallint  NOT NULL,
-    [Condition] int  NOT NULL,
-    [Lend_Id] int  NOT NULL,
-    [Lend_CreatedByUserId] nvarchar(max)  NOT NULL,
-    [Lend_LendItemId] nvarchar(max)  NOT NULL,
-    [Lend_LendReturnId] nvarchar(max)  NOT NULL
+    [Condition] int  NOT NULL
 );
 GO
 
 -- Creating table 'LendReturn'
 CREATE TABLE [dbo].[LendReturn] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [LendId] nvarchar(max)  NOT NULL,
+    [LendId] int  NOT NULL,
     [CreatedByUserId] nvarchar(max)  NOT NULL,
     [CustomerId] nvarchar(max)  NOT NULL,
-    [Description] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
     [CreatedAt] datetime  NOT NULL,
-    [Users_Id] int  NOT NULL,
-    [Users_RoleId] nvarchar(max)  NOT NULL
+    [User_Id] int  NOT NULL,
+    [User_RoleId] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -165,79 +162,79 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [Users_Id], [Users_RoleId] in table 'Lend'
+-- Creating foreign key on [LendItem_Id] in table 'Lend'
 ALTER TABLE [dbo].[Lend]
-ADD CONSTRAINT [FK_LendUsers]
-    FOREIGN KEY ([Users_Id], [Users_RoleId])
-    REFERENCES [dbo].[User]
-        ([Id], [RoleId])
+ADD CONSTRAINT [FK_LendItemLend]
+    FOREIGN KEY ([LendItem_Id])
+    REFERENCES [dbo].[LendItem]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LendUsers'
-CREATE INDEX [IX_FK_LendUsers]
+-- Creating non-clustered index for FOREIGN KEY 'FK_LendItemLend'
+CREATE INDEX [IX_FK_LendItemLend]
 ON [dbo].[Lend]
-    ([Users_Id], [Users_RoleId]);
-GO
-
--- Creating foreign key on [Lend_Id], [Lend_CreatedByUserId], [Lend_LendItemId], [Lend_LendReturnId] in table 'LendItem'
-ALTER TABLE [dbo].[LendItem]
-ADD CONSTRAINT [FK_LendLendItem]
-    FOREIGN KEY ([Lend_Id], [Lend_CreatedByUserId], [Lend_LendItemId], [Lend_LendReturnId])
-    REFERENCES [dbo].[Lend]
-        ([Id], [CreatedByUserId], [LendItemId], [LendReturnId])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LendLendItem'
-CREATE INDEX [IX_FK_LendLendItem]
-ON [dbo].[LendItem]
-    ([Lend_Id], [Lend_CreatedByUserId], [Lend_LendItemId], [Lend_LendReturnId]);
+    ([LendItem_Id]);
 GO
 
 -- Creating foreign key on [LendReturn_Id], [LendReturn_LendId], [LendReturn_CreatedByUserId] in table 'Lend'
 ALTER TABLE [dbo].[Lend]
-ADD CONSTRAINT [FK_LendLendReturn]
+ADD CONSTRAINT [FK_LendReturnLend]
     FOREIGN KEY ([LendReturn_Id], [LendReturn_LendId], [LendReturn_CreatedByUserId])
     REFERENCES [dbo].[LendReturn]
         ([Id], [LendId], [CreatedByUserId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LendLendReturn'
-CREATE INDEX [IX_FK_LendLendReturn]
+-- Creating non-clustered index for FOREIGN KEY 'FK_LendReturnLend'
+CREATE INDEX [IX_FK_LendReturnLend]
 ON [dbo].[Lend]
     ([LendReturn_Id], [LendReturn_LendId], [LendReturn_CreatedByUserId]);
 GO
 
--- Creating foreign key on [Users_Id], [Users_RoleId] in table 'LendReturn'
+-- Creating foreign key on [User_Id], [User_RoleId] in table 'LendReturn'
 ALTER TABLE [dbo].[LendReturn]
-ADD CONSTRAINT [FK_LendReturnAspNetUsers]
-    FOREIGN KEY ([Users_Id], [Users_RoleId])
+ADD CONSTRAINT [FK_UserLendReturn]
+    FOREIGN KEY ([User_Id], [User_RoleId])
     REFERENCES [dbo].[User]
         ([Id], [RoleId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LendReturnAspNetUsers'
-CREATE INDEX [IX_FK_LendReturnAspNetUsers]
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserLendReturn'
+CREATE INDEX [IX_FK_UserLendReturn]
 ON [dbo].[LendReturn]
-    ([Users_Id], [Users_RoleId]);
+    ([User_Id], [User_RoleId]);
 GO
 
--- Creating foreign key on [Roles_Id] in table 'User'
+-- Creating foreign key on [User_Id], [User_RoleId] in table 'Lend'
+ALTER TABLE [dbo].[Lend]
+ADD CONSTRAINT [FK_UserLend]
+    FOREIGN KEY ([User_Id], [User_RoleId])
+    REFERENCES [dbo].[User]
+        ([Id], [RoleId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserLend'
+CREATE INDEX [IX_FK_UserLend]
+ON [dbo].[Lend]
+    ([User_Id], [User_RoleId]);
+GO
+
+-- Creating foreign key on [Role_Id] in table 'User'
 ALTER TABLE [dbo].[User]
-ADD CONSTRAINT [FK_UsersRoles]
-    FOREIGN KEY ([Roles_Id])
+ADD CONSTRAINT [FK_RoleUser]
+    FOREIGN KEY ([Role_Id])
     REFERENCES [dbo].[Role]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_UsersRoles'
-CREATE INDEX [IX_FK_UsersRoles]
+-- Creating non-clustered index for FOREIGN KEY 'FK_RoleUser'
+CREATE INDEX [IX_FK_RoleUser]
 ON [dbo].[User]
-    ([Roles_Id]);
+    ([Role_Id]);
 GO
 
 -- --------------------------------------------------

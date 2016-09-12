@@ -27,8 +27,10 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static WhoLends.Controllers.HomeController Home = new WhoLends.Controllers.T4MVC_HomeController();
+    public static WhoLends.Controllers.LendItemsController LendItems = new WhoLends.Controllers.T4MVC_LendItemsController();
+    public static WhoLends.Controllers.LendsController Lends = new WhoLends.Controllers.T4MVC_LendsController();
     public static T4MVC._SharedController _Shared = new T4MVC._SharedController();
-    public static T4MVC.HomeController Home = new T4MVC.HomeController();
 }
 
 namespace T4MVC
@@ -45,6 +47,21 @@ namespace T4MVC
     }
 }
 
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+     
+    public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -72,14 +89,24 @@ namespace Links
         public const string UrlPath = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
-        public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
-        public static readonly string bootstrap_theme_css_map = Url("bootstrap-theme.css.map");
-        public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
-        public static readonly string bootstrap_theme_min_css_map = Url("bootstrap-theme.min.css.map");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class bootstrap {
+            public const string UrlPath = "~/Content/bootstrap";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
+            public static readonly string bootstrap_theme_css_map = Url("bootstrap-theme.css.map");
+            public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
+            public static readonly string bootstrap_theme_min_css_map = Url("bootstrap-theme.min.css.map");
+            public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
+            public static readonly string bootstrap_css_map = Url("bootstrap.css.map");
+            public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+            public static readonly string bootstrap_min_css_map = Url("bootstrap.min.css.map");
+        }
+    
         public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
-        public static readonly string bootstrap_css_map = Url("bootstrap.css.map");
         public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
-        public static readonly string bootstrap_min_css_map = Url("bootstrap.min.css.map");
+        public static readonly string Site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/Site.min.css") ? Url("Site.min.css") : Url("Site.css");
     }
 
     
@@ -103,12 +130,21 @@ namespace Links
         }
         public static partial class Content 
         {
+            public static partial class bootstrap 
+            {
+                public static class Assets
+                {
+                    public const string bootstrap_theme_css = "~/Content/bootstrap/bootstrap-theme.css";
+                    public const string bootstrap_theme_min_css = "~/Content/bootstrap/bootstrap-theme.min.css";
+                    public const string bootstrap_css = "~/Content/bootstrap/bootstrap.css";
+                    public const string bootstrap_min_css = "~/Content/bootstrap/bootstrap.min.css";
+                }
+            }
             public static class Assets
             {
-                public const string bootstrap_theme_css = "~/Content/bootstrap-theme.css";
-                public const string bootstrap_theme_min_css = "~/Content/bootstrap-theme.min.css";
                 public const string bootstrap_css = "~/Content/bootstrap.css";
                 public const string bootstrap_min_css = "~/Content/bootstrap.min.css";
+                public const string Site_css = "~/Content/Site.css";
             }
         }
     }

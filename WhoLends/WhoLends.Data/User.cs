@@ -17,8 +17,8 @@ namespace WhoLends.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Lend = new HashSet<Lend>();
             this.LendReturn = new HashSet<LendReturn>();
+            this.Lend = new HashSet<Lend>();
         }
     
         public int Id { get; set; }
@@ -36,9 +36,9 @@ namespace WhoLends.Data
         public string UserName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lend> Lend { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LendReturn> LendReturn { get; set; }
-        public virtual Role Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lend> Lend { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

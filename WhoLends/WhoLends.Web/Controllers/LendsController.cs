@@ -6,18 +6,18 @@ using WhoLends.Data;
 
 namespace WhoLends.Controllers
 {
-    public class LendsController : Controller
+    public partial class LendsController : Controller
     {
         private Entities dbc = new Entities();
 
         // GET: Lends
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View(dbc.Lend.ToList());
         }
 
         // GET: Lends/Details/5
-        public ActionResult Details(int? id)
+        public virtual ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -32,7 +32,7 @@ namespace WhoLends.Controllers
         }
 
         // GET: Lends/Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             return View();
         }
@@ -42,7 +42,7 @@ namespace WhoLends.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,LendObjectName,LendObjectDescription,From,To,Employee")] Lend lend)
+        public virtual ActionResult Create([Bind(Include = "ID,LendObjectName,LendObjectDescription,From,To,Employee")] Lend lend)
         {
             if (ModelState.IsValid)
             {
@@ -54,13 +54,13 @@ namespace WhoLends.Controllers
             return View(lend);
         }
 
-        public ActionResult CreateLendObject()
+        public virtual ActionResult CreateLendObject()
         {
-            return RedirectToAction("Create","LendItems");
+            return RedirectToAction("Create", "LendItems");
         }
 
         // GET: Lends/Edit/5
-        public ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -79,7 +79,7 @@ namespace WhoLends.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,LendObjectName,LendObjectDescription,From,To,Employee")] Lend lend)
+        public virtual ActionResult Edit([Bind(Include = "ID,LendObjectName,LendObjectDescription,From,To,Employee")] Lend lend)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace WhoLends.Controllers
         }
 
         // GET: Lends/Delete/5
-        public ActionResult Delete(int? id)
+        public virtual ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -108,7 +108,7 @@ namespace WhoLends.Controllers
         // POST: Lends/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
             Lend lend = dbc.Lend.Find(id);
             dbc.Lend.Remove(lend);
