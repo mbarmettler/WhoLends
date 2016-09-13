@@ -58,6 +58,7 @@
   <EntityType Name="LendItem">
     <Key>
       <PropertyRef Name="Id" />
+      <PropertyRef Name="CreatedByUserId" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
     <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
@@ -126,6 +127,14 @@
   <Association Name="UserLendItem">
     <End Type="Model.User" Role="User" Multiplicity="1" />
     <End Type="Model.LendItem" Role="LendItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendItem">
+        <PropertyRef Name="CreatedByUserId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
   <Association Name="LendItemLend">
     <End Type="Model.LendItem" Role="LendItem" Multiplicity="1" />

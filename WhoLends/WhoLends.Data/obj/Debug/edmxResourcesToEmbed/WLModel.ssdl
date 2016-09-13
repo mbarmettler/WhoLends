@@ -70,10 +70,12 @@
     <Property Name="LendReturn_CreatedByUserId" Type="nvarchar(max)" Nullable="true" />
     <Property Name="User_Id" Type="int" Nullable="false" />
     <Property Name="LendItem_Id" Type="int" Nullable="false" />
+    <Property Name="LendItem_CreatedByUserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
       <PropertyRef Name="Id" />
+      <PropertyRef Name="CreatedByUserId" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CreatedByUserId" Type="int" Nullable="false" />
@@ -83,7 +85,6 @@
     <Property Name="Quantity" Type="smallint" Nullable="false" />
     <Property Name="Condition" Type="int" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
-    <Property Name="UserLendItem_LendItem_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -158,7 +159,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="LendItem">
-        <PropertyRef Name="UserLendItem_LendItem_Id" />
+        <PropertyRef Name="CreatedByUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -168,9 +169,11 @@
     <ReferentialConstraint>
       <Principal Role="LendItem">
         <PropertyRef Name="Id" />
+        <PropertyRef Name="CreatedByUserId" />
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="LendItem_Id" />
+        <PropertyRef Name="LendItem_CreatedByUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

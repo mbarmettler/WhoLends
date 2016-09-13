@@ -105,17 +105,10 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserLendItem" TypeName="Model.UserLendItem" StoreEntitySet="LendItem">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="UserLendItem_LendItem_Id" />
-      </EndProperty>
-      <EndProperty Name="LendItem">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="LendItemLend" TypeName="Model.LendItemLend" StoreEntitySet="Lend">
       <EndProperty Name="LendItem">
         <ScalarProperty Name="Id" ColumnName="LendItem_Id" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="LendItem_CreatedByUserId" />
       </EndProperty>
       <EndProperty Name="Lend">
         <ScalarProperty Name="Id" ColumnName="Id" />

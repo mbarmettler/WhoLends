@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/13/2016 14:19:59
+-- Date Created: 09/13/2016 17:21:19
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -31,6 +31,9 @@ IF OBJECT_ID(N'[dbo].[FK_RoleUser]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserLendItem]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LendItem] DROP CONSTRAINT [FK_UserLendItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LendItemLend]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendItemLend];
 GO
 
 -- --------------------------------------------------
@@ -90,7 +93,8 @@ CREATE TABLE [dbo].[Lend] (
     [LendReturn_LendId] nvarchar(max)  NULL,
     [LendReturn_CreatedByUserId] nvarchar(max)  NULL,
     [User_Id] int  NOT NULL,
-    [LendItem_Id] int  NOT NULL
+    [LendItem_Id] int  NOT NULL,
+    [LendItem_CreatedByUserId] int  NOT NULL
 );
 GO
 
@@ -103,8 +107,7 @@ CREATE TABLE [dbo].[LendItem] (
     [CustomerId] nvarchar(max)  NOT NULL,
     [Quantity] smallint  NOT NULL,
     [Condition] int  NOT NULL,
-    [CreatedAt] datetime  NOT NULL,
-    [UserLendItem_LendItem_Id] int  NOT NULL
+    [CreatedAt] datetime  NOT NULL
 );
 GO
 
@@ -141,10 +144,10 @@ ADD CONSTRAINT [PK_Lend]
     PRIMARY KEY CLUSTERED ([Id], [CreatedByUserId], [LendReturnId], [LendItemId] ASC);
 GO
 
--- Creating primary key on [Id] in table 'LendItem'
+-- Creating primary key on [Id], [CreatedByUserId] in table 'LendItem'
 ALTER TABLE [dbo].[LendItem]
 ADD CONSTRAINT [PK_LendItem]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
+    PRIMARY KEY CLUSTERED ([Id], [CreatedByUserId] ASC);
 GO
 
 -- Creating primary key on [Id], [LendId], [CreatedByUserId] in table 'LendReturn'
@@ -217,10 +220,10 @@ ON [dbo].[User]
     ([Role_Id]);
 GO
 
--- Creating foreign key on [UserLendItem_LendItem_Id] in table 'LendItem'
+-- Creating foreign key on [CreatedByUserId] in table 'LendItem'
 ALTER TABLE [dbo].[LendItem]
 ADD CONSTRAINT [FK_UserLendItem]
-    FOREIGN KEY ([UserLendItem_LendItem_Id])
+    FOREIGN KEY ([CreatedByUserId])
     REFERENCES [dbo].[User]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -229,22 +232,22 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserLendItem'
 CREATE INDEX [IX_FK_UserLendItem]
 ON [dbo].[LendItem]
-    ([UserLendItem_LendItem_Id]);
+    ([CreatedByUserId]);
 GO
 
--- Creating foreign key on [LendItem_Id] in table 'Lend'
+-- Creating foreign key on [LendItem_Id], [LendItem_CreatedByUserId] in table 'Lend'
 ALTER TABLE [dbo].[Lend]
 ADD CONSTRAINT [FK_LendItemLend]
-    FOREIGN KEY ([LendItem_Id])
+    FOREIGN KEY ([LendItem_Id], [LendItem_CreatedByUserId])
     REFERENCES [dbo].[LendItem]
-        ([Id])
+        ([Id], [CreatedByUserId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_LendItemLend'
 CREATE INDEX [IX_FK_LendItemLend]
 ON [dbo].[Lend]
-    ([LendItem_Id]);
+    ([LendItem_Id], [LendItem_CreatedByUserId]);
 GO
 
 -- --------------------------------------------------
