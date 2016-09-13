@@ -16,13 +16,8 @@
     <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
     <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
     <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
     <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
     <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="LendReturn" Relationship="Model.UserLendReturn" FromRole="User" ToRole="LendReturn" />
     <NavigationProperty Name="Lend" Relationship="Model.UserLend" FromRole="User" ToRole="Lend" />
@@ -55,6 +50,10 @@
       <End Role="User" EntitySet="User" />
       <End Role="LendItem" EntitySet="LendItem" />
     </AssociationSet>
+    <AssociationSet Name="LendItemLend" Association="Model.LendItemLend">
+      <End Role="LendItem" EntitySet="LendItem" />
+      <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="LendItem">
     <Key>
@@ -68,6 +67,7 @@
     <Property Name="Quantity" Type="Int16" Nullable="false" />
     <Property Name="Condition" Type="Model.Condition" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Lend" Relationship="Model.LendItemLend" FromRole="LendItem" ToRole="Lend" />
   </EntityType>
   <EntityType Name="Lend">
     <Key>
@@ -85,6 +85,7 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="LendReturn" Relationship="Model.LendReturnLend" FromRole="Lend" ToRole="LendReturn" />
     <NavigationProperty Name="User" Relationship="Model.UserLend" FromRole="Lend" ToRole="User" />
+    <NavigationProperty Name="LendItem" Relationship="Model.LendItemLend" FromRole="Lend" ToRole="LendItem" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -125,5 +126,9 @@
   <Association Name="UserLendItem">
     <End Type="Model.User" Role="User" Multiplicity="1" />
     <End Type="Model.LendItem" Role="LendItem" Multiplicity="*" />
+  </Association>
+  <Association Name="LendItemLend">
+    <End Type="Model.LendItem" Role="LendItem" Multiplicity="1" />
+    <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
   </Association>
 </Schema>

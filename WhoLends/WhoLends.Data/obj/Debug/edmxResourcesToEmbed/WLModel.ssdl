@@ -26,6 +26,10 @@
       <End Role="User" EntitySet="User" />
       <End Role="LendItem" EntitySet="LendItem" />
     </AssociationSet>
+    <AssociationSet Name="LendItemLend" Association="Model.Store.LendItemLend">
+      <End Role="LendItem" EntitySet="LendItem" />
+      <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
     <Key>
@@ -42,13 +46,8 @@
     <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
     <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
     <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
     <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
     <Property Name="Role_Id" Type="int" Nullable="false" />
   </EntityType>
@@ -70,6 +69,7 @@
     <Property Name="LendReturn_LendId" Type="nvarchar(max)" Nullable="true" />
     <Property Name="LendReturn_CreatedByUserId" Type="nvarchar(max)" Nullable="true" />
     <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="LendItem_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
@@ -159,6 +159,18 @@
       </Principal>
       <Dependent Role="LendItem">
         <PropertyRef Name="UserLendItem_LendItem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LendItemLend">
+    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
+    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LendItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LendItem_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

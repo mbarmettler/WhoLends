@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/13/2016 13:50:42
+-- Date Created: 09/13/2016 14:19:59
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -70,13 +70,8 @@ CREATE TABLE [dbo].[User] (
     [Email] nvarchar(256)  NULL,
     [EmailConfirmed] bit  NOT NULL,
     [PasswordHash] nvarchar(max)  NULL,
-    [SecurityStamp] nvarchar(max)  NULL,
-    [PhoneNumber] nvarchar(max)  NULL,
-    [PhoneNumberConfirmed] bit  NOT NULL,
-    [TwoFactorEnabled] bit  NOT NULL,
     [LockoutEndDateUtc] datetime  NULL,
     [LockoutEnabled] bit  NOT NULL,
-    [AccessFailedCount] int  NOT NULL,
     [UserName] nvarchar(256)  NOT NULL,
     [Role_Id] int  NOT NULL
 );
@@ -94,7 +89,8 @@ CREATE TABLE [dbo].[Lend] (
     [LendReturn_Id] int  NULL,
     [LendReturn_LendId] nvarchar(max)  NULL,
     [LendReturn_CreatedByUserId] nvarchar(max)  NULL,
-    [User_Id] int  NOT NULL
+    [User_Id] int  NOT NULL,
+    [LendItem_Id] int  NOT NULL
 );
 GO
 
@@ -234,6 +230,21 @@ GO
 CREATE INDEX [IX_FK_UserLendItem]
 ON [dbo].[LendItem]
     ([UserLendItem_LendItem_Id]);
+GO
+
+-- Creating foreign key on [LendItem_Id] in table 'Lend'
+ALTER TABLE [dbo].[Lend]
+ADD CONSTRAINT [FK_LendItemLend]
+    FOREIGN KEY ([LendItem_Id])
+    REFERENCES [dbo].[LendItem]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LendItemLend'
+CREATE INDEX [IX_FK_LendItemLend]
+ON [dbo].[Lend]
+    ([LendItem_Id]);
 GO
 
 -- --------------------------------------------------

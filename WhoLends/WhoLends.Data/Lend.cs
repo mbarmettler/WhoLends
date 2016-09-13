@@ -24,5 +24,6 @@ namespace WhoLends.Data
     
         public virtual LendReturn LendReturn { get; set; }
         public virtual User User { get; set; }
+        public virtual LendItem LendItem { get; set; }
     }
 }

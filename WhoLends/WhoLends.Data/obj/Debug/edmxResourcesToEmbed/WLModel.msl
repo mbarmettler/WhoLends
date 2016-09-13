@@ -16,13 +16,8 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
           <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
           <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -116,6 +111,17 @@
       </EndProperty>
       <EndProperty Name="LendItem">
         <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LendItemLend" TypeName="Model.LendItemLend" StoreEntitySet="Lend">
+      <EndProperty Name="LendItem">
+        <ScalarProperty Name="Id" ColumnName="LendItem_Id" />
+      </EndProperty>
+      <EndProperty Name="Lend">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
+        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
