@@ -6,10 +6,6 @@
     <EntitySet Name="Lend" EntityType="Model.Store.Lend" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendItem" EntityType="Model.Store.LendItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendReturn" EntityType="Model.Store.LendReturn" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="LendItemLend" Association="Model.Store.LendItemLend">
-      <End Role="LendItem" EntitySet="LendItem" />
-      <End Role="Lend" EntitySet="Lend" />
-    </AssociationSet>
     <AssociationSet Name="LendReturnLend" Association="Model.Store.LendReturnLend">
       <End Role="LendReturn" EntitySet="LendReturn" />
       <End Role="Lend" EntitySet="Lend" />
@@ -26,6 +22,10 @@
       <End Role="Role" EntitySet="Role" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
+    <AssociationSet Name="UserLendItem" Association="Model.Store.UserLendItem">
+      <End Role="User" EntitySet="User" />
+      <End Role="LendItem" EntitySet="LendItem" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
     <Key>
@@ -37,10 +37,8 @@
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="Id" />
-      <PropertyRef Name="RoleId" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoleId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
     <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
     <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
@@ -58,32 +56,34 @@
     <Key>
       <PropertyRef Name="Id" />
       <PropertyRef Name="CreatedByUserId" />
-      <PropertyRef Name="LendItemId" />
       <PropertyRef Name="LendReturnId" />
+      <PropertyRef Name="LendItemId" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LendItemId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LendItemId" Type="int" Nullable="false" />
     <Property Name="CreatedByUserId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LendReturnId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="From" Type="datetime" Nullable="false" />
     <Property Name="To" Type="datetime" Nullable="true" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
-    <Property Name="LendItem_Id" Type="int" Nullable="false" />
     <Property Name="LendReturn_Id" Type="int" Nullable="true" />
-    <Property Name="LendReturn_LendId" Type="int" Nullable="true" />
+    <Property Name="LendReturn_LendId" Type="nvarchar(max)" Nullable="true" />
     <Property Name="LendReturn_CreatedByUserId" Type="nvarchar(max)" Nullable="true" />
     <Property Name="User_Id" Type="int" Nullable="false" />
-    <Property Name="User_RoleId" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Quantity" Type="smallint" Nullable="false" />
     <Property Name="Condition" Type="int" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="UserLendItem_LendItem_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -92,26 +92,12 @@
       <PropertyRef Name="CreatedByUserId" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LendId" Type="int" Nullable="false" />
+    <Property Name="LendId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedByUserId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CustomerId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="User_Id" Type="int" Nullable="false" />
-    <Property Name="User_RoleId" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <Association Name="LendItemLend">
-    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LendItem">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Lend">
-        <PropertyRef Name="LendItem_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="LendReturnLend">
     <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="0..1" />
     <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
@@ -134,11 +120,9 @@
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id" />
-        <PropertyRef Name="RoleId" />
       </Principal>
       <Dependent Role="LendReturn">
         <PropertyRef Name="User_Id" />
-        <PropertyRef Name="User_RoleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -148,11 +132,9 @@
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id" />
-        <PropertyRef Name="RoleId" />
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="User_Id" />
-        <PropertyRef Name="User_RoleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -165,6 +147,18 @@
       </Principal>
       <Dependent Role="User">
         <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserLendItem">
+    <End Role="User" Type="Model.Store.User" Multiplicity="1" />
+    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendItem">
+        <PropertyRef Name="UserLendItem_LendItem_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -172,11 +172,11 @@ namespace WhoLends.Controllers
             {
                 public readonly string Create = "Create";
                 public readonly string Detail = "Detail";
-                public readonly string LendItems = "LendItems";
+                public readonly string Index = "Index";
             }
             public readonly string Create = "~/Views/LendItems/Create.cshtml";
             public readonly string Detail = "~/Views/LendItems/Detail.cshtml";
-            public readonly string LendItems = "~/Views/LendItems/LendItems.cshtml";
+            public readonly string Index = "~/Views/LendItems/Index.cshtml";
         }
     }
 

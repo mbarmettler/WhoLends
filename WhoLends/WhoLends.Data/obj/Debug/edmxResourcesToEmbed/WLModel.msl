@@ -13,7 +13,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.User)">
         <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -33,8 +32,8 @@
         <MappingFragment StoreEntitySet="Lend">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
+          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="From" ColumnName="From" />
           <ScalarProperty Name="To" ColumnName="To" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
@@ -45,10 +44,13 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendItem)">
         <MappingFragment StoreEntitySet="LendItem">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -58,23 +60,11 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="LendId" ColumnName="LendId" />
           <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="LendItemLend" TypeName="Model.LendItemLend" StoreEntitySet="Lend">
-      <EndProperty Name="LendItem">
-        <ScalarProperty Name="Id" ColumnName="LendItem_Id" />
-      </EndProperty>
-      <EndProperty Name="Lend">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
-        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="LendReturnLend" TypeName="Model.LendReturnLend" StoreEntitySet="Lend">
       <EndProperty Name="LendReturn">
         <ScalarProperty Name="Id" ColumnName="LendReturn_Id" />
@@ -84,8 +74,8 @@
       <EndProperty Name="Lend">
         <ScalarProperty Name="Id" ColumnName="Id" />
         <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
         <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
+        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
       </EndProperty>
       <Condition ColumnName="LendReturn_Id" IsNull="false" />
       <Condition ColumnName="LendReturn_LendId" IsNull="false" />
@@ -94,7 +84,6 @@
     <AssociationSetMapping Name="UserLendReturn" TypeName="Model.UserLendReturn" StoreEntitySet="LendReturn">
       <EndProperty Name="User">
         <ScalarProperty Name="Id" ColumnName="User_Id" />
-        <ScalarProperty Name="RoleId" ColumnName="User_RoleId" />
       </EndProperty>
       <EndProperty Name="LendReturn">
         <ScalarProperty Name="Id" ColumnName="Id" />
@@ -105,13 +94,12 @@
     <AssociationSetMapping Name="UserLend" TypeName="Model.UserLend" StoreEntitySet="Lend">
       <EndProperty Name="User">
         <ScalarProperty Name="Id" ColumnName="User_Id" />
-        <ScalarProperty Name="RoleId" ColumnName="User_RoleId" />
       </EndProperty>
       <EndProperty Name="Lend">
         <ScalarProperty Name="Id" ColumnName="Id" />
         <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
         <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
+        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="RoleUser" TypeName="Model.RoleUser" StoreEntitySet="User">
@@ -120,7 +108,14 @@
       </EndProperty>
       <EndProperty Name="User">
         <ScalarProperty Name="Id" ColumnName="Id" />
-        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserLendItem" TypeName="Model.UserLendItem" StoreEntitySet="LendItem">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="UserLendItem_LendItem_Id" />
+      </EndProperty>
+      <EndProperty Name="LendItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
