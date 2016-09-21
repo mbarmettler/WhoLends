@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -46,6 +47,7 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
+                lend.CreatedAt = DateTime.Now;
                 dbc.Lend.Add(lend);
                 dbc.SaveChanges();
                 return RedirectToAction("Index");

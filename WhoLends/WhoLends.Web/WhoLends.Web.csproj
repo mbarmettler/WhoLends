@@ -234,10 +234,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\web.config" />
     <Content Include="Views\LendItems\Index.cshtml" />
-    <Content Include="Views\LendItems\Detail.cshtml" />
+    <Content Include="Views\LendItems\Details.cshtml" />
     <Content Include="Views\LendItems\Create.cshtml" />
     <Content Include="Views\Lends\Create.cshtml" />
-    <Content Include="Views\Lends\Detail.cshtml" />
+    <Content Include="Views\Lends\Details.cshtml" />
     <Content Include="Views\Lends\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
