@@ -19,6 +19,7 @@
           <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
           <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -26,12 +27,11 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.Lend)">
         <MappingFragment StoreEntitySet="Lend">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-          <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
-          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="From" ColumnName="From" />
           <ScalarProperty Name="To" ColumnName="To" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -39,13 +39,13 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendItem)">
         <MappingFragment StoreEntitySet="LendItem">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="Condition" ColumnName="Condition" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -54,67 +54,19 @@
         <MappingFragment StoreEntitySet="LendReturn">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="LendId" ColumnName="LendId" />
-          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="LendReturnLend" TypeName="Model.LendReturnLend" StoreEntitySet="Lend">
-      <EndProperty Name="LendReturn">
-        <ScalarProperty Name="Id" ColumnName="LendReturn_Id" />
-        <ScalarProperty Name="LendId" ColumnName="LendReturn_LendId" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="LendReturn_CreatedByUserId" />
-      </EndProperty>
+    <AssociationSetMapping Name="FK_LendLendReturn" TypeName="Model.FK_LendLendReturn" StoreEntitySet="LendReturn">
       <EndProperty Name="Lend">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
-        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
-      </EndProperty>
-      <Condition ColumnName="LendReturn_Id" IsNull="false" />
-      <Condition ColumnName="LendReturn_LendId" IsNull="false" />
-      <Condition ColumnName="LendReturn_CreatedByUserId" IsNull="false" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="UserLendReturn" TypeName="Model.UserLendReturn" StoreEntitySet="LendReturn">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
+        <ScalarProperty Name="Id" ColumnName="Lend_Id" />
       </EndProperty>
       <EndProperty Name="LendReturn">
         <ScalarProperty Name="Id" ColumnName="Id" />
         <ScalarProperty Name="LendId" ColumnName="LendId" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="UserLend" TypeName="Model.UserLend" StoreEntitySet="Lend">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
-      </EndProperty>
-      <EndProperty Name="Lend">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
-        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="RoleUser" TypeName="Model.RoleUser" StoreEntitySet="User">
-      <EndProperty Name="Role">
-        <ScalarProperty Name="Id" ColumnName="Role_Id" />
-      </EndProperty>
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="LendItemLend" TypeName="Model.LendItemLend" StoreEntitySet="Lend">
-      <EndProperty Name="LendItem">
-        <ScalarProperty Name="Id" ColumnName="LendItem_Id" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="LendItem_CreatedByUserId" />
-      </EndProperty>
-      <EndProperty Name="Lend">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-        <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-        <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
-        <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

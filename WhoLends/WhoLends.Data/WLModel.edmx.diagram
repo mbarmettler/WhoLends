@@ -7,15 +7,16 @@
       <Diagram DiagramId="af85a0ff735a4bb1993a26ba92284b10" Name="Diagram1" ZoomLevel="107">
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" FillColor="Gray" />
         <EntityTypeShape EntityType="Model.User" Width="1.75" PointX="3" PointY="1.75" IsExpanded="true" FillColor="Gray" />
-        <EntityTypeShape EntityType="Model.LendItem" Width="1.5" PointX="8.625" PointY="1.5" FillColor="RoyalBlue" />
-        <EntityTypeShape EntityType="Model.Lend" Width="1.5" PointX="8.625" PointY="4.875" FillColor="RoyalBlue" />
-        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="5.875" PointY="4.25" FillColor="RoyalBlue" />
-        <AssociationConnector Association="Model.LendReturnLend" />
-        <AssociationConnector Association="Model.UserLendReturn" />
-        <AssociationConnector Association="Model.UserLend" />
-        <AssociationConnector Association="Model.RoleUser" />
-        <AssociationConnector Association="Model.UserLendItem" />
-        <AssociationConnector Association="Model.LendItemLend" />
+        <EntityTypeShape EntityType="Model.LendItem" Width="1.5" PointX="9" PointY="1.5" FillColor="RoyalBlue" />
+        <EntityTypeShape EntityType="Model.Lend" Width="2.125" PointX="8.75" PointY="6.125" FillColor="RoyalBlue" />
+        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="5.875" PointY="5.5" FillColor="RoyalBlue" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_LendItemLend" />
+        <AssociationConnector Association="Model.FK_UserLendItem" />
+        <AssociationConnector Association="Model.FK_UserLendReturn" />
+        <AssociationConnector Association="Model.FK_UserLend" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_RoleUser" />
+        <AssociationConnector Association="Model.FK_LendLendReturn" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

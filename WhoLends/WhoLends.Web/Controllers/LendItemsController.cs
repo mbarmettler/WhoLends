@@ -48,7 +48,7 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
-                lendItem.CreatedByUserId = dbc.User.FirstOrDefault().Id;
+                lendItem.UserId = dbc.User.FirstOrDefault().Id;
                 lendItem.CreatedAt = DateTime.Now;
 
                 dbc.LendItem.Add(lendItem);

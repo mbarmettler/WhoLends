@@ -21,15 +21,16 @@ namespace WhoLends.Data
         }
     
         public int Id { get; set; }
-        public int CreatedByUserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string CustomerId { get; set; }
         public short Quantity { get; set; }
         public Condition Condition { get; set; }
         public System.DateTime CreatedAt { get; set; }
+        public int UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lend> Lend { get; set; }
+        public virtual User User { get; set; }
     }
 }
