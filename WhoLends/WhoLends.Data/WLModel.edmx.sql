@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/21/2016 11:01:44
+-- Date Created: 09/21/2016 13:13:21
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -17,8 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_LendReturnLend]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendReturnLend];
+IF OBJECT_ID(N'[dbo].[FK_LendItemLend]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendItemLend];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserLendItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LendItem] DROP CONSTRAINT [FK_UserLendItem];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserLendReturn]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_UserLendReturn];
@@ -29,11 +32,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_RoleUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_RoleUser];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserLendItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LendItem] DROP CONSTRAINT [FK_UserLendItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LendItemLend]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendItemLend];
+IF OBJECT_ID(N'[dbo].[FK_LendLendReturn]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_LendLendReturn];
 GO
 
 -- --------------------------------------------------
@@ -87,7 +87,8 @@ CREATE TABLE [dbo].[Lend] (
     [To] datetime  NULL,
     [CreatedAt] datetime  NOT NULL,
     [LendItemId] int  NOT NULL,
-    [UserId] int  NOT NULL
+    [UserId] int  NOT NULL,
+    [LenderUserId] int  NOT NULL
 );
 GO
 
@@ -241,6 +242,21 @@ GO
 CREATE INDEX [IX_FK_LendLendReturn]
 ON [dbo].[LendReturn]
     ([Lend_Id]);
+GO
+
+-- Creating foreign key on [LenderUserId] in table 'Lend'
+ALTER TABLE [dbo].[Lend]
+ADD CONSTRAINT [FK_LendUser]
+    FOREIGN KEY ([LenderUserId])
+    REFERENCES [dbo].[User]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LendUser'
+CREATE INDEX [IX_FK_LendUser]
+ON [dbo].[Lend]
+    ([LenderUserId]);
 GO
 
 -- --------------------------------------------------

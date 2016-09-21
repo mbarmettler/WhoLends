@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Lends";
-    Layout = "~/Views/_Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <br />
@@ -55,6 +55,9 @@
             @Html.DisplayNameFor(model => model.LendItem)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.LendUser.UserName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.From)
         </th>
         <th>
@@ -72,6 +75,9 @@
     <tr>
         <td>
             @Html.DisplayFor(model => item.LendItem.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.LendUser.UserName)
         </td>
         <td>
             @Html.DisplayFor(model => item.From)

@@ -20,6 +20,7 @@ namespace WhoLends.Data
             this.LendItem = new HashSet<LendItem>();
             this.LendReturn = new HashSet<LendReturn>();
             this.Lend = new HashSet<Lend>();
+            this.LendUserLend = new HashSet<Lend>();
         }
     
         public int Id { get; set; }
@@ -38,5 +39,7 @@ namespace WhoLends.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lend> Lend { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lend> LendUserLend { get; set; }
     }
 }

@@ -13,10 +13,11 @@
         <AssociationConnector Association="Model.FK_LendItemLend" />
         <AssociationConnector Association="Model.FK_UserLendItem" />
         <AssociationConnector Association="Model.FK_UserLendReturn" />
-        <AssociationConnector Association="Model.FK_UserLend" ManuallyRouted="false" >
+        <AssociationConnector ManuallyRouted="false" Association="Model.FK_UserLend">
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_RoleUser" />
         <AssociationConnector Association="Model.FK_LendLendReturn" />
+        <AssociationConnector Association="Model.FK_LendUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

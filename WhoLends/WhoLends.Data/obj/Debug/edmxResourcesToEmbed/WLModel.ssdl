@@ -30,6 +30,10 @@
       <End Role="Lend" EntitySet="Lend" />
       <End Role="LendReturn" EntitySet="LendReturn" />
     </AssociationSet>
+    <AssociationSet Name="FK_LendUser" Association="Model.Store.FK_LendUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
     <Key>
@@ -61,6 +65,7 @@
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="LendItemId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="LenderUserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
@@ -156,6 +161,18 @@
       </Principal>
       <Dependent Role="LendReturn">
         <PropertyRef Name="Lend_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LendUser">
+    <End Role="User" Type="Model.Store.User" Multiplicity="1" />
+    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LenderUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

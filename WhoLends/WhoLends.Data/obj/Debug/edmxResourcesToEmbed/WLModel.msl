@@ -32,6 +32,7 @@
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LenderUserId" ColumnName="LenderUserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

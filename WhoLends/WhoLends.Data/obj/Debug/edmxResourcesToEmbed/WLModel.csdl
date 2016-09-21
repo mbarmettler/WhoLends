@@ -24,6 +24,7 @@
     <NavigationProperty Name="Lend" Relationship="Model.FK_UserLend" FromRole="User" ToRole="Lend" />
     <NavigationProperty Name="Role" Relationship="Model.FK_RoleUser" FromRole="User" ToRole="Role" />
     <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LendUserLend" Relationship="Model.FK_LendUser" FromRole="User" ToRole="Lend" />
   </EntityType>
   <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Role" EntityType="Model.Role" />
@@ -44,8 +45,8 @@
       <End Role="LendReturn" EntitySet="LendReturn" />
     </AssociationSet>
     <AssociationSet Name="FK_UserLend" Association="Model.FK_UserLend">
-      <End Role="User" EntitySet="User" />
-      <End Role="Lend" EntitySet="Lend" />
+      <End EntitySet="User" Role="User" />
+      <End EntitySet="Lend" Role="Lend" />
     </AssociationSet>
     <AssociationSet Name="FK_RoleUser" Association="Model.FK_RoleUser">
       <End Role="Role" EntitySet="Role" />
@@ -54,6 +55,10 @@
     <AssociationSet Name="FK_LendLendReturn" Association="Model.FK_LendLendReturn">
       <End Role="Lend" EntitySet="Lend" />
       <End Role="LendReturn" EntitySet="LendReturn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LendUser" Association="Model.FK_LendUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Lend" EntitySet="Lend" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="LendItem">
@@ -84,6 +89,8 @@
     <NavigationProperty Name="User" Relationship="Model.FK_UserLend" FromRole="Lend" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LendReturn" Relationship="Model.FK_LendLendReturn" FromRole="Lend" ToRole="LendReturn" />
+    <NavigationProperty Name="LendUser" Relationship="Model.FK_LendUser" FromRole="Lend" ToRole="User" />
+    <Property Name="LenderUserId" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -141,8 +148,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserLend">
-    <End Type="Model.User" Role="User" Multiplicity="1" />
-    <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
+    <End Type="Model.User" Multiplicity="1" Role="User" />
+    <End Type="Model.Lend" Multiplicity="*" Role="Lend" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id" />
@@ -167,5 +174,17 @@
   <Association Name="FK_LendLendReturn">
     <End Type="Model.Lend" Role="Lend" Multiplicity="1" />
     <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="0..1" />
+  </Association>
+  <Association Name="FK_LendUser">
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LenderUserId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

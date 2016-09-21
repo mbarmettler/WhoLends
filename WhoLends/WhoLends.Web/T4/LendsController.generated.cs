@@ -173,12 +173,12 @@ namespace WhoLends.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Create = "Create";
-                public readonly string Detail = "Detail";
+                public readonly string Details = "Details";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string Create = "~/Views/Lends/Create.cshtml";
-            public readonly string Detail = "~/Views/Lends/Detail.cshtml";
+            public readonly string Details = "~/Views/Lends/Details.cshtml";
             public readonly string Edit = "~/Views/Lends/Edit.cshtml";
             public readonly string Index = "~/Views/Lends/Index.cshtml";
         }

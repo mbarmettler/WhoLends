@@ -27,10 +27,11 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    public static WhoLends.Controllers.AccountController Account = new WhoLends.Controllers.T4MVC_AccountController();
     public static WhoLends.Controllers.HomeController Home = new WhoLends.Controllers.T4MVC_HomeController();
     public static WhoLends.Controllers.LendItemsController LendItems = new WhoLends.Controllers.T4MVC_LendItemsController();
     public static WhoLends.Controllers.LendsController Lends = new WhoLends.Controllers.T4MVC_LendsController();
-    public static T4MVC._SharedController _Shared = new T4MVC._SharedController();
+    public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
 namespace T4MVC
