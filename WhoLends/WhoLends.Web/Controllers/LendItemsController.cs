@@ -50,7 +50,7 @@ namespace WhoLends.Controllers
             {
                 lendItem.UserId = dbc.User.FirstOrDefault().Id;
                 lendItem.CreatedAt = DateTime.Now;
-
+                
                 dbc.LendItem.Add(lendItem);
                 try
                 {

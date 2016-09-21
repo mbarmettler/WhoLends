@@ -13,6 +13,7 @@ namespace WhoLends.Models
         public int Id { get; set; }
 
         [Display(Name = "Von")]
+        [Required]
         public System.DateTime From { get; set; }
         [Display(Name = "Bis")]
         public Nullable<System.DateTime> To { get; set; }

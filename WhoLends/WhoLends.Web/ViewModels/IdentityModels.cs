@@ -20,7 +20,7 @@ namespace WhoLends.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext() : base("LendsContext", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("Entities", throwIfV1Schema: false)
         { }
 
         public static ApplicationDbContext Create()
