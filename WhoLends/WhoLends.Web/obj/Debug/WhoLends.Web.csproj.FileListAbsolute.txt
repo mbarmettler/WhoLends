@@ -76,3 +76,10 @@ D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\Microsoft.Owin.Host.SystemWeb.x
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\Microsoft.Owin.Security.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\Microsoft.Owin.Security.Cookies.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\Microsoft.Owin.Security.OAuth.xml
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\AutoMapper.dll
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\AutoMapper.EF6.dll
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\DelegateDecompiler.dll
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\DelegateDecompiler.EntityFramework.dll
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\Mono.Reflection.dll
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\AutoMapper.xml
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\AutoMapper.EF6.xml

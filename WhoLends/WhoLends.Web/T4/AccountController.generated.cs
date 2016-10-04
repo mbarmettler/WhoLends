@@ -285,10 +285,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.LoginViewModel model, string returnUrl);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LoginViewModel model, string returnUrl);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(WhoLends.Models.LoginViewModel model, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(WhoLends.ViewModels.LoginViewModel model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -312,10 +312,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void VerifyCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.VerifyCodeViewModel model);
+        partial void VerifyCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.VerifyCodeViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode(WhoLends.Models.VerifyCodeViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode(WhoLends.ViewModels.VerifyCodeViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -335,10 +335,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.RegisterViewModel model);
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.RegisterViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(WhoLends.Models.RegisterViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(WhoLends.ViewModels.RegisterViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -371,10 +371,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.ForgotPasswordViewModel model);
+        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.ForgotPasswordViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ForgotPassword(WhoLends.Models.ForgotPasswordViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ForgotPassword(WhoLends.ViewModels.ForgotPasswordViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ForgotPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -406,10 +406,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.ResetPasswordViewModel model);
+        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.ResetPasswordViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetPassword(WhoLends.Models.ResetPasswordViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetPassword(WhoLends.ViewModels.ResetPasswordViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -455,10 +455,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void SendCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.SendCodeViewModel model);
+        partial void SendCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.SendCodeViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SendCode(WhoLends.Models.SendCodeViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SendCode(WhoLends.ViewModels.SendCodeViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SendCode);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -479,10 +479,10 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void ExternalLoginConfirmationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Models.ExternalLoginConfirmationViewModel model, string returnUrl);
+        partial void ExternalLoginConfirmationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.ExternalLoginConfirmationViewModel model, string returnUrl);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ExternalLoginConfirmation(WhoLends.Models.ExternalLoginConfirmationViewModel model, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ExternalLoginConfirmation(WhoLends.ViewModels.ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ExternalLoginConfirmation);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

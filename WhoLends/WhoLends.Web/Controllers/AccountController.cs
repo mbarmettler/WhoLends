@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WhoLends.Models;
+using WhoLends.ViewModels;
 using WhoLends.Data;
 
 namespace WhoLends.Controllers

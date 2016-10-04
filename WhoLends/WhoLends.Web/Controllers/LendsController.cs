@@ -14,7 +14,7 @@ namespace WhoLends.Controllers
         // GET: Lends
         public virtual ActionResult Index()
         {
-            return View(dbc.Lend.ToList());
+            return View(dbc.Lend.ToList());            
         }
 
         // GET: Lends/Details/5

@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.From, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
                 @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.To, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.To, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
                 @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -54,4 +54,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/css")
+    <script type="text/javascript">
+        $('.datepicker').datepicker(); //Initialise any date pickers
+    </script>
 }

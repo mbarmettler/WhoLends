@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using WhoLends.Data;
 
-namespace WhoLends.Models
+namespace WhoLends.ViewModels
 {
     [MetadataType(typeof(LendItemHelper))]
     public partial class LendItem { }

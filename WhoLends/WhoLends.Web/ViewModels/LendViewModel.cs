@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using WhoLends.Data;
 
-namespace WhoLends.Models
+namespace WhoLends.ViewModels
 {
     [MetadataType(typeof(LendHelpter))]
     public partial class Lend { }
@@ -17,5 +19,8 @@ namespace WhoLends.Models
         public System.DateTime From { get; set; }
         [Display(Name = "Bis")]
         public Nullable<System.DateTime> To { get; set; }
+        public IEnumerable<LendItem> LendItemsList { get; set; }
+        public IEnumerable<User> UserList { get; set; }   
+
     }
 }
