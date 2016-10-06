@@ -372,6 +372,8 @@
     <Compile Include="DAL\ILendRepository.cs" />
     <Compile Include="DAL\Implementations\LendItemRepository.cs" />
     <Compile Include="DAL\Implementations\LendRepository.cs" />
+    <Compile Include="DAL\Implementations\UserRepository.cs" />
+    <Compile Include="DAL\IUserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

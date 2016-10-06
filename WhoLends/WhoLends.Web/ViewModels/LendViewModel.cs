@@ -33,8 +33,8 @@ namespace WhoLends.ViewModels
 
         public User SelectedLendUser { get; set; }
 
-        public IEnumerable<LendItem> LendItemsList { get; set; }
-        public IEnumerable<User> UserList { get; set; }   
+        public IEnumerable<Data.LendItem> LendItemsList { get; set; }
+        public IEnumerable<Data.User> UserList { get; set; }   
 
     }
 }

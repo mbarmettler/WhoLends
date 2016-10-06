@@ -42,7 +42,14 @@ namespace WhoLends.Web.DAL
 
         public void Save()
         {
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
         }
 
         protected virtual void Dispose(bool disposing)

@@ -2,43 +2,44 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using WhoLends.Data;
 
 namespace WhoLends.Web.DAL
 {
-    public class LendItemRepository : ILendItemRepository, IDisposable
+    public class UserRepository : IUserRepository, IDisposable
     {
         private Entities context;
         private bool disposed = false;
-        public LendItemRepository(Entities context)
+        public UserRepository(Entities context)
         {
             this.context = context;
         }
 
-        public IEnumerable<LendItem> GetLendItems()
+        public IEnumerable<User> GetUsers()
         {
-            return this.context.LendItem.ToList();
+            return this.context.User.ToList();
+        }
+        
+        public User GetUserById(int userId)
+        {
+            return this.context.User.Find(userId);
         }
 
-        public LendItem GetLendItemByID(int lenditemId)
+        public void UpdateUser(User user)
         {
-            return this.context.LendItem.Find(lenditemId);
+            this.context.Entry(user).State = EntityState.Modified;
         }
 
-        public void InsertLendItem(LendItem lenditem)
+        public void InsertUser(User user)
         {
-            this.context.LendItem.Add(lenditem);
+            this.context.User.Add(user);
         }
-
-        public void UpdateLendItem(LendItem lenditem)
+        
+        public void DeleteUser(int userId)
         {
-            this.context.Entry(lenditem).State = EntityState.Modified;
-        }
-
-        public void DeleteLendItem(int lenditemId)
-        {
-            LendItem lenditem = this.context.LendItem.Find(lenditemId);
-            this.context.LendItem.Remove(lenditem);
+            User user = this.context.User.Find(userId);
+            this.context.User.Remove(user);
         }
 
         public void Save()

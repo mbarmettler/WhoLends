@@ -63,6 +63,8 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
+                lendItemVM.CreatedAt = DateTime.Now;
+
                 var model = LoadModel(lendItemVM);
                 _lendItemRepository.InsertLendItem(model);
                 _lendItemRepository.Save();                

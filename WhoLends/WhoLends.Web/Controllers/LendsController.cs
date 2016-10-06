@@ -14,10 +14,14 @@ namespace WhoLends.Controllers
     public partial class LendsController : Controller
     {
         private ILendRepository _lendRepository;
+        private ILendItemRepository _lendItemRepository;
+        private IUserRepository _userRepository;
 
         public LendsController()
         {
             this._lendRepository = new LendRepository(new Entities());
+            this._lendItemRepository = new LendItemRepository(new Entities());
+            this._userRepository = new UserRepository(new Entities());
         }
 
         public LendsController(ILendRepository lendrepository)
@@ -49,7 +53,15 @@ namespace WhoLends.Controllers
         // GET: Lends/Create
         public virtual ActionResult Create()
         {
-            return View();
+            var viewmodel = new LendViewModel()
+            {
+                //todo
+                //check lenditems quanitty / availability
+                LendItemsList = _lendItemRepository.GetLendItems(),
+                UserList = _userRepository.GetUsers()
+            };
+
+            return View(viewmodel);
         }
 
         // POST: Lends/Create

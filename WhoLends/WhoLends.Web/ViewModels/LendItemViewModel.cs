@@ -32,5 +32,9 @@ namespace WhoLends.ViewModels
         [Display(Name = "Zustand")]
         [Required]
         public Condition Condition { get; set; }
+
+        public int UserId { get; set; }
+
+        public System.DateTime CreatedAt { get; set; }
     }
 }

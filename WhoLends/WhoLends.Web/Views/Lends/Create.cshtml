@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LendItemId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.DropDownListFor(model => model.LendItemId, Model.LendItemsList, "select something")*@
+                @Html.DropDownListFor(model => model.LendItemId, new SelectList(Model.LendItemsList, "id", "Name", "--select--"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LendItemId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LenderUserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.DropDownListFor(model => model.UserId, null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.UserId, new SelectList(Model.UserList, "id", "UserName", "--select--"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LenderUserId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -66,10 +66,11 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Content/css")
-<script type="text/javascript">
-    $('.datepicker').datepicker(); //Initialise any date pickers
-</script>
+    @Scripts.Render("~/Content/css")*@
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker(); //Initialise any date pickers
+    </script>
 }
