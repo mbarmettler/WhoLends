@@ -7,10 +7,12 @@ using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    [MetadataType(typeof(LendItemHelper))]
+    [MetadataType(typeof(LendItemViewModel))]
     public partial class LendItem { }
-    public partial class LendItemHelper
+    public partial class LendItemViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Name")]
         [Required]
         public string Name { get; set; }

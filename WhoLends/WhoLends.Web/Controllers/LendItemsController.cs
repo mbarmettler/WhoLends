@@ -1,36 +1,51 @@
-﻿using System;
+﻿using MvcJqGrid;
+using System;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using WhoLends.Data;
+using WhoLends.ViewModels;
+using WhoLends.Web.Converters;
+using WhoLends.Web.DAL;
 
 namespace WhoLends.Controllers
 {
     public partial class LendItemsController : Controller
     {
-        private Entities dbc = new Entities();
+        private ILendItemRepository _lendItemRepository;
+
+        public LendItemsController()
+        {
+            this._lendItemRepository = new LendItemRepository(new Entities());
+        }
+
+        public LendItemsController(ILendItemRepository lendItemrepository)
+        {
+            this._lendItemRepository = lendItemrepository;
+        }
 
         // GET: LendItems
         public virtual ActionResult Index()
         {
-            return View(dbc.LendItem.ToList());
+            var viewmodel = new LendItemViewModel();
+            return View(viewmodel);
         }
 
         // GET: LendItems/Details/5
-        public virtual ActionResult Details(int? id)
+        public virtual ActionResult Details(int lendItemid)
         {
-            if (id == null)
+            var model = _lendItemRepository.GetLendItemByID(lendItemid);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction(Actions.Index());
             }
-            LendItem lendItem = dbc.LendItem.Find(id);
-            if (lendItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lendItem);
+
+            var viewModel = Converter.ConvertToViewModel(model);
+
+            return View(viewModel);
         }
 
         // GET: LendItems/Create
@@ -44,52 +59,32 @@ namespace WhoLends.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Create([Bind(Include = "ID,Name,Description,Photo,Quanitty,Condition")] LendItem lendItem)
+        public virtual ActionResult Create(LendItemViewModel lendItemVM)
         {
             if (ModelState.IsValid)
             {
-                lendItem.UserId = dbc.User.FirstOrDefault().Id;
-                lendItem.CreatedAt = DateTime.Now;
-                
-                dbc.LendItem.Add(lendItem);
-                try
-                {
-                    dbc.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
-                    throw;
-                }
+                var model = LoadModel(lendItemVM);
+                _lendItemRepository.InsertLendItem(model);
+                _lendItemRepository.Save();                
 
                 return RedirectToAction("Index");
             }
 
-            return View(lendItem);
+            return View(lendItemVM);
         }
-
+             
         // GET: LendItems/Edit/5
-        public virtual ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int lendItemid)
         {
-            if (id == null)
+            var model = _lendItemRepository.GetLendItemByID(lendItemid);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction(Actions.Index());
             }
-            LendItem lendItem = dbc.LendItem.Find(id);
-            if (lendItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lendItem);
+
+            var viewModel = Converter.ConvertToViewModel(model);
+
+            return View(viewModel);
         }
 
         // POST: LendItems/Edit/5
@@ -97,50 +92,66 @@ namespace WhoLends.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit([Bind(Include = "ID,Name,Description,Photo,Quanitty,Condition")] LendItem lendItem)
+        public virtual ActionResult Edit(LendItemViewModel lendItemVM)
         {
-            if (ModelState.IsValid)
-            {
-                dbc.Entry(lendItem).State = EntityState.Modified;
-                dbc.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(lendItem);
-        }
+            var model = LoadModel(lendItemVM);
 
-        // GET: LendItems/Delete/5
-        public virtual ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LendItem lendItem = dbc.LendItem.Find(id);
-            if (lendItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lendItem);
+            lendItemVM = Converter.ConvertToViewModel(model);
+            return View(lendItemVM);
         }
 
         // POST: LendItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int lendItemid)
         {
-            LendItem lendItem = dbc.LendItem.Find(id);
-            dbc.LendItem.Remove(lendItem);
-            dbc.SaveChanges();
+            try
+            {
+                var model = _lendItemRepository.GetLendItemByID(lendItemid);
+                _lendItemRepository.DeleteLendItem(lendItemid);
+                _lendItemRepository.Save();
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+                return RedirectToAction("Delete", new { id = lendItemid, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        private Data.LendItem LoadModel(LendItemViewModel viewModel)
         {
-            if (disposing)
+            var model = _lendItemRepository.GetLendItemByID(viewModel.Id) ?? new Data.LendItem();
+            return model;
+        }
+
+        public virtual ActionResult List(GridSettings gridSettings)
+        {
+            var lendItems = _lendItemRepository.GetLendItems();
+            int totalItems = lendItems.Count();
+            var jsonData = new
             {
-                dbc.Dispose();
-            }
-            base.Dispose(disposing);
+                total = totalItems / gridSettings.PageSize + 1,
+                page = gridSettings.PageIndex,
+                records = totalItems,
+                rows = (
+                         from c in lendItems
+                         select new
+                         {
+                             id = c.Id,
+                             cell = new[]
+                             {
+                                c.Id.ToString(),
+                                c.CustomerId.ToString(),
+                                c.Name,
+                                c.Description,
+                                c.CreatedAt.ToString(),
+                                c.UserId.ToString()
+                             }
+                         }).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
     }
 }

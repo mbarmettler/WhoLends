@@ -1,35 +1,49 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using WhoLends.ViewModels;
+using WhoLends.Web.Converters;
+using WhoLends.Web.DAL;
 using WhoLends.Data;
+using System.Data;
+using MvcJqGrid;
+using System.Linq;
 
 namespace WhoLends.Controllers
 {
     public partial class LendsController : Controller
     {
-        private Entities dbc = new Entities();
+        private ILendRepository _lendRepository;
+
+        public LendsController()
+        {
+            this._lendRepository = new LendRepository(new Entities());
+        }
+
+        public LendsController(ILendRepository lendrepository)
+        {
+            this._lendRepository = lendrepository;
+        }
 
         // GET: Lends
         public virtual ActionResult Index()
         {
-            return View(dbc.Lend.ToList());            
+            var viewModel = new LendViewModel();
+            return View(viewModel);
         }
 
         // GET: Lends/Details/5
-        public virtual ActionResult Details(int? id)
+        public virtual ActionResult Details(int lendId)
         {
-            if (id == null)
+            var model = _lendRepository.GetLendByID(lendId);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction(Actions.Index());
             }
-            Lend lend = dbc.Lend.Find(id);
-            if (lend == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lend);
+
+            var viewModel = Converter.ConvertToViewModel(model);
+
+            return View(viewModel);
         }
 
         // GET: Lends/Create
@@ -42,89 +56,99 @@ namespace WhoLends.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult Create([Bind(Include = "ID,LendObjectName,LendObjectDescription,From,To,Employee")] Lend lend)
+        [ValidateAntiForgeryToken]        
+        public virtual ActionResult Create(LendViewModel lendVM)
         {
             if (ModelState.IsValid)
             {
-                lend.CreatedAt = DateTime.Now;
-                dbc.Lend.Add(lend);
-                dbc.SaveChanges();
+                var model = LoadModel(lendVM);
+                _lendRepository.InsertLend(model);
+                _lendRepository.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(lend);
+            return View(lendVM);
         }
 
-        public virtual ActionResult CreateLendObject()
-        {
-            return RedirectToAction("Create", "LendItems");
-        }
 
         // GET: Lends/Edit/5
-        public virtual ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int lendId)
         {
-            if (id == null)
+            var model = _lendRepository.GetLendByID(lendId);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction(Actions.Index());
             }
-            Lend lend = dbc.Lend.Find(id);
-            if (lend == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lend);
+
+            var viewModel = Converter.ConvertToViewModel(model);
+
+            return View(viewModel);
         }
 
-        // POST: Lends/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit([Bind(Include = "ID,LendObjectName,LendObjectDescription,From,To,Employee")] Lend lend)
+        public virtual ActionResult Edit(LendViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                dbc.Entry(lend).State = EntityState.Modified;
-                dbc.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(lend);
-        }
+            var model = LoadModel(viewModel);
 
-        // GET: Lends/Delete/5
-        public virtual ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Lend lend = dbc.Lend.Find(id);
-            if (lend == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lend);
+            viewModel = Converter.ConvertToViewModel(model);
+            return View(viewModel);
         }
-
+             
         // POST: Lends/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult Delete(int lendId)
         {
-            Lend lend = dbc.Lend.Find(id);
-            dbc.Lend.Remove(lend);
-            dbc.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                var model = _lendRepository.GetLendByID(lendId);
+                _lendRepository.DeleteLend(lendId);
+                _lendRepository.Save();
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+                return RedirectToAction("Delete", new { id = lendId, saveChangesError = true });
+            }
+            return RedirectToAction("Index");            
         }
 
-        protected override void Dispose(bool disposing)
+        private Data.Lend LoadModel(LendViewModel viewModel)
         {
-            if (disposing)
+            var model = _lendRepository.GetLendByID(viewModel.Id) ?? new Data.Lend();
+            return model;
+        }
+
+        public virtual ActionResult List(GridSettings gridSettings)
+        {
+            var lends = _lendRepository.GetLends();
+            int totalitems = lends.Count();
+            var jsonData = new
             {
-                dbc.Dispose();
-            }
-            base.Dispose(disposing);
+                total = totalitems / gridSettings.PageSize + 1,
+                page = gridSettings.PageIndex,
+                records = totalitems,
+                rows = (
+                         from c in lends
+                         select new
+                         {
+                             id = c.Id,
+                             cell = new[]
+                             {
+                                c.Id.ToString(),
+                                c.LenderUserId.ToString(),
+                                c.From.ToShortDateString(),
+                                c.To.ToString(),
+                                c.LendItem.Name.ToString(),
+                                c.LendItem.CustomerId.ToString(),
+                                c.CreatedAt.ToString(),
+                                c.UserId.ToString()
+                             }
+                         }).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
     }
 }

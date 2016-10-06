@@ -8,9 +8,9 @@ using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    [MetadataType(typeof(LendHelpter))]
+    [MetadataType(typeof(LendViewModel))]
     public partial class Lend { }
-    public partial class LendHelpter
+    public partial class LendViewModel
     {
         public int Id { get; set; }
 
@@ -19,6 +19,20 @@ namespace WhoLends.ViewModels
         public System.DateTime From { get; set; }
         [Display(Name = "Bis")]
         public Nullable<System.DateTime> To { get; set; }
+
+        [Required]
+        public System.DateTime CreatedAt { get; set; }
+        [Required]
+        public int LendItemId { get; set; }
+
+        public LendItemViewModel SelectedLendItem { get; set; }
+
+        public int UserId { get; set; }
+        [Required]
+        public int LenderUserId { get; set; }
+
+        public User SelectedLendUser { get; set; }
+
         public IEnumerable<LendItem> LendItemsList { get; set; }
         public IEnumerable<User> UserList { get; set; }   
 

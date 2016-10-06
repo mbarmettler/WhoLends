@@ -75,12 +75,67 @@ namespace Links
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
         public static readonly string ai_0_15_0_build58334_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/ai.0.15.0-build58334.min.js") ? Url("ai.0.15.0-build58334.min.js") : Url("ai.0.15.0-build58334.js");
         public static readonly string ai_0_15_0_build58334_min_js = Url("ai.0.15.0-build58334.min.js");
+        public static readonly string bootstrap_datepicker_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-datepicker.min.js") ? Url("bootstrap-datepicker.min.js") : Url("bootstrap-datepicker.js");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class i18n {
+            public const string UrlPath = "~/Scripts/i18n";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string grid_locale_ar_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-ar.min.js") ? Url("grid.locale-ar.min.js") : Url("grid.locale-ar.js");
+            public static readonly string grid_locale_bg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-bg.min.js") ? Url("grid.locale-bg.min.js") : Url("grid.locale-bg.js");
+            public static readonly string grid_locale_bg1251_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-bg1251.min.js") ? Url("grid.locale-bg1251.min.js") : Url("grid.locale-bg1251.js");
+            public static readonly string grid_locale_cat_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-cat.min.js") ? Url("grid.locale-cat.min.js") : Url("grid.locale-cat.js");
+            public static readonly string grid_locale_cn_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-cn.min.js") ? Url("grid.locale-cn.min.js") : Url("grid.locale-cn.js");
+            public static readonly string grid_locale_cs_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-cs.min.js") ? Url("grid.locale-cs.min.js") : Url("grid.locale-cs.js");
+            public static readonly string grid_locale_da_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-da.min.js") ? Url("grid.locale-da.min.js") : Url("grid.locale-da.js");
+            public static readonly string grid_locale_de_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-de.min.js") ? Url("grid.locale-de.min.js") : Url("grid.locale-de.js");
+            public static readonly string grid_locale_dk_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-dk.min.js") ? Url("grid.locale-dk.min.js") : Url("grid.locale-dk.js");
+            public static readonly string grid_locale_el_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-el.min.js") ? Url("grid.locale-el.min.js") : Url("grid.locale-el.js");
+            public static readonly string grid_locale_en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-en.min.js") ? Url("grid.locale-en.min.js") : Url("grid.locale-en.js");
+            public static readonly string grid_locale_es_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-es.min.js") ? Url("grid.locale-es.min.js") : Url("grid.locale-es.js");
+            public static readonly string grid_locale_fa_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-fa.min.js") ? Url("grid.locale-fa.min.js") : Url("grid.locale-fa.js");
+            public static readonly string grid_locale_fi_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-fi.min.js") ? Url("grid.locale-fi.min.js") : Url("grid.locale-fi.js");
+            public static readonly string grid_locale_fr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-fr.min.js") ? Url("grid.locale-fr.min.js") : Url("grid.locale-fr.js");
+            public static readonly string grid_locale_gl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-gl.min.js") ? Url("grid.locale-gl.min.js") : Url("grid.locale-gl.js");
+            public static readonly string grid_locale_he_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-he.min.js") ? Url("grid.locale-he.min.js") : Url("grid.locale-he.js");
+            public static readonly string grid_locale_hr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-hr.min.js") ? Url("grid.locale-hr.min.js") : Url("grid.locale-hr.js");
+            public static readonly string grid_locale_hr1250_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-hr1250.min.js") ? Url("grid.locale-hr1250.min.js") : Url("grid.locale-hr1250.js");
+            public static readonly string grid_locale_hu_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-hu.min.js") ? Url("grid.locale-hu.min.js") : Url("grid.locale-hu.js");
+            public static readonly string grid_locale_id_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-id.min.js") ? Url("grid.locale-id.min.js") : Url("grid.locale-id.js");
+            public static readonly string grid_locale_is_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-is.min.js") ? Url("grid.locale-is.min.js") : Url("grid.locale-is.js");
+            public static readonly string grid_locale_it_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-it.min.js") ? Url("grid.locale-it.min.js") : Url("grid.locale-it.js");
+            public static readonly string grid_locale_ja_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-ja.min.js") ? Url("grid.locale-ja.min.js") : Url("grid.locale-ja.js");
+            public static readonly string grid_locale_kr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-kr.min.js") ? Url("grid.locale-kr.min.js") : Url("grid.locale-kr.js");
+            public static readonly string grid_locale_lt_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-lt.min.js") ? Url("grid.locale-lt.min.js") : Url("grid.locale-lt.js");
+            public static readonly string grid_locale_mne_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-mne.min.js") ? Url("grid.locale-mne.min.js") : Url("grid.locale-mne.js");
+            public static readonly string grid_locale_nl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-nl.min.js") ? Url("grid.locale-nl.min.js") : Url("grid.locale-nl.js");
+            public static readonly string grid_locale_no_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-no.min.js") ? Url("grid.locale-no.min.js") : Url("grid.locale-no.js");
+            public static readonly string grid_locale_pl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-pl.min.js") ? Url("grid.locale-pl.min.js") : Url("grid.locale-pl.js");
+            public static readonly string grid_locale_pt_br_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-pt-br.min.js") ? Url("grid.locale-pt-br.min.js") : Url("grid.locale-pt-br.js");
+            public static readonly string grid_locale_pt_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-pt.min.js") ? Url("grid.locale-pt.min.js") : Url("grid.locale-pt.js");
+            public static readonly string grid_locale_ro_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-ro.min.js") ? Url("grid.locale-ro.min.js") : Url("grid.locale-ro.js");
+            public static readonly string grid_locale_ru_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-ru.min.js") ? Url("grid.locale-ru.min.js") : Url("grid.locale-ru.js");
+            public static readonly string grid_locale_sk_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-sk.min.js") ? Url("grid.locale-sk.min.js") : Url("grid.locale-sk.js");
+            public static readonly string grid_locale_sr_latin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-sr-latin.min.js") ? Url("grid.locale-sr-latin.min.js") : Url("grid.locale-sr-latin.js");
+            public static readonly string grid_locale_sr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-sr.min.js") ? Url("grid.locale-sr.min.js") : Url("grid.locale-sr.js");
+            public static readonly string grid_locale_sv_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-sv.min.js") ? Url("grid.locale-sv.min.js") : Url("grid.locale-sv.js");
+            public static readonly string grid_locale_th_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-th.min.js") ? Url("grid.locale-th.min.js") : Url("grid.locale-th.js");
+            public static readonly string grid_locale_tr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-tr.min.js") ? Url("grid.locale-tr.min.js") : Url("grid.locale-tr.js");
+            public static readonly string grid_locale_tw_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-tw.min.js") ? Url("grid.locale-tw.min.js") : Url("grid.locale-tw.js");
+            public static readonly string grid_locale_ua_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-ua.min.js") ? Url("grid.locale-ua.min.js") : Url("grid.locale-ua.js");
+            public static readonly string grid_locale_vi_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/grid.locale-vi.min.js") ? Url("grid.locale-vi.min.js") : Url("grid.locale-vi.js");
+        }
+    
         public static readonly string jquery_1_9_1_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.9.1.intellisense.min.js") ? Url("jquery-1.9.1.intellisense.min.js") : Url("jquery-1.9.1.intellisense.js");
         public static readonly string jquery_1_9_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.9.1.min.js") ? Url("jquery-1.9.1.min.js") : Url("jquery-1.9.1.js");
         public static readonly string jquery_1_9_1_min_js = Url("jquery-1.9.1.min.js");
         public static readonly string jquery_1_9_1_min_map = Url("jquery-1.9.1.min.map");
+        public static readonly string jquery_ui_1_10_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-ui-1.10.0.min.js") ? Url("jquery-ui-1.10.0.min.js") : Url("jquery-ui-1.10.0.js");
+        public static readonly string jquery_ui_1_10_0_min_js = Url("jquery-ui-1.10.0.min.js");
+        public static readonly string jquery_jqGrid_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.jqGrid.min.js") ? Url("jquery.jqGrid.min.js") : Url("jquery.jqGrid.js");
+        public static readonly string jquery_jqGrid_min_js = Url("jquery.jqGrid.min.js");
         public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
         public static readonly string modernizr_2_6_2_min_js = Url("modernizr-2.6.2.min.js");
     }
@@ -107,7 +162,121 @@ namespace Links
     
         public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
         public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class img {
+            public const string UrlPath = "~/Content/img";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string rm_logo_jpg = Url("rm_logo.jpg");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class jquery_jqGrid {
+            public const string UrlPath = "~/Content/jquery.jqGrid";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string ellipsis_xbl_xml = Url("ellipsis-xbl.xml");
+            public static readonly string ui_jqgrid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/ui.jqgrid.min.css") ? Url("ui.jqgrid.min.css") : Url("ui.jqgrid.css");
+        }
+    
         public static readonly string Site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/Site.min.css") ? Url("Site.min.css") : Url("Site.css");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class themes {
+            public const string UrlPath = "~/Content/themes";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class @base {
+                public const string UrlPath = "~/Content/themes/base";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class images {
+                    public const string UrlPath = "~/Content/themes/base/images";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                    public static readonly string animated_overlay_gif = Url("animated-overlay.gif");
+                    public static readonly string ui_bg_flat_0_aaaaaa_40x100_png = Url("ui-bg_flat_0_aaaaaa_40x100.png");
+                    public static readonly string ui_bg_flat_75_ffffff_40x100_png = Url("ui-bg_flat_75_ffffff_40x100.png");
+                    public static readonly string ui_bg_glass_55_fbf9ee_1x400_png = Url("ui-bg_glass_55_fbf9ee_1x400.png");
+                    public static readonly string ui_bg_glass_65_ffffff_1x400_png = Url("ui-bg_glass_65_ffffff_1x400.png");
+                    public static readonly string ui_bg_glass_75_dadada_1x400_png = Url("ui-bg_glass_75_dadada_1x400.png");
+                    public static readonly string ui_bg_glass_75_e6e6e6_1x400_png = Url("ui-bg_glass_75_e6e6e6_1x400.png");
+                    public static readonly string ui_bg_glass_95_fef1ec_1x400_png = Url("ui-bg_glass_95_fef1ec_1x400.png");
+                    public static readonly string ui_bg_highlight_soft_75_cccccc_1x100_png = Url("ui-bg_highlight-soft_75_cccccc_1x100.png");
+                    public static readonly string ui_icons_222222_256x240_png = Url("ui-icons_222222_256x240.png");
+                    public static readonly string ui_icons_2e83ff_256x240_png = Url("ui-icons_2e83ff_256x240.png");
+                    public static readonly string ui_icons_454545_256x240_png = Url("ui-icons_454545_256x240.png");
+                    public static readonly string ui_icons_888888_256x240_png = Url("ui-icons_888888_256x240.png");
+                    public static readonly string ui_icons_cd0a0a_256x240_png = Url("ui-icons_cd0a0a_256x240.png");
+                }
+            
+                public static readonly string jquery_ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-ui.min.css") ? Url("jquery-ui.min.css") : Url("jquery-ui.css");
+                public static readonly string jquery_ui_accordion_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.accordion.min.css") ? Url("jquery.ui.accordion.min.css") : Url("jquery.ui.accordion.css");
+                public static readonly string jquery_ui_all_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.all.min.css") ? Url("jquery.ui.all.min.css") : Url("jquery.ui.all.css");
+                public static readonly string jquery_ui_autocomplete_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.autocomplete.min.css") ? Url("jquery.ui.autocomplete.min.css") : Url("jquery.ui.autocomplete.css");
+                public static readonly string jquery_ui_base_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.base.min.css") ? Url("jquery.ui.base.min.css") : Url("jquery.ui.base.css");
+                public static readonly string jquery_ui_button_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.button.min.css") ? Url("jquery.ui.button.min.css") : Url("jquery.ui.button.css");
+                public static readonly string jquery_ui_core_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.core.min.css") ? Url("jquery.ui.core.min.css") : Url("jquery.ui.core.css");
+                public static readonly string jquery_ui_datepicker_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.datepicker.min.css") ? Url("jquery.ui.datepicker.min.css") : Url("jquery.ui.datepicker.css");
+                public static readonly string jquery_ui_dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.dialog.min.css") ? Url("jquery.ui.dialog.min.css") : Url("jquery.ui.dialog.css");
+                public static readonly string jquery_ui_menu_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.menu.min.css") ? Url("jquery.ui.menu.min.css") : Url("jquery.ui.menu.css");
+                public static readonly string jquery_ui_progressbar_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.progressbar.min.css") ? Url("jquery.ui.progressbar.min.css") : Url("jquery.ui.progressbar.css");
+                public static readonly string jquery_ui_resizable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.resizable.min.css") ? Url("jquery.ui.resizable.min.css") : Url("jquery.ui.resizable.css");
+                public static readonly string jquery_ui_selectable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.selectable.min.css") ? Url("jquery.ui.selectable.min.css") : Url("jquery.ui.selectable.css");
+                public static readonly string jquery_ui_slider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.slider.min.css") ? Url("jquery.ui.slider.min.css") : Url("jquery.ui.slider.css");
+                public static readonly string jquery_ui_spinner_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.spinner.min.css") ? Url("jquery.ui.spinner.min.css") : Url("jquery.ui.spinner.css");
+                public static readonly string jquery_ui_tabs_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.tabs.min.css") ? Url("jquery.ui.tabs.min.css") : Url("jquery.ui.tabs.css");
+                public static readonly string jquery_ui_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.theme.min.css") ? Url("jquery.ui.theme.min.css") : Url("jquery.ui.theme.css");
+                public static readonly string jquery_ui_tooltip_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery.ui.tooltip.min.css") ? Url("jquery.ui.tooltip.min.css") : Url("jquery.ui.tooltip.css");
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class minified {
+                    public const string UrlPath = "~/Content/themes/base/minified";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class images {
+                        public const string UrlPath = "~/Content/themes/base/minified/images";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+                        public static readonly string animated_overlay_gif = Url("animated-overlay.gif");
+                        public static readonly string ui_bg_flat_0_aaaaaa_40x100_png = Url("ui-bg_flat_0_aaaaaa_40x100.png");
+                        public static readonly string ui_bg_flat_75_ffffff_40x100_png = Url("ui-bg_flat_75_ffffff_40x100.png");
+                        public static readonly string ui_bg_glass_55_fbf9ee_1x400_png = Url("ui-bg_glass_55_fbf9ee_1x400.png");
+                        public static readonly string ui_bg_glass_65_ffffff_1x400_png = Url("ui-bg_glass_65_ffffff_1x400.png");
+                        public static readonly string ui_bg_glass_75_dadada_1x400_png = Url("ui-bg_glass_75_dadada_1x400.png");
+                        public static readonly string ui_bg_glass_75_e6e6e6_1x400_png = Url("ui-bg_glass_75_e6e6e6_1x400.png");
+                        public static readonly string ui_bg_glass_95_fef1ec_1x400_png = Url("ui-bg_glass_95_fef1ec_1x400.png");
+                        public static readonly string ui_bg_highlight_soft_75_cccccc_1x100_png = Url("ui-bg_highlight-soft_75_cccccc_1x100.png");
+                        public static readonly string ui_icons_222222_256x240_png = Url("ui-icons_222222_256x240.png");
+                        public static readonly string ui_icons_2e83ff_256x240_png = Url("ui-icons_2e83ff_256x240.png");
+                        public static readonly string ui_icons_454545_256x240_png = Url("ui-icons_454545_256x240.png");
+                        public static readonly string ui_icons_888888_256x240_png = Url("ui-icons_888888_256x240.png");
+                        public static readonly string ui_icons_cd0a0a_256x240_png = Url("ui-icons_cd0a0a_256x240.png");
+                    }
+                
+                    public static readonly string jquery_ui_min_css = Url("jquery-ui.min.css");
+                    public static readonly string jquery_ui_accordion_min_css = Url("jquery.ui.accordion.min.css");
+                    public static readonly string jquery_ui_autocomplete_min_css = Url("jquery.ui.autocomplete.min.css");
+                    public static readonly string jquery_ui_button_min_css = Url("jquery.ui.button.min.css");
+                    public static readonly string jquery_ui_core_min_css = Url("jquery.ui.core.min.css");
+                    public static readonly string jquery_ui_datepicker_min_css = Url("jquery.ui.datepicker.min.css");
+                    public static readonly string jquery_ui_dialog_min_css = Url("jquery.ui.dialog.min.css");
+                    public static readonly string jquery_ui_menu_min_css = Url("jquery.ui.menu.min.css");
+                    public static readonly string jquery_ui_progressbar_min_css = Url("jquery.ui.progressbar.min.css");
+                    public static readonly string jquery_ui_resizable_min_css = Url("jquery.ui.resizable.min.css");
+                    public static readonly string jquery_ui_selectable_min_css = Url("jquery.ui.selectable.min.css");
+                    public static readonly string jquery_ui_slider_min_css = Url("jquery.ui.slider.min.css");
+                    public static readonly string jquery_ui_spinner_min_css = Url("jquery.ui.spinner.min.css");
+                    public static readonly string jquery_ui_tabs_min_css = Url("jquery.ui.tabs.min.css");
+                    public static readonly string jquery_ui_theme_min_css = Url("jquery.ui.theme.min.css");
+                    public static readonly string jquery_ui_tooltip_min_css = Url("jquery.ui.tooltip.min.css");
+                }
+            
+            }
+        
+        }
+    
     }
 
     
@@ -116,15 +285,69 @@ namespace Links
     {
         public static partial class Scripts 
         {
+            public static partial class i18n 
+            {
+                public static class Assets
+                {
+                    public const string grid_locale_ar_js = "~/Scripts/i18n/grid.locale-ar.js"; 
+                    public const string grid_locale_bg_js = "~/Scripts/i18n/grid.locale-bg.js"; 
+                    public const string grid_locale_bg1251_js = "~/Scripts/i18n/grid.locale-bg1251.js"; 
+                    public const string grid_locale_cat_js = "~/Scripts/i18n/grid.locale-cat.js"; 
+                    public const string grid_locale_cn_js = "~/Scripts/i18n/grid.locale-cn.js"; 
+                    public const string grid_locale_cs_js = "~/Scripts/i18n/grid.locale-cs.js"; 
+                    public const string grid_locale_da_js = "~/Scripts/i18n/grid.locale-da.js"; 
+                    public const string grid_locale_de_js = "~/Scripts/i18n/grid.locale-de.js"; 
+                    public const string grid_locale_dk_js = "~/Scripts/i18n/grid.locale-dk.js"; 
+                    public const string grid_locale_el_js = "~/Scripts/i18n/grid.locale-el.js"; 
+                    public const string grid_locale_en_js = "~/Scripts/i18n/grid.locale-en.js"; 
+                    public const string grid_locale_es_js = "~/Scripts/i18n/grid.locale-es.js"; 
+                    public const string grid_locale_fa_js = "~/Scripts/i18n/grid.locale-fa.js"; 
+                    public const string grid_locale_fi_js = "~/Scripts/i18n/grid.locale-fi.js"; 
+                    public const string grid_locale_fr_js = "~/Scripts/i18n/grid.locale-fr.js"; 
+                    public const string grid_locale_gl_js = "~/Scripts/i18n/grid.locale-gl.js"; 
+                    public const string grid_locale_he_js = "~/Scripts/i18n/grid.locale-he.js"; 
+                    public const string grid_locale_hr_js = "~/Scripts/i18n/grid.locale-hr.js"; 
+                    public const string grid_locale_hr1250_js = "~/Scripts/i18n/grid.locale-hr1250.js"; 
+                    public const string grid_locale_hu_js = "~/Scripts/i18n/grid.locale-hu.js"; 
+                    public const string grid_locale_id_js = "~/Scripts/i18n/grid.locale-id.js"; 
+                    public const string grid_locale_is_js = "~/Scripts/i18n/grid.locale-is.js"; 
+                    public const string grid_locale_it_js = "~/Scripts/i18n/grid.locale-it.js"; 
+                    public const string grid_locale_ja_js = "~/Scripts/i18n/grid.locale-ja.js"; 
+                    public const string grid_locale_kr_js = "~/Scripts/i18n/grid.locale-kr.js"; 
+                    public const string grid_locale_lt_js = "~/Scripts/i18n/grid.locale-lt.js"; 
+                    public const string grid_locale_mne_js = "~/Scripts/i18n/grid.locale-mne.js"; 
+                    public const string grid_locale_nl_js = "~/Scripts/i18n/grid.locale-nl.js"; 
+                    public const string grid_locale_no_js = "~/Scripts/i18n/grid.locale-no.js"; 
+                    public const string grid_locale_pl_js = "~/Scripts/i18n/grid.locale-pl.js"; 
+                    public const string grid_locale_pt_br_js = "~/Scripts/i18n/grid.locale-pt-br.js"; 
+                    public const string grid_locale_pt_js = "~/Scripts/i18n/grid.locale-pt.js"; 
+                    public const string grid_locale_ro_js = "~/Scripts/i18n/grid.locale-ro.js"; 
+                    public const string grid_locale_ru_js = "~/Scripts/i18n/grid.locale-ru.js"; 
+                    public const string grid_locale_sk_js = "~/Scripts/i18n/grid.locale-sk.js"; 
+                    public const string grid_locale_sr_latin_js = "~/Scripts/i18n/grid.locale-sr-latin.js"; 
+                    public const string grid_locale_sr_js = "~/Scripts/i18n/grid.locale-sr.js"; 
+                    public const string grid_locale_sv_js = "~/Scripts/i18n/grid.locale-sv.js"; 
+                    public const string grid_locale_th_js = "~/Scripts/i18n/grid.locale-th.js"; 
+                    public const string grid_locale_tr_js = "~/Scripts/i18n/grid.locale-tr.js"; 
+                    public const string grid_locale_tw_js = "~/Scripts/i18n/grid.locale-tw.js"; 
+                    public const string grid_locale_ua_js = "~/Scripts/i18n/grid.locale-ua.js"; 
+                    public const string grid_locale_vi_js = "~/Scripts/i18n/grid.locale-vi.js"; 
+                }
+            }
             public static class Assets
             {
                 public const string ai_0_15_0_build58334_js = "~/Scripts/ai.0.15.0-build58334.js"; 
                 public const string ai_0_15_0_build58334_min_js = "~/Scripts/ai.0.15.0-build58334.min.js"; 
+                public const string bootstrap_datepicker_js = "~/Scripts/bootstrap-datepicker.js"; 
                 public const string bootstrap_js = "~/Scripts/bootstrap.js"; 
                 public const string bootstrap_min_js = "~/Scripts/bootstrap.min.js"; 
                 public const string jquery_1_9_1_intellisense_js = "~/Scripts/jquery-1.9.1.intellisense.js"; 
                 public const string jquery_1_9_1_js = "~/Scripts/jquery-1.9.1.js"; 
                 public const string jquery_1_9_1_min_js = "~/Scripts/jquery-1.9.1.min.js"; 
+                public const string jquery_ui_1_10_0_js = "~/Scripts/jquery-ui-1.10.0.js"; 
+                public const string jquery_ui_1_10_0_min_js = "~/Scripts/jquery-ui-1.10.0.min.js"; 
+                public const string jquery_jqGrid_js = "~/Scripts/jquery.jqGrid.js"; 
+                public const string jquery_jqGrid_min_js = "~/Scripts/jquery.jqGrid.min.js"; 
                 public const string modernizr_2_6_2_js = "~/Scripts/modernizr-2.6.2.js"; 
                 public const string modernizr_2_6_2_min_js = "~/Scripts/modernizr-2.6.2.min.js"; 
             }
@@ -139,6 +362,83 @@ namespace Links
                     public const string bootstrap_theme_min_css = "~/Content/bootstrap/bootstrap-theme.min.css";
                     public const string bootstrap_css = "~/Content/bootstrap/bootstrap.css";
                     public const string bootstrap_min_css = "~/Content/bootstrap/bootstrap.min.css";
+                }
+            }
+            public static partial class img 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class jquery_jqGrid 
+            {
+                public static class Assets
+                {
+                    public const string ui_jqgrid_css = "~/Content/jquery.jqGrid/ui.jqgrid.css";
+                }
+            }
+            public static partial class themes 
+            {
+                public static partial class @base 
+                {
+                    public static partial class images 
+                    {
+                        public static class Assets
+                        {
+                        }
+                    }
+                    public static partial class minified 
+                    {
+                        public static partial class images 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string jquery_ui_min_css = "~/Content/themes/base/minified/jquery-ui.min.css";
+                            public const string jquery_ui_accordion_min_css = "~/Content/themes/base/minified/jquery.ui.accordion.min.css";
+                            public const string jquery_ui_autocomplete_min_css = "~/Content/themes/base/minified/jquery.ui.autocomplete.min.css";
+                            public const string jquery_ui_button_min_css = "~/Content/themes/base/minified/jquery.ui.button.min.css";
+                            public const string jquery_ui_core_min_css = "~/Content/themes/base/minified/jquery.ui.core.min.css";
+                            public const string jquery_ui_datepicker_min_css = "~/Content/themes/base/minified/jquery.ui.datepicker.min.css";
+                            public const string jquery_ui_dialog_min_css = "~/Content/themes/base/minified/jquery.ui.dialog.min.css";
+                            public const string jquery_ui_menu_min_css = "~/Content/themes/base/minified/jquery.ui.menu.min.css";
+                            public const string jquery_ui_progressbar_min_css = "~/Content/themes/base/minified/jquery.ui.progressbar.min.css";
+                            public const string jquery_ui_resizable_min_css = "~/Content/themes/base/minified/jquery.ui.resizable.min.css";
+                            public const string jquery_ui_selectable_min_css = "~/Content/themes/base/minified/jquery.ui.selectable.min.css";
+                            public const string jquery_ui_slider_min_css = "~/Content/themes/base/minified/jquery.ui.slider.min.css";
+                            public const string jquery_ui_spinner_min_css = "~/Content/themes/base/minified/jquery.ui.spinner.min.css";
+                            public const string jquery_ui_tabs_min_css = "~/Content/themes/base/minified/jquery.ui.tabs.min.css";
+                            public const string jquery_ui_theme_min_css = "~/Content/themes/base/minified/jquery.ui.theme.min.css";
+                            public const string jquery_ui_tooltip_min_css = "~/Content/themes/base/minified/jquery.ui.tooltip.min.css";
+                        }
+                    }
+                    public static class Assets
+                    {
+                        public const string jquery_ui_css = "~/Content/themes/base/jquery-ui.css";
+                        public const string jquery_ui_accordion_css = "~/Content/themes/base/jquery.ui.accordion.css";
+                        public const string jquery_ui_all_css = "~/Content/themes/base/jquery.ui.all.css";
+                        public const string jquery_ui_autocomplete_css = "~/Content/themes/base/jquery.ui.autocomplete.css";
+                        public const string jquery_ui_base_css = "~/Content/themes/base/jquery.ui.base.css";
+                        public const string jquery_ui_button_css = "~/Content/themes/base/jquery.ui.button.css";
+                        public const string jquery_ui_core_css = "~/Content/themes/base/jquery.ui.core.css";
+                        public const string jquery_ui_datepicker_css = "~/Content/themes/base/jquery.ui.datepicker.css";
+                        public const string jquery_ui_dialog_css = "~/Content/themes/base/jquery.ui.dialog.css";
+                        public const string jquery_ui_menu_css = "~/Content/themes/base/jquery.ui.menu.css";
+                        public const string jquery_ui_progressbar_css = "~/Content/themes/base/jquery.ui.progressbar.css";
+                        public const string jquery_ui_resizable_css = "~/Content/themes/base/jquery.ui.resizable.css";
+                        public const string jquery_ui_selectable_css = "~/Content/themes/base/jquery.ui.selectable.css";
+                        public const string jquery_ui_slider_css = "~/Content/themes/base/jquery.ui.slider.css";
+                        public const string jquery_ui_spinner_css = "~/Content/themes/base/jquery.ui.spinner.css";
+                        public const string jquery_ui_tabs_css = "~/Content/themes/base/jquery.ui.tabs.css";
+                        public const string jquery_ui_theme_css = "~/Content/themes/base/jquery.ui.theme.css";
+                        public const string jquery_ui_tooltip_css = "~/Content/themes/base/jquery.ui.tooltip.css";
+                    }
+                }
+                public static class Assets
+                {
                 }
             }
             public static class Assets

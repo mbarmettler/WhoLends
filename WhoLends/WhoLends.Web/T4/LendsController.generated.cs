@@ -28,9 +28,6 @@ namespace WhoLends.Controllers
     public partial class LendsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public LendsController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected LendsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -77,12 +74,6 @@ namespace WhoLends.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult DeleteConfirmed()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public LendsController Actions { get { return MVC.Lends; } }
@@ -102,10 +93,8 @@ namespace WhoLends.Controllers
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string Create = "Create";
-            public readonly string CreateLendObject = "CreateLendObject";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
-            public readonly string DeleteConfirmed = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -114,10 +103,8 @@ namespace WhoLends.Controllers
             public const string Index = "Index";
             public const string Details = "Details";
             public const string Create = "Create";
-            public const string CreateLendObject = "CreateLendObject";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
-            public const string DeleteConfirmed = "Delete";
         }
 
 
@@ -127,7 +114,7 @@ namespace WhoLends.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
-            public readonly string id = "id";
+            public readonly string lendId = "lendId";
         }
         static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -135,7 +122,7 @@ namespace WhoLends.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Create
         {
-            public readonly string lend = "lend";
+            public readonly string lendVM = "lendVM";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -143,8 +130,8 @@ namespace WhoLends.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Edit
         {
-            public readonly string id = "id";
-            public readonly string lend = "lend";
+            public readonly string lendId = "lendId";
+            public readonly string viewModel = "viewModel";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -152,15 +139,7 @@ namespace WhoLends.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Delete
         {
-            public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_DeleteConfirmed s_params_DeleteConfirmed = new ActionParamsClass_DeleteConfirmed();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeleteConfirmed DeleteConfirmedParams { get { return s_params_DeleteConfirmed; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeleteConfirmed
-        {
-            public readonly string id = "id";
+            public readonly string lendId = "lendId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -201,14 +180,14 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int lendId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Details(int? id)
+        public override System.Web.Mvc.ActionResult Details(int lendId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DetailsOverride(callInfo, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendId", lendId);
+            DetailsOverride(callInfo, lendId);
             return callInfo;
         }
 
@@ -224,73 +203,50 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Data.Lend lend);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendViewModel lendVM);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(WhoLends.Data.Lend lend)
+        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendViewModel lendVM)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lend", lend);
-            CreateOverride(callInfo, lend);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendVM", lendVM);
+            CreateOverride(callInfo, lendVM);
             return callInfo;
         }
 
         [NonAction]
-        partial void CreateLendObjectOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int lendId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult CreateLendObject()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateLendObject);
-            CreateLendObjectOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(int? id)
+        public override System.Web.Mvc.ActionResult Edit(int lendId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            EditOverride(callInfo, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendId", lendId);
+            EditOverride(callInfo, lendId);
             return callInfo;
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.Data.Lend lend);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendViewModel viewModel);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(WhoLends.Data.Lend lend)
+        public override System.Web.Mvc.ActionResult Edit(WhoLends.ViewModels.LendViewModel viewModel)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lend", lend);
-            EditOverride(callInfo, lend);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
+            EditOverride(callInfo, viewModel);
             return callInfo;
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int lendId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(int? id)
+        public override System.Web.Mvc.ActionResult Delete(int lendId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DeleteOverride(callInfo, id);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void DeleteConfirmedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult DeleteConfirmed(int id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            DeleteConfirmedOverride(callInfo, id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendId", lendId);
+            DeleteOverride(callInfo, lendId);
             return callInfo;
         }
 
