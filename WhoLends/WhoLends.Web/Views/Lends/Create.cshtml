@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LenderUserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.UserId, new SelectList(Model.UserList, "id", "UserName", "--select--"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.LenderUserId, new SelectList(Model.UserList, "id", "UserName", "--select--"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LenderUserId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,6 +42,14 @@
                 @*@Html.Editor(model => model.From, new { @class = "input-xlarge" })*@
 
                 @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
         </div>
 

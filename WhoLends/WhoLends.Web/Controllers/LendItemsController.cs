@@ -124,6 +124,16 @@ namespace WhoLends.Controllers
         private Data.LendItem LoadModel(LendItemViewModel viewModel)
         {
             var model = _lendItemRepository.GetLendItemByID(viewModel.Id) ?? new Data.LendItem();
+
+            model.Id = viewModel.Id;
+            model.Description = viewModel.Description;
+            model.Name = viewModel.Name;
+            model.CreatedAt = viewModel.CreatedAt;
+            model.UserId = viewModel.UserId;
+            model.Quantity = viewModel.Quantity;
+            model.Condition = viewModel.Condition;
+            model.CustomerId = viewModel.CustomerId;
+
             return model;
         }
 

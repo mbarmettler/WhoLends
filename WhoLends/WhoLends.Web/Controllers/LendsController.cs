@@ -73,6 +73,8 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
+                lendVM.CreatedAt = DateTime.Now;
+
                 var model = LoadModel(lendVM);
                 _lendRepository.InsertLend(model);
                 _lendRepository.Save();
@@ -129,6 +131,15 @@ namespace WhoLends.Controllers
         private Data.Lend LoadModel(LendViewModel viewModel)
         {
             var model = _lendRepository.GetLendByID(viewModel.Id) ?? new Data.Lend();
+
+            model.Id = viewModel.Id;
+            model.From = viewModel.From;
+            model.To = viewModel.To;
+            model.CreatedAt = viewModel.CreatedAt;
+            model.LendItemId = viewModel.LendItemId;
+            model.UserId = viewModel.UserId;
+            model.LenderUserId = viewModel.LenderUserId;
+
             return model;
         }
 

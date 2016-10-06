@@ -1,4 +1,6 @@
-﻿@using WhoLends.ViewModels;
+﻿
+@using WhoLends.ViewModels;
+@using MvcJqGrid
 
 @model LendViewModel
 
@@ -34,7 +36,7 @@
                 </p>
                 <p>
                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                    @Html.ActionLink("erfassen", "CreateLendObject") &raquo;
+                    @Html.ActionLink("erfassen", "../LendItems/Create") &raquo;
                </p>
             </div>
         </div>
@@ -53,7 +55,7 @@
 <h3>Ausgeliehene Gegenstände</h3>
 
 <div>
-    @(Html.Grid("LendItemsList")
+    @(Html.Grid("LendList")
     .AddColumn(new Column("Id")
         .SetWidth(40))
     .AddColumn(new Column("Ausleiher"))
@@ -65,7 +67,7 @@
          .SetWidth(80))
     .AddColumn(new Column("Erstellt von")
         .SetWidth(80))
-    .SetUrl("/Lend/List")
+    .SetUrl("/Lends/List")
     .SetAutoWidth(true)
     .SetRowNum(10)
     .SetRowList(new int[] { 10, 15, 20, 50 })
