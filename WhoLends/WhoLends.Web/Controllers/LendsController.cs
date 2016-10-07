@@ -160,13 +160,13 @@ namespace WhoLends.Controllers
                              cell = new[]
                              {
                                 c.Id.ToString(),
-                                c.LenderUserId.ToString(),
+                                c.LendUser.UserName.ToString(),
                                 c.From.ToShortDateString(),
                                 c.To.ToString(),
                                 c.LendItem.Name.ToString(),
                                 c.LendItem.CustomerId.ToString(),
                                 c.CreatedAt.ToString(),
-                                c.UserId.ToString()
+                                c.User.UserName.ToString()
                              }
                          }).ToArray()
             };

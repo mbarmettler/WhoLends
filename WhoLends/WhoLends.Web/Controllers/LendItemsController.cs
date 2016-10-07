@@ -158,7 +158,7 @@ namespace WhoLends.Controllers
                                 c.Name,
                                 c.Description,
                                 c.CreatedAt.ToString(),
-                                c.UserId.ToString()
+                                c.User.UserName.ToString()
                              }
                          }).ToArray()
             };
