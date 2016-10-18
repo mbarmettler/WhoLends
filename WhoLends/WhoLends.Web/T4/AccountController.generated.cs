@@ -261,9 +261,17 @@ namespace WhoLends.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string ForgotPassword = "ForgotPassword";
+                public readonly string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
                 public readonly string Login = "Login";
+                public readonly string Register = "Register";
+                public readonly string ResetPassword = "ResetPassword";
             }
+            public readonly string ForgotPassword = "~/Views/Account/ForgotPassword.cshtml";
+            public readonly string ForgotPasswordConfirmation = "~/Views/Account/ForgotPasswordConfirmation.cshtml";
             public readonly string Login = "~/Views/Account/Login.cshtml";
+            public readonly string Register = "~/Views/Account/Register.cshtml";
+            public readonly string ResetPassword = "~/Views/Account/ResetPassword.cshtml";
         }
     }
 

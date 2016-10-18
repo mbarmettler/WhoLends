@@ -74,6 +74,12 @@ namespace WhoLends.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult List()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public LendsController Actions { get { return MVC.Lends; } }
@@ -95,6 +101,7 @@ namespace WhoLends.Controllers
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+            public readonly string List = "List";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -105,6 +112,7 @@ namespace WhoLends.Controllers
             public const string Create = "Create";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
+            public const string List = "List";
         }
 
 
@@ -140,6 +148,14 @@ namespace WhoLends.Controllers
         public class ActionParamsClass_Delete
         {
             public readonly string lendId = "lendId";
+        }
+        static readonly ActionParamsClass_List s_params_List = new ActionParamsClass_List();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_List ListParams { get { return s_params_List; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_List
+        {
+            public readonly string gridSettings = "gridSettings";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -247,6 +263,18 @@ namespace WhoLends.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendId", lendId);
             DeleteOverride(callInfo, lendId);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ListOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, MvcJqGrid.GridSettings gridSettings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult List(MvcJqGrid.GridSettings gridSettings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.List);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "gridSettings", gridSettings);
+            ListOverride(callInfo, gridSettings);
             return callInfo;
         }
 

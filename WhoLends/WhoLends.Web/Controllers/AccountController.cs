@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WhoLends.ViewModels;
+using WhoLends.Web.DAL;
 using WhoLends.Data;
 
 namespace WhoLends.Controllers
@@ -18,9 +16,11 @@ namespace WhoLends.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserRepository _userRepository;
 
         public AccountController()
         {
+            this._userRepository = new UserRepository(new Entities());
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -76,7 +76,7 @@ namespace WhoLends.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);       
             switch (result)
             {
                 case SignInStatus.Success:
@@ -158,11 +158,22 @@ namespace WhoLends.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                    //creating new User in database
+                    User dddd = new Data.User();
+                    dddd.UserName = user.UserName;
+                    dddd.Email = user.Email;
+                    dddd.PasswordHash = user.PasswordHash;
+                    dddd.RoleId = 2;
+
+                    _userRepository.InsertUser(dddd);
+                    _userRepository.Save();
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
 
                     return RedirectToAction("Index", "Home");
                 }
