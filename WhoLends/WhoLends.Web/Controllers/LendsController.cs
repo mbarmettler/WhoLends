@@ -74,6 +74,8 @@ namespace WhoLends.Controllers
             if (ModelState.IsValid)
             {
                 lendVM.CreatedAt = DateTime.Now;
+                
+                //get currently logged in user
 
                 var model = LoadModel(lendVM);
                 _lendRepository.InsertLend(model);
