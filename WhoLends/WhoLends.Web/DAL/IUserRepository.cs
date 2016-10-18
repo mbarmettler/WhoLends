@@ -11,6 +11,7 @@ namespace WhoLends.Web.DAL
     {
         IEnumerable<User> GetUsers();
         User GetUserById(int userId);
+        User GetUserByEmail(string email);
         void InsertUser(User user);
         void DeleteUser(int userId);
         void UpdateUser(User user);

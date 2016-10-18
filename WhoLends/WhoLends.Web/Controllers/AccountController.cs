@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using WhoLends.ViewModels;
 using WhoLends.Web.DAL;
 using WhoLends.Data;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WhoLends.Controllers
 {
@@ -18,9 +19,22 @@ namespace WhoLends.Controllers
         private ApplicationUserManager _userManager;
         private IUserRepository _userRepository;
 
+        /// <summary>
+        /// Application DB context
+        /// </summary>
+        protected ApplicationDbContext ApplicationDbContext { get; set; }
+
+        /// <summary>
+        /// User manager - attached to application DB context
+        /// </summary>
+        protected UserManager<ApplicationUser> UserManager2 { get; set; }
+
         public AccountController()
         {
             this._userRepository = new UserRepository(new Entities());
+
+            this.ApplicationDbContext = new ApplicationDbContext();
+            UserManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext));
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)

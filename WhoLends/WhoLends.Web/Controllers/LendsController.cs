@@ -8,6 +8,9 @@ using WhoLends.Data;
 using System.Data;
 using MvcJqGrid;
 using System.Linq;
+using Microsoft.AspNet.Identity;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace WhoLends.Controllers
 {
@@ -74,10 +77,15 @@ namespace WhoLends.Controllers
             if (ModelState.IsValid)
             {
                 lendVM.CreatedAt = DateTime.Now;
-                
-                //get currently logged in user
 
+                //get currently logged in user
+            
+                ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+                var dbUser = _userRepository.GetUserByEmail(Auser.Email);
+                
                 var model = LoadModel(lendVM);
+                model.UserId = dbUser.Id;
+
                 _lendRepository.InsertLend(model);
                 _lendRepository.Save();
                 return RedirectToAction("Index");

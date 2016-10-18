@@ -26,6 +26,11 @@ namespace WhoLends.Web.DAL
             return this.context.User.Find(userId);
         }
 
+        public User GetUserByEmail(string email)
+        {
+            return GetUsers().Where(user => user.Email.Equals(email)).FirstOrDefault();
+        }
+
         public void UpdateUser(User user)
         {
             this.context.Entry(user).State = EntityState.Modified;
