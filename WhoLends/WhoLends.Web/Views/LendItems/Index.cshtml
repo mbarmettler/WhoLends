@@ -1,6 +1,5 @@
-﻿
-@using WhoLends.ViewModels;
-@using MvcJqGrid
+﻿@using WhoLends.ViewModels;
+@using GridMvc.Html
 
 @model LendItemViewModel
 
@@ -19,20 +18,17 @@
 @* jquery grid demo http://www.ok-soft-gmbh.com/jqGrid/Lince81.htm *@
 
 <div>
-    @(Html.Grid("LendItemsList")
-    .AddColumn(new Column("Id")
-        .SetWidth(40))
-    .AddColumn(new Column("interne ID"))
-    .AddColumn(new Column("Name"))
-    .AddColumn(new Column("Beschreibung"))
-    .AddColumn(new Column("Erstellt am")
-         .SetWidth(80))
-    .AddColumn(new Column("Erstellt von")
-        .SetWidth(80))
-    .SetUrl("/LendItems/List")
-    .SetAutoWidth(true)
-    .SetRowNum(10)
-    .SetRowList(new int[] { 10, 15, 20, 50 })
-    .SetViewRecords(true)
-    .SetPager("pager"))
+    @Html.Grid(Model.LendItemList).Columns(
+    columns =>
+    {
+        columns.Add(c => c.Id).Titled("ID");
+        columns.Add(c => c.CustomerId).Titled("interne ID").Filterable(true);
+        columns.Add(c => c.Name).Titled("Name").Filterable(true);
+        columns.Add(c => c.Description).Titled("Beschreibung").Filterable(true);
+        columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
+        //columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
+        columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
+        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
+        columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
+    }).WithPaging(3).Sortable(true)
 </div>

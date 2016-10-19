@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using WhoLends.Data;
 
 namespace WhoLends.ViewModels
@@ -28,13 +25,19 @@ namespace WhoLends.ViewModels
         public LendItemViewModel SelectedLendItem { get; set; }
 
         public int UserId { get; set; }
+
         [Required]
         public int LenderUserId { get; set; }
 
         public User SelectedLendUser { get; set; }
 
-        public IEnumerable<Data.LendItem> LendItemsList { get; set; }
-        public IEnumerable<Data.User> UserList { get; set; }   
+        public LendReturn LendLendReturn { get; set; }
 
+        public IEnumerable<Data.LendItem> LendItemsList { get; set; }
+        public IEnumerable<User> UserList { get; set; }
+        public IEnumerable<LendViewModel> LendList { get; set; }
+
+        [Display(Name = "Ersteller")]
+        public string CurrentUserwithID { get; set; }
     }
 }

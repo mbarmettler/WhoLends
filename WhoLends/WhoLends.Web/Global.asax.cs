@@ -11,7 +11,7 @@ namespace WhoLends.Web
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);            
-            AutoMapperConfig.ConfigureMappers();
+            AutoMapperConfig.ConfigureMappers();                          
         }
     }
 }

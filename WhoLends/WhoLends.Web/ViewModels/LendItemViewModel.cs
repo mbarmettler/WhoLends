@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using WhoLends.Data;
 
 namespace WhoLends.ViewModels
@@ -35,6 +32,13 @@ namespace WhoLends.ViewModels
 
         public int UserId { get; set; }
 
+        public User CreatedBy { get; set; }
+
         public System.DateTime CreatedAt { get; set; }
+
+        public IEnumerable<LendItemViewModel> LendItemList { get; set; }
+
+        [Display(Name = "Ersteller")]
+        public string CurrentUserwithID { get; set; }
     }
 }

@@ -1,6 +1,5 @@
-﻿
-@using WhoLends.ViewModels;
-@using MvcJqGrid
+﻿@using WhoLends.ViewModels;
+@using GridMvc.Html
 
 @model LendViewModel
 
@@ -19,10 +18,7 @@
                     Einen neuen Gegenstand ausleihen
                 </p>
                 <p>
-                    <a class="btn btn-default">
-                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                        @Html.ActionLink("erfassen", "Create") &raquo;
-                    </a>
+                    @Html.ActionLink(" erfassen", "Create", null, new { @class = "btn btn-default" })
                 </p>
             </div>
         </div>
@@ -35,9 +31,8 @@
                     Einen neuen Gegenstand zum Ausleihen
                 </p>
                 <p>
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                    @Html.ActionLink("erfassen", "../LendItems/Create") &raquo;
-               </p>
+                    @Html.ActionLink(" erfassen", "../LendItems/Create", null, new { @class = "btn btn-default" })
+                </p>
             </div>
         </div>
     </div>
@@ -55,27 +50,19 @@
 <h3>Ausgeliehene Gegenstände</h3>
 
 <div>
-    @(Html.Grid("LendList")
-    .AddColumn(new Column("Id")
-        .SetWidth(40))
-    .AddColumn(new Column("Ausleiher")
-        .SetWidth(40))
-    .AddColumn(new Column("von")
-        .SetWidth(60))
-    .AddColumn(new Column("bis")
-        .SetWidth(60))
-    .AddColumn(new Column("Gegenstand Name")
-        .SetWidth(120))
-    .AddColumn(new Column("interne ID")
-        .SetWidth(60))
-    .AddColumn(new Column("Erstellt am")
-         .SetWidth(60))
-    .AddColumn(new Column("Erstellt von")
-        .SetWidth(80))
-    .SetUrl("/Lends/List")
-    .SetAutoWidth(true)
-    .SetRowNum(10)
-    .SetRowList(new int[] { 10, 15, 20, 50 })
-    .SetViewRecords(true)
-    .SetPager("pager"))
+    @Html.Grid(Model.LendList).Columns(
+    columns =>
+    {
+        columns.Add(c => c.Id).Titled("ID");
+        //columns.Add(c => c.LendUser.UserName).Titled("Ausleiher").Filterable(true);
+        columns.Add(c => c.From).Titled("Von").Filterable(true);
+        columns.Add(c => c.To).Titled("Bis").Filterable(true);
+        //columns.Add(c => c.LendItem.Name).Titled("Gegenstand Name").Filterable(true);
+        //columns.Add(c => c.LendItem.CustomerId).Titled("interne ID").Filterable(true);
+        columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
+        //columns.Add(c => c.User.UserName).Titled("Erstellt von").Filterable(true);
+        columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
+        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
+        columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
+    }).WithPaging(3).Sortable(true)    
 </div>

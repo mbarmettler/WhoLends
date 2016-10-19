@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Net;
 using System.Web.Mvc;
 using WhoLends.ViewModels;
 using WhoLends.Web.Converters;
 using WhoLends.Web.DAL;
 using WhoLends.Data;
 using System.Data;
-using MvcJqGrid;
-using System.Linq;
 using Microsoft.AspNet.Identity;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WhoLends.Controllers
 {
@@ -24,7 +23,7 @@ namespace WhoLends.Controllers
         {
             this._lendRepository = new LendRepository(new Entities());
             this._lendItemRepository = new LendItemRepository(new Entities());
-            this._userRepository = new UserRepository(new Entities());
+            this._userRepository = new UserRepository(new Entities());            
         }
 
         public LendsController(ILendRepository lendrepository)
@@ -36,13 +35,31 @@ namespace WhoLends.Controllers
         public virtual ActionResult Index()
         {
             var viewModel = new LendViewModel();
+
+            List<LendViewModel> lItems = new List<LendViewModel>();
+            foreach (var l in _lendRepository.GetLends())
+            {
+                var item = new LendViewModel();
+                item.Id = l.Id;
+                item.From = l.From;
+                item.To = l.To;
+                item.CreatedAt = l.CreatedAt;
+                item.UserId = l.UserId;
+                item.LendItemId = l.LendItemId;
+                item.LenderUserId = l.LendUser.Id;
+
+                lItems.Add(item);
+            }
+
+            viewModel.LendList = lItems.AsEnumerable();
+
             return View(viewModel);
         }
 
         // GET: Lends/Details/5
-        public virtual ActionResult Details(int lendId)
+        public virtual ActionResult Details(int Id)
         {
-            var model = _lendRepository.GetLendByID(lendId);
+            var model = _lendRepository.GetLendByID(Id);
             if (model == null)
             {
                 return RedirectToAction(Actions.Index());
@@ -56,12 +73,16 @@ namespace WhoLends.Controllers
         // GET: Lends/Create
         public virtual ActionResult Create()
         {
+            ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var dbUser = _userRepository.GetUserByEmail(Auser.Email);
+
             var viewmodel = new LendViewModel()
             {
                 //todo
                 //check lenditems quanitty / availability
                 LendItemsList = _lendItemRepository.GetLendItems(),
-                UserList = _userRepository.GetUsers()
+                UserList = _userRepository.GetUsers(),                      
+                CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
             };
 
             return View(viewmodel);
@@ -78,11 +99,9 @@ namespace WhoLends.Controllers
             {
                 lendVM.CreatedAt = DateTime.Now;
 
-                //get currently logged in user
-            
-                ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                var dbUser = _userRepository.GetUserByEmail(Auser.Email);
-                
+                //get currently logged in user               
+                var dbUser = Web.Helpers.General.GetCurrentUser(_userRepository);
+
                 var model = LoadModel(lendVM);
                 model.UserId = dbUser.Id;
 
@@ -96,9 +115,9 @@ namespace WhoLends.Controllers
 
 
         // GET: Lends/Edit/5
-        public virtual ActionResult Edit(int lendId)
+        public virtual ActionResult Edit(int Id)
         {
-            var model = _lendRepository.GetLendByID(lendId);
+            var model = _lendRepository.GetLendByID(Id);
             if (model == null)
             {
                 return RedirectToAction(Actions.Index());
@@ -122,18 +141,18 @@ namespace WhoLends.Controllers
         // POST: Lends/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(int lendId)
+        public virtual ActionResult Delete(int Id)
         {
             try
             {
-                var model = _lendRepository.GetLendByID(lendId);
-                _lendRepository.DeleteLend(lendId);
+                var model = _lendRepository.GetLendByID(Id);
+                _lendRepository.DeleteLend(Id);
                 _lendRepository.Save();
             }
             catch (DataException /* dex */)
             {
                 //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
-                return RedirectToAction("Delete", new { id = lendId, saveChangesError = true });
+                return RedirectToAction("Delete", new { id = Id, saveChangesError = true });
             }
             return RedirectToAction("Index");            
         }
@@ -151,37 +170,6 @@ namespace WhoLends.Controllers
             model.LenderUserId = viewModel.LenderUserId;
 
             return model;
-        }
-
-        public virtual ActionResult List(GridSettings gridSettings)
-        {
-            var lends = _lendRepository.GetLends();
-            int totalitems = lends.Count();
-            var jsonData = new
-            {
-                total = totalitems / gridSettings.PageSize + 1,
-                page = gridSettings.PageIndex,
-                records = totalitems,
-                rows = (
-                         from c in lends
-                         select new
-                         {
-                             id = c.Id,
-                             cell = new[]
-                             {
-                                c.Id.ToString(),
-                                c.LendUser.UserName.ToString(),
-                                c.From.ToShortDateString(),
-                                c.To.ToString(),
-                                c.LendItem.Name.ToString(),
-                                c.LendItem.CustomerId.ToString(),
-                                c.CreatedAt.ToString(),
-                                c.User.UserName.ToString()
-                             }
-                         }).ToArray()
-            };
-
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
     }
 }
