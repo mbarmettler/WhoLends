@@ -62,7 +62,10 @@
         columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
         columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
         columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
-        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
-        columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
+        if (Model.CurrentUser.RoleId == 1)
+        {
+            columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
+            columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
+        }
     }).WithPaging(3).Sortable(true)    
 </div>

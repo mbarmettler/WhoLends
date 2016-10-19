@@ -41,5 +41,7 @@ namespace WhoLends.ViewModels
 
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
+
+        public User CurrentUser { get; set; }
     }
 }

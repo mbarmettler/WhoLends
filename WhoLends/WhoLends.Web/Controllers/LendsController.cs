@@ -23,18 +23,21 @@ namespace WhoLends.Controllers
         {
             this._lendRepository = new LendRepository(new Entities());
             this._lendItemRepository = new LendItemRepository(new Entities());
-            this._userRepository = new UserRepository(new Entities());            
+            this._userRepository = new UserRepository(new Entities());
         }
 
-        public LendsController(ILendRepository lendrepository)
+        public LendsController(ILendRepository lendrepository, ILendItemRepository lenditemrepository, IUserRepository userrepository)
         {
             this._lendRepository = lendrepository;
+            this._lendItemRepository = lenditemrepository;
+            this._userRepository = userrepository;           
         }
 
         // GET: Lends
         public virtual ActionResult Index()
         {
             var viewModel = new LendViewModel();
+            viewModel.CurrentUser = Web.Helpers.General.GetCurrentUser(_userRepository);
 
             List<LendViewModel> lItems = new List<LendViewModel>();
             foreach (var l in _lendRepository.GetLends())
@@ -50,6 +53,7 @@ namespace WhoLends.Controllers
                 item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
                 item.SelectedLendItem = _lendItemRepository.GetLendItemByID(item.LendItemId);
                 item.CreatedBy = _userRepository.GetUserById(item.UserId);
+
 
                 lItems.Add(item);
             }
