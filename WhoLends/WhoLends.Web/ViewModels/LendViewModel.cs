@@ -22,9 +22,11 @@ namespace WhoLends.ViewModels
         [Required]
         public int LendItemId { get; set; }
 
-        public LendItemViewModel SelectedLendItem { get; set; }
+        public Data.LendItem SelectedLendItem { get; set; }
 
         public int UserId { get; set; }
+
+        public User CreatedBy { get; set; }
 
         [Required]
         public int LenderUserId { get; set; }

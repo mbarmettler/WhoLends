@@ -46,6 +46,7 @@ namespace WhoLends.Controllers
                 item.CustomerId = l.CustomerId;
                 item.Quantity = l.Quantity;                
                 item.UserId = l.UserId;
+                item.CreatedBy = _userRepository.GetUserById(item.UserId);
 
                 lItems.Add(item);
             }

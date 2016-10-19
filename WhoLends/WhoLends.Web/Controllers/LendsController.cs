@@ -47,6 +47,9 @@ namespace WhoLends.Controllers
                 item.UserId = l.UserId;
                 item.LendItemId = l.LendItemId;
                 item.LenderUserId = l.LendUser.Id;
+                item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
+                item.SelectedLendItem = _lendItemRepository.GetLendItemByID(item.LendItemId);
+                item.CreatedBy = _userRepository.GetUserById(item.UserId);
 
                 lItems.Add(item);
             }

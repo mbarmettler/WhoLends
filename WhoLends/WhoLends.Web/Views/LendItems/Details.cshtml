@@ -22,7 +22,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
@@ -30,7 +29,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
@@ -38,7 +36,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.Quantity)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Quantity)
         </dd>
@@ -46,11 +43,23 @@
         <dt>
             @Html.DisplayNameFor(model => model.Condition)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Condition)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy.UserName)
+        </dd>
     </dl>
     </div>
 <p>

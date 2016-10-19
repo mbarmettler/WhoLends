@@ -326,6 +326,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LendItemsController.cs" />
     <Compile Include="Controllers\LendsController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Converters\Converter.cs" />
     <Compile Include="DAL\ILendItemRepository.cs" />
     <Compile Include="DAL\ILendRepository.cs" />
@@ -363,6 +364,7 @@
     <Compile Include="ViewModels\IdentityModels.cs" />
     <Compile Include="ViewModels\LendItemViewModel.cs" />
     <Compile Include="ViewModels\LendViewModel.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -392,6 +394,9 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
