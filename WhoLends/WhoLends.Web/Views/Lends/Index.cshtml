@@ -8,69 +8,72 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<br />
-<div class="row">
-    <div class="col-md-4">
-        <div class="thumbnail">
-            <div class="caption">
-                <h3>Gegenstand ausleihen</h3>
-                <p>
-                    Einen neuen Gegenstand ausleihen
-                </p>
-                <p>
-                    @Html.ActionLink(" erfassen", "Create", null, new { @class = "btn btn-default" })
-                </p>
+@if (Request.IsAuthenticated)
+{
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Gegenstand ausleihen</h3>
+                    <p>
+                        Einen neuen Gegenstand ausleihen
+                    </p>
+                    <p>
+                        @Html.ActionLink(" erfassen", "Create", null, new { @class = "btn btn-default" })
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Ausleihgegenstand</h3>
+                    <p>
+                        Einen neuen Gegenstand zum Ausleihen
+                    </p>
+                    <p>
+                        @Html.ActionLink(" erfassen", "../LendItems/Create", null, new { @class = "btn btn-default" })
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>Web Hosting</h3>
+                    <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="thumbnail">
-            <div class="caption">
-                <h3>Ausleihgegenstand</h3>
-                <p>
-                    Einen neuen Gegenstand zum Ausleihen
-                </p>
-                <p>
-                    @Html.ActionLink(" erfassen", "../LendItems/Create", null, new { @class = "btn btn-default" })
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="thumbnail">
-            <div class="caption">
-                <h3>Web Hosting</h3>
-                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-                <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
-<h3>Ausgeliehene Gegenstände</h3>
+    <br />
+    <h3>Ausgeliehene Gegenstände</h3>
 
-<div>
-    @Html.Grid(Model.LendList).Columns(
-    columns =>
-    {
-        columns.Add(c => c.Id).Titled("ID");
-        columns.Add(c => c.SelectedLendUser.UserName).Titled("Ausleiher").Filterable(true);
-        columns.Add(c => c.From).Titled("Von").Filterable(true);
-        columns.Add(c => c.To).Titled("Bis").Filterable(true);
-        columns.Add(c => c.SelectedLendItem.Name).Titled("Gegenstand Name").Filterable(true);
-        columns.Add(c => c.SelectedLendItem.CustomerId).Titled("interne ID").Filterable(true);
-        columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
-        columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
-        columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
-        if (Model.CurrentUser.RoleId == 1)
-        {
-            columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
-            columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
-            //ToDo - Ausleihung abschliessen (LendReturn)
-        }
-        if (Model.LendLendReturn == null)
-        {
-            columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Return", "../LendReturns/Create", new { id = c.Id }));
-        }
-    }).WithPaging(4).Sortable(true)    
-</div>
+    <div>
+        @Html.Grid(Model.LendList).Columns(
+            columns =>
+            {
+                columns.Add(c => c.Id).Titled("ID");
+                columns.Add(c => c.SelectedLendUser.UserName).Titled("Ausleiher").Filterable(true);
+                columns.Add(c => c.From).Titled("Von").Filterable(true);
+                columns.Add(c => c.To).Titled("Bis").Filterable(true);
+                columns.Add(c => c.SelectedLendItem.Name).Titled("Gegenstand Name").Filterable(true);
+                columns.Add(c => c.SelectedLendItem.CustomerId).Titled("interne ID").Filterable(true);
+                columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
+                columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
+                columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
+                if (Model.CurrentUser.RoleId == 1)
+                {
+                    columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
+                    columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
+                    //ToDo - Ausleihung abschliessen (LendReturn)
+                }
+                if (Model.LendLendReturn == null)
+                {
+                    columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Return", "../LendReturns/Create", new { id = c.Id }));
+                }
+            }).WithPaging(4).Sortable(true)    
+    </div>
+}
