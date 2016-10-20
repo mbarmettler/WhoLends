@@ -183,8 +183,8 @@
       <HintPath>..\packages\T4MVCExtensions.3.17.5\lib\net40\T4MVCExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -326,13 +326,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LendItemsController.cs" />
+    <Compile Include="Controllers\LendReturnsController.cs" />
     <Compile Include="Controllers\LendsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Converters\Converter.cs" />
     <Compile Include="DAL\ILendItemRepository.cs" />
     <Compile Include="DAL\ILendRepository.cs" />
+    <Compile Include="DAL\ILendReturnRepository.cs" />
     <Compile Include="DAL\Implementations\LendItemRepository.cs" />
     <Compile Include="DAL\Implementations\LendRepository.cs" />
+    <Compile Include="DAL\Implementations\LendReturnRepository.cs" />
     <Compile Include="DAL\Implementations\UserRepository.cs" />
     <Compile Include="DAL\IUserRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -364,6 +367,7 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\IdentityModels.cs" />
     <Compile Include="ViewModels\LendItemViewModel.cs" />
+    <Compile Include="ViewModels\LendReturnViewModel.cs" />
     <Compile Include="ViewModels\LendViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
@@ -398,6 +402,12 @@
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\LendItems\Delete.cshtml" />
+    <Content Include="Views\LendReturns\Create.cshtml" />
+    <Content Include="Views\LendReturns\Delete.cshtml" />
+    <Content Include="Views\LendReturns\Details.cshtml" />
+    <Content Include="Views\LendReturns\Edit.cshtml" />
+    <Content Include="Views\LendReturns\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
