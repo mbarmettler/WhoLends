@@ -16,7 +16,6 @@
         <AssociationConnector ManuallyRouted="false" Association="Model.FK_UserLend">
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_RoleUser" />
-        <AssociationConnector Association="Model.FK_LendLendReturn" />
         <AssociationConnector Association="Model.FK_LendUser" />
       </Diagram>
     </edmx:Diagrams>

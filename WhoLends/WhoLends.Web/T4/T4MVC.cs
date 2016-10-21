@@ -30,7 +30,9 @@ public static partial class MVC
     public static WhoLends.Controllers.AccountController Account = new WhoLends.Controllers.T4MVC_AccountController();
     public static WhoLends.Controllers.HomeController Home = new WhoLends.Controllers.T4MVC_HomeController();
     public static WhoLends.Controllers.LendItemsController LendItems = new WhoLends.Controllers.T4MVC_LendItemsController();
+    public static WhoLends.Web.Controllers.LendReturnsController LendReturns = new WhoLends.Web.Controllers.T4MVC_LendReturnsController();
     public static WhoLends.Controllers.LendsController Lends = new WhoLends.Controllers.T4MVC_LendsController();
+    public static WhoLends.Controllers.ManageController Manage = new WhoLends.Controllers.T4MVC_ManageController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -119,15 +121,8 @@ namespace Links
             public const string UrlPath = "~/Content/img";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
+            public static readonly string noimg_PNG = Url("noimg.PNG");
             public static readonly string rm_logo_jpg = Url("rm_logo.jpg");
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class jquery_jqGrid {
-            public const string UrlPath = "~/Content/jquery.jqGrid";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
-            public static readonly string ui_jqgrid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/ui.jqgrid.min.css") ? Url("ui.jqgrid.min.css") : Url("ui.jqgrid.css");
         }
     
         public static readonly string Site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/Site.min.css") ? Url("Site.min.css") : Url("Site.css");
@@ -271,13 +266,6 @@ namespace Links
             {
                 public static class Assets
                 {
-                }
-            }
-            public static partial class jquery_jqGrid 
-            {
-                public static class Assets
-                {
-                    public const string ui_jqgrid_css = "~/Content/jquery.jqGrid/ui.jqgrid.css";
                 }
             }
             public static partial class themes 

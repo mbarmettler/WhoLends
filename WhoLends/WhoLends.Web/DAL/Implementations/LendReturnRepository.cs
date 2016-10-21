@@ -28,8 +28,9 @@ namespace WhoLends.Web.DAL
 
         public LendReturn GetReturnByLendId(int lendId)
         {
-            var lend = context.Lend.Find(lendId);
-            return lend.LendReturn;
+            throw new NotImplementedException();
+            //var lend = context.Lend.Find(lendId);
+            //return lend.LendReturn;
         }
 
         public void InsertReturn(LendReturn _return)

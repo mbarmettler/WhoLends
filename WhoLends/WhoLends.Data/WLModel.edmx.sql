@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/21/2016 13:13:21
+-- Date Created: 10/21/2016 10:28:59
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -34,6 +34,9 @@ IF OBJECT_ID(N'[dbo].[FK_RoleUser]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_LendLendReturn]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_LendLendReturn];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LendUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendUser];
 GO
 
 -- --------------------------------------------------
@@ -108,7 +111,7 @@ GO
 -- Creating table 'LendReturn'
 CREATE TABLE [dbo].[LendReturn] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [LendId] nvarchar(max)  NOT NULL,
+    [LendId] int  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [CreatedAt] datetime  NOT NULL,
     [UserId] int  NOT NULL,

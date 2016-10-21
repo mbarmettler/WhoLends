@@ -52,10 +52,6 @@
       <End Role="Role" EntitySet="Role" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
-    <AssociationSet Name="FK_LendLendReturn" Association="Model.FK_LendLendReturn">
-      <End Role="Lend" EntitySet="Lend" />
-      <End Role="LendReturn" EntitySet="LendReturn" />
-    </AssociationSet>
     <AssociationSet Name="FK_LendUser" Association="Model.FK_LendUser">
       <End Role="User" EntitySet="User" />
       <End Role="Lend" EntitySet="Lend" />
@@ -88,7 +84,6 @@
     <Property Name="LendItemId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Model.FK_UserLend" FromRole="Lend" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="LendReturn" Relationship="Model.FK_LendLendReturn" FromRole="Lend" ToRole="LendReturn" />
     <NavigationProperty Name="LendUser" Relationship="Model.FK_LendUser" FromRole="Lend" ToRole="User" />
     <Property Name="LenderUserId" Type="Int32" Nullable="false" />
   </EntityType>
@@ -98,12 +93,11 @@
       <PropertyRef Name="LendId" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
-    <Property Name="LendId" Type="String" Nullable="false" />
+    <Property Name="LendId" Type="Int32" Nullable="false" />
     <Property Name="Description" Type="String" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Model.FK_UserLendReturn" FromRole="LendReturn" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Lend" Relationship="Model.FK_LendLendReturn" FromRole="LendReturn" ToRole="Lend" />
   </EntityType>
   <EnumType Name="Condition">
     <Member Name="Neuwertig" />
@@ -170,10 +164,6 @@
         <PropertyRef Name="RoleId" />
       </Dependent>
     </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_LendLendReturn">
-    <End Type="Model.Lend" Role="Lend" Multiplicity="1" />
-    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="0..1" />
   </Association>
   <Association Name="FK_LendUser">
     <End Type="Model.User" Role="User" Multiplicity="1" />

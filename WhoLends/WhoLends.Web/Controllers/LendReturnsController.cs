@@ -6,7 +6,7 @@ using WhoLends.Web.DAL;
 
 namespace WhoLends.Web.Controllers
 {
-    public class LendReturnsController : Controller
+    public partial class LendReturnsController : Controller
     {
         private ILendRepository _lendRepository;
         private ILendItemRepository _lendItemRepository;
@@ -22,14 +22,14 @@ namespace WhoLends.Web.Controllers
         }
 
         // GET: LendReturn
-        public ActionResult Index()
-        {            
+        public virtual ActionResult Index()
+        {
             return View();
         }
 
 
         // GET: LendReturn/Create
-        public ActionResult Create(int Id)
+        public virtual ActionResult Create(int Id)
         {
             LendReturnViewModel lendReturnVm = new LendReturnViewModel();
             LendViewModel lendVm = new LendViewModel();
@@ -59,25 +59,23 @@ namespace WhoLends.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LendReturnViewModel lendReturnVM)
+        public virtual ActionResult Create(LendReturnViewModel lendReturnVM)
         {
             if (ModelState.IsValid)
             {
-                var lend = _lendRepository.GetLendByID(lendReturnVM.LendId);
-                var user = _userRepository.GetUserById(lendReturnVM.UserId);
+                lendReturnVM.UserId = 2;
 
                 var model = LoadModel(lendReturnVM);
 
-                model.LendId = lendReturnVM.LendId.ToString();
-                //model.Lend = lend;
-                model.Description = lendReturnVM.Description;
-                model.CreatedAt = lendReturnVM.CreatedAt;
-                model.UserId = lendReturnVM.UserId;
-                //model.User = user;
-
-                //ToDo
                 _lendreturnRepository.InsertReturn(model);
-                //_lendreturnRepository.Save();
+                _lendreturnRepository.Save();
+
+                var lendmodel = _lendRepository.GetLendByID(model.LendId);
+                //ToDo
+                //set lendreturn id to lend and save
+                //lendmodel.LendReturnId = model.Id;
+                _lendRepository.UpdateLend(lendmodel);
+                _lendRepository.Save();
 
                 return RedirectToAction("..\\Lends\\Index");
             }
@@ -170,11 +168,12 @@ namespace WhoLends.Web.Controllers
 
         private Data.LendReturn LoadModel(LendReturnViewModel viewModel)
         {
-            var model = _lendreturnRepository.GetReturnByLendId(viewModel.Id) ?? new Data.LendReturn();
-            
+            var model = new Data.LendReturn();
+
             model.Description = viewModel.Description;
             model.CreatedAt = viewModel.CreatedAt;
             model.UserId = viewModel.UserId;
+            model.LendId = viewModel.LendId;
 
             return model;
         }

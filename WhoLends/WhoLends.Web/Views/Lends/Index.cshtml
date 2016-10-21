@@ -68,7 +68,6 @@
                 {
                     columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
                     columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
-                    //ToDo - Ausleihung abschliessen (LendReturn)
                 }
                 if (Model.LendLendReturn == null)
                 {

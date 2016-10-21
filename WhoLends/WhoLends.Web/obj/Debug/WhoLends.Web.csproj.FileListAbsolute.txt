@@ -1,3 +1,4 @@
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\obj\Debug\WhoLends.Web.csprojResolveAssemblyReference.cache
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\roslyn\csc.exe
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -79,6 +80,5 @@ D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\System.Web.Webpages.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\System.Web.Webpages.Deployment.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\System.Web.Webpages.Razor.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\System.Web.Helpers.xml
-D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\obj\Debug\WhoLends.Web.csprojResolveAssemblyReference.cache
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\obj\Debug\WhoLends.Web.dll
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\obj\Debug\WhoLends.Web.pdb

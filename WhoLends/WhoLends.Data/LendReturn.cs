@@ -15,12 +15,11 @@ namespace WhoLends.Data
     public partial class LendReturn
     {
         public int Id { get; set; }
-        public string LendId { get; set; }
+        public int LendId { get; set; }
         public string Description { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
     
         public virtual User User { get; set; }
-        public virtual Lend Lend { get; set; }
     }
 }
