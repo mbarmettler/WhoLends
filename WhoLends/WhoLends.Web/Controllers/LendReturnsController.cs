@@ -69,14 +69,14 @@ namespace WhoLends.Web.Controllers
                 var model = LoadModel(lendReturnVM);
 
                 model.LendId = lendReturnVM.LendId.ToString();
-                model.Lend = lend;
+                //model.Lend = lend;
                 model.Description = lendReturnVM.Description;
                 model.CreatedAt = lendReturnVM.CreatedAt;
                 model.UserId = lendReturnVM.UserId;
-                model.User = user;
+                //model.User = user;
 
                 //ToDo
-                //_lendreturnRepository.InsertReturn(model);
+                _lendreturnRepository.InsertReturn(model);
                 //_lendreturnRepository.Save();
 
                 return RedirectToAction("..\\Lends\\Index");

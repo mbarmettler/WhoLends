@@ -14,6 +14,7 @@ namespace WhoLends.Web.DAL
         {
             this.context = context;
         }
+
         public IEnumerable<Lend> GetLends()
         {
             return this.context.Lend.ToList();
@@ -26,12 +27,12 @@ namespace WhoLends.Web.DAL
 
         public void InsertLend(Lend lend)
         {
-            this.context.Lend.Add(lend);
+            context.Lend.Add(lend);
         }
 
         public void UpdateLend(Lend lend)
         {
-           this.context.Entry(lend).State = EntityState.Modified;
+            context.Entry(lend).State = EntityState.Modified;
         }
 
         public void DeleteLend(int lendId)
