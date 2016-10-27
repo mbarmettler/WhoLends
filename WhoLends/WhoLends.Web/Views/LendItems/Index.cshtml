@@ -1,7 +1,7 @@
 ﻿@using WhoLends.ViewModels;
 @using GridMvc.Html
 
-@model LendItemViewModel
+@model List<LendItemViewModel>
 
 @{
     ViewBag.Title = "LendItems";
@@ -18,7 +18,7 @@
 @* jquery grid demo http://www.ok-soft-gmbh.com/jqGrid/Lince81.htm *@
 
 <div>
-    @Html.Grid(Model.LendItemList).Columns(
+    @Html.Grid(Model).Columns(
     columns =>
     {
         columns.Add(c => c.Id).Titled("ID");

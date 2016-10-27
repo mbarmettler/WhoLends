@@ -22,7 +22,7 @@ namespace WhoLends.ViewModels
         [Required]
         public int LendItemId { get; set; }
 
-        public Data.LendItem SelectedLendItem { get; set; }
+        public LendItemViewModel SelectedLendItem { get; set; }
 
         public int UserId { get; set; }
 
@@ -37,7 +37,6 @@ namespace WhoLends.ViewModels
 
         public IEnumerable<LendItemViewModel> LendItemsList { get; set; }
         public IEnumerable<User> UserList { get; set; }
-        public IEnumerable<LendViewModel> LendList { get; set; }
 
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }

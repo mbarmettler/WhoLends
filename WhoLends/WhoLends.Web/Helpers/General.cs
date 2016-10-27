@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using WhoLends.Data;
 using WhoLends.ViewModels;
@@ -14,7 +11,7 @@ namespace WhoLends.Web.Helpers
     {
         public static User GetCurrentUser(IUserRepository _userRepository)
         {
-            ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            ApplicationUser Auser = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(HttpContext.Current.User.Identity.GetUserId());
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
 
             return dbUser;

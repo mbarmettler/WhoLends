@@ -32,30 +32,10 @@ namespace WhoLends.Controllers
         // GET: LendItems
         public virtual ActionResult Index()
         {
-            var viewmodel = new LendItemViewModel();
-
-            List<LendItemViewModel> lItems = new List<LendItemViewModel>();
-            foreach (var l in _lendItemRepository.GetLendItems())
-            {
-                var item = new LendItemViewModel();
-                item.Id = l.Id;
-                item.Name = l.Name;
-                item.Description = l.Description;
-                item.Condition = l.Condition;
-                item.CreatedAt = l.CreatedAt;
-                item.CustomerId = l.CustomerId;
-                item.Quantity = l.Quantity;                
-                item.UserId = l.UserId;
-                item.CreatedBy = _userRepository.GetUserById(item.UserId);
-
-                lItems.Add(item);
-            }
-            
-            viewmodel.LendItemList = lItems.AsEnumerable();
-
-            return View(viewmodel);
+            var itemlist = LendItemList();
+            return View(itemlist);
         }
-
+        
         // GET: LendItems/Details/5
         public virtual ActionResult Details(int Id)
         {
@@ -154,6 +134,28 @@ namespace WhoLends.Controllers
                 return RedirectToAction("Delete", new { id = Id, saveChangesError = true });
             }
             return RedirectToAction("Index");
+        }
+
+        private List<LendItemViewModel> LendItemList()
+        {
+            List<LendItemViewModel> lItems = new List<LendItemViewModel>();
+            foreach (var l in _lendItemRepository.GetLendItems())
+            {
+                var item = new LendItemViewModel();
+                item.Id = l.Id;
+                item.Name = l.Name;
+                item.Description = l.Description;
+                item.Condition = l.Condition;
+                item.CreatedAt = l.CreatedAt;
+                item.CustomerId = l.CustomerId;
+                item.Quantity = l.Quantity;
+                item.UserId = l.UserId;
+                item.CreatedBy = _userRepository.GetUserById(item.UserId);
+
+                lItems.Add(item);
+            }
+
+            return lItems;
         }
 
         private Data.LendItem LoadModel(LendItemViewModel viewModel)

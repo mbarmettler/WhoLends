@@ -8,7 +8,11 @@ namespace WhoLends.Web
         public static void ConfigureMappers()
         {
             Mapper.Initialize(cfg => {
-                cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Data.Lend, LendViewModel>()
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
+                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"));
+
+                //cfg.CreateMap<LendViewModel, Data.Lend>();
             });
 
             //Mapper.Configuration.AssertConfigurationIsValid();
@@ -16,7 +20,10 @@ namespace WhoLends.Web
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Data.LendItem, LendItemViewModel>()
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User));
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
+                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"));
+
+                //cfg.CreateMap<LendItemViewModel, Data.LendItem>();
             });
 
             Mapper.Configuration.AssertConfigurationIsValid();
@@ -24,9 +31,11 @@ namespace WhoLends.Web
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Data.LendReturn, LendReturnViewModel>();
+
+                //cfg.CreateMap<LendReturnViewModel, Data.LendReturn>();
             });
 
-            Mapper.Configuration.AssertConfigurationIsValid();
+            //Mapper.Configuration.AssertConfigurationIsValid();
         }
     }
 }

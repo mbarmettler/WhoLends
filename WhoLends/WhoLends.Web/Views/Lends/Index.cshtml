@@ -1,7 +1,8 @@
 ﻿@using WhoLends.ViewModels;
 @using GridMvc.Html
+@using WhoLends.Web.Helpers;
 
-@model LendViewModel
+@model List<LendViewModel>
 
 @{
     ViewBag.Title = "Lends";
@@ -52,7 +53,7 @@
     <h3>Ausgeliehene Gegenstände</h3>
 
     <div>
-        @Html.Grid(Model.LendList).Columns(
+        @Html.Grid(Model).Columns(
             columns =>
             {
                 columns.Add(c => c.Id).Titled("ID");
@@ -64,15 +65,16 @@
                 columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
                 columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
                 columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
-                if (Model.CurrentUser.RoleId == 1)
+                //if (Model.CurrentUser.RoleId == 1)
+                if (Request.IsAuthenticated)
                 {
                     columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
                     columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
                 }
-                if (Model.LendLendReturn == null)
-                {
-                    columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Return", "../LendReturns/Create", new { id = c.Id }));
-                }
+                //if (Model.LendLendReturn == null)
+                //{
+                columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Return", "../LendReturns/Create", new { id = c.Id }));
+                //}
             }).WithPaging(4).Sortable(true)    
     </div>
 }

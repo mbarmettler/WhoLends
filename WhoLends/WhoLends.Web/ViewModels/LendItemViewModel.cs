@@ -36,9 +36,7 @@ namespace WhoLends.ViewModels
         public User CreatedBy { get; set; }
 
         public DateTime CreatedAt { get; set; }
-
-        public IEnumerable<LendItemViewModel> LendItemList { get; set; }
-
+        
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
     }
