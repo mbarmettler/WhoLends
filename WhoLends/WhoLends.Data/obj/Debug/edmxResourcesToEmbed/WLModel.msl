@@ -33,6 +33,7 @@
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LenderUserId" ColumnName="LenderUserId" />
+          <ScalarProperty Name="LRId" ColumnName="LRId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -58,6 +59,14 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LRId" ColumnName="LRId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LRSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.LR)">
+        <MappingFragment StoreEntitySet="LRSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

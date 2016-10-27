@@ -53,8 +53,7 @@ namespace WhoLends.Controllers
                 item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
                 item.SelectedLendItem = _lendItemRepository.GetLendItemByID(item.LendItemId);
                 item.CreatedBy = _userRepository.GetUserById(item.UserId);
-
-
+                
                 lItems.Add(item);
             }
 
@@ -82,12 +81,13 @@ namespace WhoLends.Controllers
         {
             ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
-
+            
             var viewmodel = new LendViewModel()
             {
                 //todo
                 //check lenditems quanitty / availability
-                LendItemsList = _lendItemRepository.GetLendItems(),
+
+                //LendItemsList = _lendItemRepository.GetLendItems(),
                 UserList = _userRepository.GetUsers(),                      
                 CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
             };

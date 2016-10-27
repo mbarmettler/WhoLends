@@ -19,7 +19,9 @@ namespace WhoLends.Data
         public string Description { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
+        public Nullable<int> LRId { get; set; }
     
         public virtual User User { get; set; }
+        public virtual LR LR { get; set; }
     }
 }

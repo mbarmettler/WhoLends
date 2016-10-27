@@ -14,6 +14,11 @@ namespace WhoLends.Web.Converters
         public static LendItemViewModel ConvertToViewModel(Data.LendItem _lendItem)
         {
             return Mapper.Map<Data.LendItem, LendItemViewModel>(_lendItem);
-        }        
+        }
+
+        public static LendReturnViewModel ConvertToViewModel(Data.LendReturn _lendreturn)
+        {
+            return Mapper.Map<Data.LendReturn, LendReturnViewModel>(_lendreturn);
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace WhoLends.Controllers
 
                 lItems.Add(item);
             }
-
+            
             viewmodel.LendItemList = lItems.AsEnumerable();
 
             return View(viewmodel);

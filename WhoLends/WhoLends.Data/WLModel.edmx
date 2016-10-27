@@ -11,6 +11,7 @@
     <EntitySet Name="Lend" EntityType="Model.Store.Lend" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendItem" EntityType="Model.Store.LendItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendReturn" EntityType="Model.Store.LendReturn" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LRSet" EntityType="Model.Store.LRSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_LendItemLend" Association="Model.Store.FK_LendItemLend">
       <End Role="LendItem" EntitySet="LendItem" />
       <End Role="Lend" EntitySet="Lend" />
@@ -34,6 +35,14 @@
     <AssociationSet Name="FK_LendUser" Association="Model.Store.FK_LendUser">
       <End Role="User" EntitySet="User" />
       <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
+    <AssociationSet Name="LendLR" Association="Model.Store.LendLR">
+      <End Role="Lend" EntitySet="Lend" />
+      <End Role="LR" EntitySet="LRSet" />
+    </AssociationSet>
+    <AssociationSet Name="LendReturnLR" Association="Model.Store.LendReturnLR">
+      <End Role="LendReturn" EntitySet="LendReturn" />
+      <End Role="LR" EntitySet="LRSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
@@ -67,6 +76,7 @@
     <Property Name="LendItemId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="LenderUserId" Type="int" Nullable="false" />
+    <Property Name="LRId" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
@@ -91,6 +101,13 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="LRId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="LRSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <Association Name="FK_LendItemLend">
     <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
@@ -152,18 +169,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_LendLendReturn">
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="1" />
-    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Lend">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="LendReturn">
-        <PropertyRef Name="LendId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_LendUser">
     <End Role="User" Type="Model.Store.User" Multiplicity="1" />
     <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
@@ -173,6 +178,30 @@
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="LenderUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LendLR">
+    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
+    <End Role="LR" Type="Model.Store.LRSet" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="LR">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LRId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LendReturnLR">
+    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="*" />
+    <End Role="LR" Type="Model.Store.LRSet" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="LR">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendReturn">
+        <PropertyRef Name="LRId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -236,6 +265,15 @@
             <End Role="User" EntitySet="User" />
             <End Role="Lend" EntitySet="Lend" />
           </AssociationSet>
+          <EntitySet Name="LRSet" EntityType="Model.LR" />
+          <AssociationSet Name="LendLR" Association="Model.LendLR">
+            <End Role="Lend" EntitySet="Lend" />
+            <End Role="LR" EntitySet="LRSet" />
+          </AssociationSet>
+          <AssociationSet Name="LendReturnLR" Association="Model.LendReturnLR">
+            <End Role="LendReturn" EntitySet="LendReturn" />
+            <End Role="LR" EntitySet="LRSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="LendItem">
           <Key>
@@ -266,6 +304,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LendUser" Relationship="Model.FK_LendUser" FromRole="Lend" ToRole="User" />
           <Property Name="LenderUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LR" Relationship="Model.LendLR" FromRole="Lend" ToRole="LR" />
+          <Property Name="LRId" Type="Int32" Nullable="true" />
         </EntityType>
         <EntityType Name="LendReturn">
           <Key>
@@ -278,6 +318,8 @@
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Model.FK_UserLendReturn" FromRole="LendReturn" ToRole="User" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LR" Relationship="Model.LendReturnLR" FromRole="LendReturn" ToRole="LR" />
+          <Property Name="LRId" Type="Int32" Nullable="true" />
         </EntityType>
         <EnumType Name="Condition">
           <Member Name="Neuwertig" />
@@ -357,6 +399,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Lend" Relationship="Model.LendLR" FromRole="LR" ToRole="Lend" />
+          <NavigationProperty Name="LendReturn" Relationship="Model.LendReturnLR" FromRole="LR" ToRole="LendReturn" />
+        </EntityType>
+        <Association Name="LendLR">
+          <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
+          <End Type="Model.LR" Role="LR" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="LR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lend">
+              <PropertyRef Name="LRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LendReturnLR">
+          <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="*" />
+          <End Type="Model.LR" Role="LR" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="LR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LendReturn">
+              <PropertyRef Name="LRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -395,6 +469,7 @@
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LenderUserId" ColumnName="LenderUserId" />
+          <ScalarProperty Name="LRId" ColumnName="LRId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -420,6 +495,14 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="LRId" ColumnName="LRId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LRSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.LR)">
+        <MappingFragment StoreEntitySet="LRSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

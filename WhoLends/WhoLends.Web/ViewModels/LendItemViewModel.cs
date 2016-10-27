@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WhoLends.Data;
 
@@ -34,7 +35,7 @@ namespace WhoLends.ViewModels
 
         public User CreatedBy { get; set; }
 
-        public System.DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public IEnumerable<LendItemViewModel> LendItemList { get; set; }
 

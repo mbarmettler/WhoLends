@@ -13,7 +13,8 @@ namespace WhoLends.ViewModels
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
-
+        public int? LRId { get; set; }
+        public LR LRObject { get; set; }
 
         public User CreatedBy { get; set; }
 

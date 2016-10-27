@@ -17,6 +17,9 @@
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_RoleUser" />
         <AssociationConnector Association="Model.FK_LendUser" />
+        <EntityTypeShape EntityType="Model.LR" Width="1.5" PointX="6" PointY="9" />
+        <AssociationConnector Association="Model.LendLR" />
+        <AssociationConnector Association="Model.LendReturnLR" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

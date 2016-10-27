@@ -21,9 +21,11 @@ namespace WhoLends.Data
         public int LendItemId { get; set; }
         public int UserId { get; set; }
         public int LenderUserId { get; set; }
+        public Nullable<int> LRId { get; set; }
     
         public virtual LendItem LendItem { get; set; }
         public virtual User User { get; set; }
         public virtual User LendUser { get; set; }
+        public virtual LR LR { get; set; }
     }
 }

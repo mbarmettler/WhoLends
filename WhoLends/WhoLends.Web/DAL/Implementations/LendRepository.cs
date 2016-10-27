@@ -28,6 +28,10 @@ namespace WhoLends.Web.DAL
         public void InsertLend(Lend lend)
         {
             context.Lend.Add(lend);
+
+            var lr = new LR();
+            lr.Lend.Add(lend);
+            context.LRSet.Add(lr);
         }
 
         public void UpdateLend(Lend lend)
@@ -39,6 +43,11 @@ namespace WhoLends.Web.DAL
         {
             Lend lend = this.context.Lend.Find(lendId);
             this.context.Lend.Remove(lend);
+        }
+
+        public LendReturn GetLRByID(int lrID)
+        {
+            return context.LendReturn.Find(lrID);
         }
 
         public void Save()

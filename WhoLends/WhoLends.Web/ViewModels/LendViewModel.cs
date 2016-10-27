@@ -13,12 +13,12 @@ namespace WhoLends.ViewModels
 
         [Display(Name = "Von")]
         [Required]
-        public System.DateTime From { get; set; }
+        public DateTime From { get; set; }
         [Display(Name = "Bis")]
-        public Nullable<System.DateTime> To { get; set; }
+        public DateTime? To { get; set; }
 
         [Required]
-        public System.DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         [Required]
         public int LendItemId { get; set; }
 
@@ -33,9 +33,9 @@ namespace WhoLends.ViewModels
 
         public User SelectedLendUser { get; set; }
 
-        public LendReturn LendLendReturn { get; set; }
+        public LendReturnViewModel LendLendReturn { get; set; }
 
-        public IEnumerable<Data.LendItem> LendItemsList { get; set; }
+        public IEnumerable<LendItemViewModel> LendItemsList { get; set; }
         public IEnumerable<User> UserList { get; set; }
         public IEnumerable<LendViewModel> LendList { get; set; }
 
