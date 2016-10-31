@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,14 @@ namespace WhoLends.Controllers
                 return RedirectToAction(Actions.Index());
             }
 
-            var viewModel = Converter.ConvertToViewModel(model);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+            });
 
-            return View(viewModel);
+            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+
+            return View(vm);
         }
 
         // GET: LendItems/Create
@@ -99,9 +105,14 @@ namespace WhoLends.Controllers
                 return RedirectToAction(Actions.Index());
             }
 
-            var viewModel = Converter.ConvertToViewModel(model);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+            });
 
-            return View(viewModel);
+            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+
+            return View(vm);
         }
 
         // POST: LendItems/Edit/5
@@ -113,8 +124,14 @@ namespace WhoLends.Controllers
         {
             var model = LoadModel(lendItemVM);
 
-            lendItemVM = Converter.ConvertToViewModel(model);
-            return View(lendItemVM);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+            });
+
+            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+
+            return View(vm);
         }
 
         // POST: LendItems/Delete/5

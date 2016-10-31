@@ -21,14 +21,14 @@
     @Html.Grid(Model).Columns(
     columns =>
     {
+        columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
         columns.Add(c => c.Id).Titled("ID");
         columns.Add(c => c.CustomerId).Titled("interne ID").Filterable(true);
         columns.Add(c => c.Name).Titled("Name").Filterable(true);
         //columns.Add(c => c.Description).Titled("Beschreibung").Filterable(true);
         columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
         columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
-        columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Details", "Details", new { id = c.Id }));
-        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.Id }));
-        columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.Id }));
+        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" }));
+        columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
     }).WithPaging(3).Sortable(true)
 </div>

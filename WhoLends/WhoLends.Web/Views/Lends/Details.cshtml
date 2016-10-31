@@ -39,7 +39,10 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Bearbeiten", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Zurück", "Index")
+<p>    
+    <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>    
+    @Html.ActionLink("Bearbeiten", "Edit", new {  id = Model.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" })
 </p>

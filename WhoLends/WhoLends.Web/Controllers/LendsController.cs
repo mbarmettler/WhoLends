@@ -10,6 +10,7 @@ using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace WhoLends.Controllers
 {
@@ -38,6 +39,19 @@ namespace WhoLends.Controllers
         {
             var lendlist = LendList();
             return View(lendlist);
+
+
+            //best practive way
+            //
+            //IEnumerable<Data.Lend> _lends = _lendRepository.GetLends();
+
+            //Mapper.Initialize(cfg =>
+            //{
+            //    cfg.CreateMap<Data.Lend, LendViewModel>();
+            //});
+
+            //IEnumerable<LendViewModel> viewModelList = Mapper.Map<IEnumerable<Data.Lend>, IEnumerable<LendViewModel>>(_lends);
+            //return View(viewModelList);
         }
 
         // GET: Lends/Details/5
@@ -48,10 +62,15 @@ namespace WhoLends.Controllers
             {
                 return RedirectToAction(Actions.Index());
             }
+            
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.Lend, LendViewModel>();
+            });
 
-            var viewModel = Converter.ConvertToViewModel(model);
+            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
 
-            return View(viewModel);
+            return View(vm);
         }
 
         // GET: Lends/Create
@@ -107,9 +126,14 @@ namespace WhoLends.Controllers
                 return RedirectToAction(Actions.Index());
             }
 
-            var viewModel = Converter.ConvertToViewModel(model);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.Lend, LendViewModel>();
+            });
 
-            return View(viewModel);
+            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            
+            return View(vm);
         }
 
         [HttpPost]
@@ -118,8 +142,14 @@ namespace WhoLends.Controllers
         {
             var model = LoadModel(viewModel);
 
-            viewModel = Converter.ConvertToViewModel(model);
-            return View(viewModel);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.Lend, LendViewModel>();
+            });
+
+            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+
+            return View(vm);
         }
 
         // POST: Lends/Delete/5

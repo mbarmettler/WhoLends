@@ -10,7 +10,8 @@ namespace WhoLends.Web
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<Data.Lend, LendViewModel>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
-                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"));
+                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"))
+                .ReverseMap();
 
                 //cfg.CreateMap<LendViewModel, Data.Lend>();
             });
@@ -21,7 +22,8 @@ namespace WhoLends.Web
             {
                 cfg.CreateMap<Data.LendItem, LendItemViewModel>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
-                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"));
+                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"))
+                .ReverseMap();
 
                 //cfg.CreateMap<LendItemViewModel, Data.LendItem>();
             });
@@ -30,7 +32,8 @@ namespace WhoLends.Web
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.LendReturn, LendReturnViewModel>();
+                cfg.CreateMap<Data.LendReturn, LendReturnViewModel>()
+                .ReverseMap();
 
                 //cfg.CreateMap<LendReturnViewModel, Data.LendReturn>();
             });

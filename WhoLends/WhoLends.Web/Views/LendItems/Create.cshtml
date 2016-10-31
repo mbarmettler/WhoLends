@@ -75,7 +75,10 @@
 }
 
 <div>
-    @Html.ActionLink("Zurück", "Index")
+    <a href="@Url.Action("Index", "LendItems")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>
 </div>
 
 @section Scripts {
