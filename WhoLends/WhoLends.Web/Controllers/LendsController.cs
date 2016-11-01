@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using WhoLends.ViewModels;
-using WhoLends.Web.Converters;
 using WhoLends.Web.DAL;
 using WhoLends.Data;
 using System.Data;
@@ -14,6 +13,7 @@ using AutoMapper;
 
 namespace WhoLends.Controllers
 {
+    [Authorize]
     public partial class LendsController : Controller
     {
         private ILendRepository _lendRepository;
@@ -57,6 +57,13 @@ namespace WhoLends.Controllers
         // GET: Lends/Details/5
         public virtual ActionResult Details(int Id)
         {
+            //todo - get more data of lend
+            // createdby (user)
+            // lender (user)
+            // lenditem
+            // lenditem.condition
+            // quantity (improve model Lend)
+
             var model = _lendRepository.GetLendByID(Id);
             if (model == null)
             {

@@ -328,7 +328,6 @@
     <Compile Include="Controllers\LendReturnsController.cs" />
     <Compile Include="Controllers\LendsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Converters\Converter.cs" />
     <Compile Include="DAL\ILendItemRepository.cs" />
     <Compile Include="DAL\ILendRepository.cs" />
     <Compile Include="DAL\ILendReturnRepository.cs" />
@@ -423,6 +422,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_Readme\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

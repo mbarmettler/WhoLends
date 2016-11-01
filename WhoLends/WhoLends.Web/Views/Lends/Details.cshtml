@@ -7,16 +7,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Detail</h2>
+<h2>Ausleihung #@Html.DisplayFor(model => model.Id)</h2>
 
 <div>
-    <h4>Lend</h4>
+    <h4>Detail - Ausleihung</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.From)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.From)
         </dd>
@@ -24,7 +23,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.To)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.To)
         </dd>
@@ -32,17 +30,61 @@
         <dt>
             @Html.DisplayNameFor(model => model.CreatedAt)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.CreatedAt)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy.UserName)
+        </dd>
     </dl>
+
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Lend Item</div>
+            <br />
+            Lend Item informations:<br />
+            - name<br />
+            - description <br />
+            - interne id<br />
+            - total quantity / current<br />
+            - created at<br />
+            - created by<br />
+            - image<br />
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="panel panel-success">
+            <div class="panel-heading">Lend Return</div>
+            <br />
+            <!-- if not yet returned -->
+            @Html.ActionLink(" erfassen", "../LendReturns/Create", new { id = Model.Id }, new { @class = "btn btn-default" })
+            <br />
+
+            <!-- if already returned -->
+            Lend Return:<br />
+            - description <br />
+            - total quantity<br />
+            - created at<br />
+            - created by<br />
+            - image<br />
+        </div>
+    </div>
 </div>
 <p>    
     <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
         Zurück
     </a>    
-    @Html.ActionLink("Bearbeiten", "Edit", new {  id = Model.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" })
+    <a href="@Url.Action("Edit", "Lends", new {  id = Model.Id })" class="btn btn-default">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        Bearbeiten
+    </a>   
+    @*@Html.ActionLink("Bearbeiten", "Edit", new {  id = Model.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" })*@
 </p>

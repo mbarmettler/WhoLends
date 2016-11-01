@@ -83,8 +83,7 @@ namespace WhoLends.Web.Controllers
                 //ToDo
                 //set lendreturn id to lend and save
                 //set lendVM LendReturn to VM and save model
-                lendVM.LendLendReturn = Converters.Converter.ConvertToViewModel(
-                    _lendRepository.GetLRByID(lendmodel.LRId.Value));
+                lendVM.LendLendReturn = lendReturnVM;
                 lendReturnVM.LRId = lendmodel.LRId;
                 
 
