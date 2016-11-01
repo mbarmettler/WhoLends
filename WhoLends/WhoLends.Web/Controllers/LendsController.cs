@@ -79,12 +79,19 @@ namespace WhoLends.Controllers
             ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
 
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+            });
+
+            var lenditems = Mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems()).ToList().AsEnumerable();
+
             var viewmodel = new LendViewModel()
             {
                 //todo
                 //check lenditems quanitty / availability
 
-                //LendItemsList = _lendItemRepository.GetLendItems(),
+                LendItemsList = lenditems,
                 UserList = _userRepository.GetUsers(),
                 CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
             };
