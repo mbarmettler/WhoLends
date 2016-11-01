@@ -412,6 +412,7 @@
     <Content Include="Views\LendReturns\Details.cshtml" />
     <Content Include="Views\LendReturns\Edit.cshtml" />
     <Content Include="Views\LendReturns\Index.cshtml" />
+    <Content Include="Views\Lends\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

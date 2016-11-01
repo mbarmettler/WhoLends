@@ -58,8 +58,6 @@ namespace WhoLends.Controllers
         public virtual ActionResult Details(int Id)
         {
             //todo - get more data of lend
-            // createdby (user)
-            // lender (user)
             // lenditem
             // lenditem.condition
             // quantity (improve model Lend)
@@ -73,9 +71,14 @@ namespace WhoLends.Controllers
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
             });
 
             LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            LendItemViewModel ItemVM = Mapper.Map<Data.LendItem, LendItemViewModel>(model.LendItem);
+            vm.CreatedBy = model.User;
+            vm.SelectedLendUser = model.LendUser;
+            vm.SelectedLendItem = ItemVM;
 
             return View(vm);
         }
@@ -91,14 +94,35 @@ namespace WhoLends.Controllers
                 cfg.CreateMap<Data.LendItem, LendItemViewModel>();
             });
 
+            //check lenditems quanitty / availability
+
             var lenditems = Mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems()).ToList().AsEnumerable();
+            
+            var lendsItemKeyCount = _lendRepository.GetLends()
+                            .GroupBy(f => f.LendItemId)
+                            .Select(g => new { g.Key, Count = g.Count() });
+
+            var sortedItemList = new List<LendItemViewModel>();
+
+            foreach (var item in lendsItemKeyCount)
+            {
+                var itemId = item.Key;
+                var itemCnt = item.Count;
+                foreach (var li in lenditems)
+                {
+                    if (itemId == li.Id && itemCnt < li.Quantity)
+                    {
+                        sortedItemList.Add(li);
+                    }
+                }
+            }
 
             var viewmodel = new LendViewModel()
             {
                 //todo
-                //check lenditems quanitty / availability
+                
 
-                LendItemsList = lenditems,
+                LendItemsList = sortedItemList,
                 UserList = _userRepository.GetUsers(),
                 CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
             };
@@ -166,6 +190,24 @@ namespace WhoLends.Controllers
             return View(vm);
         }
 
+        // Lends/Delete/5
+        public virtual ActionResult Delete(int? id)
+        {
+            var model = _lendRepository.GetLendByID(id.Value);
+            if (model == null)
+            {
+                return RedirectToAction(Actions.Index());
+            }
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.Lend, LendViewModel>();
+            });
+
+            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            return View(vm);
+        }
+
         // POST: Lends/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -184,6 +226,8 @@ namespace WhoLends.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        
 
         private Data.Lend LoadModel(LendViewModel viewModel)
         {
@@ -214,7 +258,7 @@ namespace WhoLends.Controllers
                 item.LendItemId = l.LendItemId;
                 item.LenderUserId = l.LendUser.Id;
                 item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
-                item.SelectedLendItem = new LendItemViewModel(); //Converter.ConvertToViewModel(_lendItemRepository.GetLendItemByID(item.LendItemId));
+                item.SelectedLendItem = new LendItemViewModel();
                 item.CreatedBy = _userRepository.GetUserById(item.UserId);
 
                 lItems.Add(item);

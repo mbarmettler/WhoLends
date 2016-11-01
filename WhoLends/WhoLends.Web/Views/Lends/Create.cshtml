@@ -18,8 +18,8 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.LendItemId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.LendItemId, htmlAttributes: new { @class = "control-label col-md-2" })            
+            <div class="col-md-10">                
                 @Html.DropDownListFor(model => model.LendItemId, new SelectList(Model.LendItemsList, "id", "Name", "--select--"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LendItemId, "", new { @class = "text-danger" })
             </div>

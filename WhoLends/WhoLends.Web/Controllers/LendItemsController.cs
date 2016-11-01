@@ -133,10 +133,28 @@ namespace WhoLends.Controllers
             return View(vm);
         }
 
+        // LendItems/Delete/5
+        public virtual ActionResult Delete(int? id)
+        {
+            var model = _lendItemRepository.GetLendItemByID(id.Value);
+            if (model == null)
+            {
+                return RedirectToAction(Actions.Index());
+            }
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+            });
+
+            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+            return View(vm);
+        }
+
         // POST: LendItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult DeleteConfirmed(int Id)
+        public virtual ActionResult Delete(int Id)
         {
             try
             {

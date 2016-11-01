@@ -14,6 +14,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.SelectedLendUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelectedLendUser.UserName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.From)
         </dt>
         <dd>
@@ -46,14 +53,72 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Lend Item</div>
             <br />
-            Lend Item informations:<br />
-            - name<br />
-            - description <br />
-            - interne id<br />
-            - total quantity / current<br />
-            - created at<br />
-            - created by<br />
-            - image<br />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.CustomerId)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.CustomerId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.Quantity)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.Quantity)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.Condition)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.Condition)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.CreatedAt)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.CreatedAt)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SelectedLendItem.CreatedBy)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelectedLendItem.CreatedBy.UserName)
+                </dd>
+            </dl>
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">
+                        <a href="#" class="thumbnail">
+                            <img src="~/Content/img/noimg.PNG" />
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <a href="#" class="thumbnail">
+                            <img src="~/Content/img/noimg.PNG" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br/>
         </div>
     </div>
 
@@ -64,20 +129,27 @@
             <div class="panel-heading">Lend Return</div>
             <br />
             <!-- if not yet returned -->
-            @Html.ActionLink(" erfassen", "../LendReturns/Create", new { id = Model.Id }, new { @class = "btn btn-default" })
-            <br />
-
-            <!-- if already returned -->
-            Lend Return:<br />
-            - description <br />
-            - total quantity<br />
-            - created at<br />
-            - created by<br />
-            - image<br />
+            @if (Model.To == null)
+            {
+                @Html.ActionLink(" erfassen", "../LendReturns/Create", new { id = Model.Id }, new { @class = "btn btn-default" })
+                <br />
+            }
+            else
+            {                
+                <!-- if already returned -->
+                <div>
+                    Lend Return:< br />
+                    -description < br />
+                    -total quantity < br />
+                    -created at < br />
+                    -created by < br />
+                    -image < br />
+                </div>
+            }
         </div>
     </div>
 </div>
-<p>    
+<p>
     <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
         Zurück
@@ -85,6 +157,6 @@
     <a href="@Url.Action("Edit", "Lends", new {  id = Model.Id })" class="btn btn-default">
         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         Bearbeiten
-    </a>   
+    </a>
     @*@Html.ActionLink("Bearbeiten", "Edit", new {  id = Model.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" })*@
 </p>
