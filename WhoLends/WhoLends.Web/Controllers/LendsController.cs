@@ -39,8 +39,7 @@ namespace WhoLends.Controllers
         {
             var lendlist = LendList();
             return View(lendlist);
-
-
+            
             //best practive way
             //
             //IEnumerable<Data.Lend> _lends = _lendRepository.GetLends();
@@ -48,6 +47,8 @@ namespace WhoLends.Controllers
             //Mapper.Initialize(cfg =>
             //{
             //    cfg.CreateMap<Data.Lend, LendViewModel>();
+            //    cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+            //    cfg.CreateMap<Data.LendReturn, LendReturnViewModel>();
             //});
 
             //IEnumerable<LendViewModel> viewModelList = Mapper.Map<IEnumerable<Data.Lend>, IEnumerable<LendViewModel>>(_lends);

@@ -14,11 +14,14 @@ namespace WhoLends.ViewModels
         [Display(Name = "Von")]
         [Required]
         public DateTime From { get; set; }
+
         [Display(Name = "Bis")]
         public DateTime? To { get; set; }
 
+        [Display(Name = "Erstellt am")]
         [Required]
         public DateTime CreatedAt { get; set; }
+
         [Required]
         public int LendItemId { get; set; }
 
@@ -26,11 +29,13 @@ namespace WhoLends.ViewModels
 
         public int UserId { get; set; }
 
+        [Display(Name = "Erstellt von")]
         public User CreatedBy { get; set; }
 
         [Required]
         public int LenderUserId { get; set; }
 
+        [Display(Name = "Ausleiher")]
         public User SelectedLendUser { get; set; }
 
         public LendReturnViewModel LendLendReturn { get; set; }

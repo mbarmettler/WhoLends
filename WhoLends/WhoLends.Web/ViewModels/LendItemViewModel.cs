@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WhoLends.Data;
 
@@ -31,10 +30,14 @@ namespace WhoLends.ViewModels
         [Required]
         public Condition Condition { get; set; }
 
+        [Display(Name = "Ersteller ID")]
         public int UserId { get; set; }
 
+        [Display(Name = "Erstellt von")]
         public User CreatedBy { get; set; }
 
+        [Display(Name = "Erstellt am")]
+        [Required]
         public DateTime CreatedAt { get; set; }
         
         [Display(Name = "Ersteller")]
