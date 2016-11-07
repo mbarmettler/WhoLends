@@ -102,6 +102,7 @@
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="LRId" Type="int" Nullable="true" />
+    <Property Name="SetComplete" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="LRSet">
     <Key>
@@ -320,6 +321,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LR" Relationship="Model.LendReturnLR" FromRole="LendReturn" ToRole="LR" />
           <Property Name="LRId" Type="Int32" Nullable="true" />
+          <Property Name="SetComplete" Type="Boolean" Nullable="false" />
         </EntityType>
         <EnumType Name="Condition">
           <Member Name="Neuwertig" />
@@ -496,6 +498,7 @@
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LRId" ColumnName="LRId" />
+          <ScalarProperty Name="SetComplete" ColumnName="SetComplete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

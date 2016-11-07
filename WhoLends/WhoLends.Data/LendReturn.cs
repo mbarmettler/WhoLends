@@ -20,6 +20,7 @@ namespace WhoLends.Data
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
         public Nullable<int> LRId { get; set; }
+        public bool SetComplete { get; set; }
     
         public virtual User User { get; set; }
         public virtual LR LR { get; set; }

@@ -72,11 +72,11 @@ namespace WhoLends.Controllers
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Data.Lend, LendViewModel>();
-                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
             LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
-            LendItemViewModel ItemVM = Mapper.Map<Data.LendItem, LendItemViewModel>(model.LendItem);
+            LendItemViewModel ItemVM = Mapper.Map<LendItem, LendItemViewModel>(model.LendItem);
             vm.CreatedBy = model.User;
             vm.SelectedLendUser = model.LendUser;
             vm.SelectedLendItem = ItemVM;
@@ -92,7 +92,7 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
             //check lenditems quanitty / availability
@@ -167,10 +167,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Lend, LendViewModel>();
             });
 
-            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
             
             return View(vm);
         }
@@ -183,10 +183,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Lend, LendViewModel>();
             });
 
-            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
 
             return View(vm);
         }
@@ -202,10 +202,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Lend, LendViewModel>();
             });
 
-            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
             return View(vm);
         }
 

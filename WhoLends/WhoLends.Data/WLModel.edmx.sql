@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/21/2016 15:39:06
+-- Date Created: 11/02/2016 09:19:58
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -35,6 +35,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_LendUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendUser];
 GO
+IF OBJECT_ID(N'[dbo].[FK_LendLR]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendLR];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LendReturnLR]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_LendReturnLR];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -54,6 +60,9 @@ IF OBJECT_ID(N'[dbo].[LendItem]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[LendReturn]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LendReturn];
+GO
+IF OBJECT_ID(N'[dbo].[LRSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LRSet];
 GO
 
 -- --------------------------------------------------
@@ -113,7 +122,8 @@ CREATE TABLE [dbo].[LendReturn] (
     [Description] nvarchar(max)  NOT NULL,
     [CreatedAt] datetime  NOT NULL,
     [UserId] int  NOT NULL,
-    [LRId] int  NULL
+    [LRId] int  NULL,
+    [SetComplete] bit  NOT NULL
 );
 GO
 

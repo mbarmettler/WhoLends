@@ -179,9 +179,9 @@ namespace WhoLends.Web.Controllers
         //    base.Dispose(disposing);
         //}
 
-        private Data.LendReturn LoadModel(LendReturnViewModel viewModel)
+        private LendReturn LoadModel(LendReturnViewModel viewModel)
         {
-            var model = new Data.LendReturn();
+            var model = new LendReturn();
 
             model.Description = viewModel.Description;
             model.CreatedAt = viewModel.CreatedAt;

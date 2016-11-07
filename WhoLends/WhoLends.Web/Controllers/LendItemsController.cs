@@ -47,10 +47,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
-            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
 
             return View(vm);
         }
@@ -106,10 +106,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
-            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
 
             return View(vm);
         }
@@ -125,10 +125,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
-            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
 
             return View(vm);
         }
@@ -144,10 +144,10 @@ namespace WhoLends.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
-            LendItemViewModel vm = Mapper.Map<Data.LendItem, LendItemViewModel>(model);
+            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
             return View(vm);
         }
 
@@ -192,9 +192,9 @@ namespace WhoLends.Controllers
             return lItems;
         }
 
-        private Data.LendItem LoadModel(LendItemViewModel viewModel)
+        private LendItem LoadModel(LendItemViewModel viewModel)
         {
-            var model = _lendItemRepository.GetLendItemByID(viewModel.Id) ?? new Data.LendItem();
+            var model = _lendItemRepository.GetLendItemByID(viewModel.Id) ?? new LendItem();
 
             model.Id = viewModel.Id;
             model.Description = viewModel.Description;

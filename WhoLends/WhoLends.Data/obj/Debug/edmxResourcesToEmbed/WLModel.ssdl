@@ -97,6 +97,7 @@
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="LRId" Type="int" Nullable="true" />
+    <Property Name="SetComplete" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="LRSet">
     <Key>

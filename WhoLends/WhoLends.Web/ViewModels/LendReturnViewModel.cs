@@ -4,9 +4,9 @@ using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    [MetadataType(typeof(LendReturnViewModel))]
-    public partial class LendReturn { }
-    public partial class LendReturnViewModel
+    //[MetadataType(typeof(LendReturnViewModel))]
+    //public partial class LendReturn { }
+    public class LendReturnViewModel
     {
         public int Id { get; set; }
         public int LendId { get; set; }
@@ -15,6 +15,7 @@ namespace WhoLends.ViewModels
         public int UserId { get; set; }
         public int? LRId { get; set; }
         public LR LRObject { get; set; }
+        public bool SetComplete { get; set; }
 
         public User CreatedBy { get; set; }
 

@@ -60,6 +60,7 @@
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LRId" ColumnName="LRId" />
+          <ScalarProperty Name="SetComplete" ColumnName="SetComplete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

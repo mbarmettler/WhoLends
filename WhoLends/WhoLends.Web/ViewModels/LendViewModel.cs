@@ -5,9 +5,9 @@ using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    [MetadataType(typeof(LendViewModel))]
-    public partial class Lend { }
-    public partial class LendViewModel
+    //[MetadataType(typeof(LendViewModel))]
+    //public partial class Lend { }
+    public class LendViewModel
     {
         public int Id { get; set; }
 

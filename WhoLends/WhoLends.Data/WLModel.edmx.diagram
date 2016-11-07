@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="af85a0ff735a4bb1993a26ba92284b10" Name="Diagram1" ZoomLevel="107">
+      <Diagram DiagramId="af85a0ff735a4bb1993a26ba92284b10" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" FillColor="Gray" />
         <EntityTypeShape EntityType="Model.User" Width="1.75" PointX="3" PointY="1.75" IsExpanded="true" FillColor="Gray" />
         <EntityTypeShape EntityType="Model.LendItem" Width="1.5" PointX="9" PointY="1.5" FillColor="RoyalBlue" />
         <EntityTypeShape EntityType="Model.Lend" Width="2.125" PointX="8.75" PointY="6.125" FillColor="RoyalBlue" />
-        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="5.875" PointY="5.5" FillColor="RoyalBlue" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="3.25" PointY="6.75" FillColor="RoyalBlue" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_LendItemLend" />
         <AssociationConnector Association="Model.FK_UserLendItem" />
         <AssociationConnector Association="Model.FK_UserLendReturn" />
@@ -17,7 +17,7 @@
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_RoleUser" />
         <AssociationConnector Association="Model.FK_LendUser" />
-        <EntityTypeShape EntityType="Model.LR" Width="1.5" PointX="6" PointY="9" />
+        <EntityTypeShape EntityType="Model.LR" Width="1.5" PointX="5.875" PointY="7.375" />
         <AssociationConnector Association="Model.LendLR" />
         <AssociationConnector Association="Model.LendReturnLR" />
       </Diagram>
