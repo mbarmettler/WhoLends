@@ -6,7 +6,6 @@
     <EntitySet Name="Lend" EntityType="Model.Store.Lend" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendItem" EntityType="Model.Store.LendItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendReturn" EntityType="Model.Store.LendReturn" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LRSet" EntityType="Model.Store.LRSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_LendItemLend" Association="Model.Store.FK_LendItemLend">
       <End Role="LendItem" EntitySet="LendItem" />
       <End Role="Lend" EntitySet="Lend" />
@@ -31,13 +30,9 @@
       <End Role="User" EntitySet="User" />
       <End Role="Lend" EntitySet="Lend" />
     </AssociationSet>
-    <AssociationSet Name="LendLR" Association="Model.Store.LendLR">
+    <AssociationSet Name="LendLendReturn" Association="Model.Store.LendLendReturn">
       <End Role="Lend" EntitySet="Lend" />
-      <End Role="LR" EntitySet="LRSet" />
-    </AssociationSet>
-    <AssociationSet Name="LendReturnLR" Association="Model.Store.LendReturnLR">
       <End Role="LendReturn" EntitySet="LendReturn" />
-      <End Role="LR" EntitySet="LRSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
@@ -96,14 +91,7 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="LRId" Type="int" Nullable="true" />
     <Property Name="SetComplete" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="LRSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <Association Name="FK_LendItemLend">
     <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
@@ -177,27 +165,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LendLR">
+  <Association Name="LendLendReturn">
     <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
-    <End Role="LR" Type="Model.Store.LRSet" Multiplicity="0..1" />
+    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="0..1" />
     <ReferentialConstraint>
-      <Principal Role="LR">
+      <Principal Role="LendReturn">
         <PropertyRef Name="Id" />
+        <PropertyRef Name="LendId" />
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="LRId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="LendReturnLR">
-    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="*" />
-    <End Role="LR" Type="Model.Store.LRSet" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="LR">
         <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="LendReturn">
-        <PropertyRef Name="LRId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

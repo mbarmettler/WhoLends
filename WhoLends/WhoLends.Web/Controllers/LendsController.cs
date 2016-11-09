@@ -39,20 +39,20 @@ namespace WhoLends.Controllers
         {
             var lendlist = LendList();
             return View(lendlist);
-            
+
             //best practive way
             //
-            //IEnumerable<Data.Lend> _lends = _lendRepository.GetLends();
+            //IEnumerable<Lend> _lends = _lendRepository.GetLends();
 
             //Mapper.Initialize(cfg =>
             //{
-            //    cfg.CreateMap<Data.Lend, LendViewModel>();
-            //    cfg.CreateMap<Data.LendItem, LendItemViewModel>();
-            //    cfg.CreateMap<Data.LendReturn, LendReturnViewModel>();
+            //    cfg.CreateMap<Lend, LendViewModel>();
+            //    cfg.CreateMap<LendItem, LendItemViewModel>();
+            //    cfg.CreateMap<LendReturn, LendReturnViewModel>();
             //});
 
-            //IEnumerable<LendViewModel> viewModelList = Mapper.Map<IEnumerable<Data.Lend>, IEnumerable<LendViewModel>>(_lends);
-            //return View(viewModelList);
+            //IEnumerable<LendViewModel> viewModelList = Mapper.Map<IEnumerable<Lend>, IEnumerable<LendViewModel>>(_lends);
+            //return View(viewModelList.ToList());
         }
 
         // GET: Lends/Details/5
@@ -75,11 +75,20 @@ namespace WhoLends.Controllers
                 cfg.CreateMap<LendItem, LendItemViewModel>();
             });
 
-            LendViewModel vm = Mapper.Map<Data.Lend, LendViewModel>(model);
+            LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
             LendItemViewModel ItemVM = Mapper.Map<LendItem, LendItemViewModel>(model.LendItem);
+            //todo create reference on Return object (model)
+            //LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model.LendLendReturn);
+            LendReturnViewModel lrVM = new LendReturnViewModel();
+
+            ItemVM.CreatedBy = model.LendItem.User;
+            ItemVM.CurrentUserwithID = ItemVM.CreatedBy.UserName + " (" + ItemVM.CreatedBy.Id + ")";
+
             vm.CreatedBy = model.User;
+            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
             vm.SelectedLendUser = model.LendUser;
             vm.SelectedLendItem = ItemVM;
+            vm.LendLendReturn = lrVM;
 
             return View(vm);
         }
@@ -105,15 +114,23 @@ namespace WhoLends.Controllers
 
             var sortedItemList = new List<LendItemViewModel>();
 
-            foreach (var item in lendsItemKeyCount)
+            //if there are no lends - just fill all lenditems
+            if (!lendsItemKeyCount.Any())
             {
-                var itemId = item.Key;
-                var itemCnt = item.Count;
-                foreach (var li in lenditems)
+                sortedItemList = lenditems.ToList();
+            }
+            else
+            {
+                foreach (var item in lendsItemKeyCount)
                 {
-                    if (itemId == li.Id && itemCnt < li.Quantity)
+                    var itemId = item.Key;
+                    var itemCnt = item.Count;
+                    foreach (var li in lenditems)
                     {
-                        sortedItemList.Add(li);
+                        if (itemId == li.Id && itemCnt < li.Quantity)
+                        {
+                            sortedItemList.Add(li);
+                        }
                     }
                 }
             }
@@ -121,7 +138,6 @@ namespace WhoLends.Controllers
             var viewmodel = new LendViewModel()
             {
                 //todo
-                
 
                 LendItemsList = sortedItemList,
                 UserList = _userRepository.GetUsers(),
@@ -229,7 +245,6 @@ namespace WhoLends.Controllers
         }
 
         
-
         private Data.Lend LoadModel(LendViewModel viewModel)
         {
             var model = _lendRepository.GetLendByID(viewModel.Id) ?? new Data.Lend();
@@ -247,9 +262,27 @@ namespace WhoLends.Controllers
 
         private List<LendViewModel> LendList()
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Lend, LendViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>();
+            });
+            
             List<LendViewModel> lItems = new List<LendViewModel>();
             foreach (var l in _lendRepository.GetLends())
             {
+                var LImodel = _lendItemRepository.GetLendItemByID(l.LendItemId);
+                LendItemViewModel liVM = Mapper.Map<LendItem, LendItemViewModel>(LImodel);
+
+                LendReturnViewModel lrVM = null;
+                if (l.LRId != null)
+                {
+                    var LRmodel = _lendRepository.GetLRByID(l.LRId.Value);
+                    lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(LRmodel);
+                }
+
+
                 var item = new LendViewModel();
                 item.Id = l.Id;
                 item.From = l.From;
@@ -259,7 +292,8 @@ namespace WhoLends.Controllers
                 item.LendItemId = l.LendItemId;
                 item.LenderUserId = l.LendUser.Id;
                 item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
-                item.SelectedLendItem = new LendItemViewModel();
+                item.SelectedLendItem = liVM;
+                item.LendLendReturn = lrVM;
                 item.CreatedBy = _userRepository.GetUserById(item.UserId);
 
                 lItems.Add(item);

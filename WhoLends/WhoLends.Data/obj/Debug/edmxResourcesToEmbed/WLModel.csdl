@@ -56,14 +56,9 @@
       <End Role="User" EntitySet="User" />
       <End Role="Lend" EntitySet="Lend" />
     </AssociationSet>
-    <EntitySet Name="LRSet" EntityType="Model.LR" />
-    <AssociationSet Name="LendLR" Association="Model.LendLR">
+    <AssociationSet Name="LendLendReturn" Association="Model.LendLendReturn">
       <End Role="Lend" EntitySet="Lend" />
-      <End Role="LR" EntitySet="LRSet" />
-    </AssociationSet>
-    <AssociationSet Name="LendReturnLR" Association="Model.LendReturnLR">
       <End Role="LendReturn" EntitySet="LendReturn" />
-      <End Role="LR" EntitySet="LRSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="LendItem">
@@ -95,8 +90,8 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LendUser" Relationship="Model.FK_LendUser" FromRole="Lend" ToRole="User" />
     <Property Name="LenderUserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="LR" Relationship="Model.LendLR" FromRole="Lend" ToRole="LR" />
     <Property Name="LRId" Type="Int32" Nullable="true" />
+    <NavigationProperty Name="LendReturn" Relationship="Model.LendLendReturn" FromRole="Lend" ToRole="LendReturn" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -109,9 +104,8 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Model.FK_UserLendReturn" FromRole="LendReturn" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="LR" Relationship="Model.LendReturnLR" FromRole="LendReturn" ToRole="LR" />
-    <Property Name="LRId" Type="Int32" Nullable="true" />
     <Property Name="SetComplete" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Lend" Relationship="Model.LendLendReturn" FromRole="LendReturn" ToRole="Lend" />
   </EntityType>
   <EnumType Name="Condition">
     <Member Name="Neuwertig" />
@@ -191,35 +185,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="LR">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="Lend" Relationship="Model.LendLR" FromRole="LR" ToRole="Lend" />
-    <NavigationProperty Name="LendReturn" Relationship="Model.LendReturnLR" FromRole="LR" ToRole="LendReturn" />
-  </EntityType>
-  <Association Name="LendLR">
+  <Association Name="LendLendReturn">
     <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
-    <End Type="Model.LR" Role="LR" Multiplicity="0..1" />
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="0..1" />
     <ReferentialConstraint>
-      <Principal Role="LR">
+      <Principal Role="LendReturn">
         <PropertyRef Name="Id" />
+        <PropertyRef Name="LendId" />
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="LRId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="LendReturnLR">
-    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="*" />
-    <End Type="Model.LR" Role="LR" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="LR">
         <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="LendReturn">
-        <PropertyRef Name="LRId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -28,10 +28,6 @@ namespace WhoLends.Web.DAL
         public void InsertLend(Lend lend)
         {
             context.Lend.Add(lend);
-
-            var lr = new LR();
-            lr.Lend.Add(lend);
-            context.LRSet.Add(lr);
         }
 
         public void UpdateLend(Lend lend)

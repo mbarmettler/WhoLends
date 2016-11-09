@@ -64,7 +64,7 @@ namespace WhoLends.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                lendReturnVM.UserId = 2;
+                lendReturnVM.UserId = Helpers.General.GetCurrentUser(_userRepository).Id;
 
                 var model = LoadModel(lendReturnVM);
 
@@ -72,20 +72,20 @@ namespace WhoLends.Web.Controllers
                 _lendreturnRepository.Save();
 
                 var lendmodel = _lendRepository.GetLendByID(model.LendId);
+                lendmodel.To = DateTime.Now;
 
                 Mapper.Initialize(cfg =>
                 {
-                    cfg.CreateMap<Data.Lend, LendViewModel>();
+                    cfg.CreateMap<Lend, LendViewModel>();
                 });
 
-                LendViewModel lendVM = Mapper.Map<Data.Lend, LendViewModel>(lendmodel);
-
+                LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
+                
                 //ToDo
                 //set lendreturn id to lend and save
                 //set lendVM LendReturn to VM and save model
                 lendVM.LendLendReturn = lendReturnVM;
-                lendReturnVM.LRId = lendmodel.LRId;
-                
+                lendReturnVM.LRId = lendmodel.Id;
 
                 _lendRepository.UpdateLend(lendmodel);
                 _lendRepository.Save();

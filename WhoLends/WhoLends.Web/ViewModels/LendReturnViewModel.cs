@@ -14,7 +14,6 @@ namespace WhoLends.ViewModels
         public DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
         public int? LRId { get; set; }
-        public LR LRObject { get; set; }
         public bool SetComplete { get; set; }
 
         public User CreatedBy { get; set; }

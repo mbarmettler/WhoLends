@@ -70,7 +70,10 @@
                     columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" }));
                     columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
                 }
-                columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "../LendReturns/Create", new { id = c.Id }, new { @class = "btn btn-success glyphicon glyphicon-share-alt" }));                
+                //if (Model.First().LendLendReturn == null)
+                //{
+                columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "../LendReturns/Create", new {id = c.Id}, new {@class = "btn btn-success glyphicon glyphicon-share-alt"}));
+                //}
             }).WithPaging(4).Sortable(true)
     </div>
 }

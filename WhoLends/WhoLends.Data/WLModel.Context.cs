@@ -32,6 +32,5 @@ namespace WhoLends.Data
         public virtual DbSet<Lend> Lend { get; set; }
         public virtual DbSet<LendItem> LendItem { get; set; }
         public virtual DbSet<LendReturn> LendReturn { get; set; }
-        public virtual DbSet<LR> LRSet { get; set; }
     }
 }

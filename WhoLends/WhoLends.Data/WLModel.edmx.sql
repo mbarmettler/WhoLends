@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/02/2016 09:19:58
+-- Date Created: 11/09/2016 17:23:14
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -35,12 +35,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_LendUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendUser];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LendLR]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendLR];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LendReturnLR]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_LendReturnLR];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -60,9 +54,6 @@ IF OBJECT_ID(N'[dbo].[LendItem]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[LendReturn]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LendReturn];
-GO
-IF OBJECT_ID(N'[dbo].[LRSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LRSet];
 GO
 
 -- --------------------------------------------------
@@ -122,14 +113,7 @@ CREATE TABLE [dbo].[LendReturn] (
     [Description] nvarchar(max)  NOT NULL,
     [CreatedAt] datetime  NOT NULL,
     [UserId] int  NOT NULL,
-    [LRId] int  NULL,
     [SetComplete] bit  NOT NULL
-);
-GO
-
--- Creating table 'LRSet'
-CREATE TABLE [dbo].[LRSet] (
-    [Id] int IDENTITY(1,1) NOT NULL
 );
 GO
 
@@ -165,12 +149,6 @@ GO
 ALTER TABLE [dbo].[LendReturn]
 ADD CONSTRAINT [PK_LendReturn]
     PRIMARY KEY CLUSTERED ([Id], [LendId] ASC);
-GO
-
--- Creating primary key on [Id] in table 'LRSet'
-ALTER TABLE [dbo].[LRSet]
-ADD CONSTRAINT [PK_LRSet]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -267,34 +245,19 @@ ON [dbo].[Lend]
     ([LenderUserId]);
 GO
 
--- Creating foreign key on [LRId] in table 'Lend'
+-- Creating foreign key on [LRId], [Id] in table 'Lend'
 ALTER TABLE [dbo].[Lend]
-ADD CONSTRAINT [FK_LendLR]
-    FOREIGN KEY ([LRId])
-    REFERENCES [dbo].[LRSet]
-        ([Id])
+ADD CONSTRAINT [FK_LendLendReturn]
+    FOREIGN KEY ([LRId], [Id])
+    REFERENCES [dbo].[LendReturn]
+        ([Id], [LendId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LendLR'
-CREATE INDEX [IX_FK_LendLR]
+-- Creating non-clustered index for FOREIGN KEY 'FK_LendLendReturn'
+CREATE INDEX [IX_FK_LendLendReturn]
 ON [dbo].[Lend]
-    ([LRId]);
-GO
-
--- Creating foreign key on [LRId] in table 'LendReturn'
-ALTER TABLE [dbo].[LendReturn]
-ADD CONSTRAINT [FK_LendReturnLR]
-    FOREIGN KEY ([LRId])
-    REFERENCES [dbo].[LRSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LendReturnLR'
-CREATE INDEX [IX_FK_LendReturnLR]
-ON [dbo].[LendReturn]
-    ([LRId]);
+    ([LRId], [Id]);
 GO
 
 -- --------------------------------------------------
