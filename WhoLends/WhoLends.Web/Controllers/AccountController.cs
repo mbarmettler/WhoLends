@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -106,6 +111,229 @@ namespace WhoLends.Controllers
             }
         }
 
+
+        //
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public virtual ActionResult Register()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    //no automatic login for new user
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    //creating new User in database
+                    User newUserLogin = new User();
+                    newUserLogin.UserName = user.UserName;
+                    newUserLogin.Email = user.Email;
+                    newUserLogin.PasswordHash = user.PasswordHash;
+                    newUserLogin.RoleId = 2;
+
+                    _userRepository.InsertUser(newUserLogin);
+                    _userRepository.Save();
+
+                    
+                    MailMessage mailMsg = new MailMessage();
+
+                    // Init SmtpClient
+                    SmtpClient smtpClient = new SmtpClient();
+                    NetworkCredential credentials = (NetworkCredential)smtpClient.Credentials;
+
+                    // To
+                    mailMsg.To.Add(new MailAddress(newUserLogin.Email, newUserLogin.UserName));
+
+                    // From
+                    mailMsg.From = new MailAddress(credentials.UserName, "WhoLends");
+
+                    // Subject and multipart/alternative Body
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                    mailMsg.Subject = "Confirm your account";
+                    string text = "Please confirm your account by clicking " + callbackUrl;
+                    string html = $"<p>Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a></p>";
+                    mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+                    mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+                    
+                    //send mail
+                    smtpClient.Send(mailMsg);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ConfirmEmail
+        [AllowAnonymous]
+        public virtual async Task<ActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        //
+        // GET: /Account/ForgotPassword
+        [AllowAnonymous]
+        public virtual ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = UserManager.FindByEmail(model.Email);
+                if (user == null /*|| !(await UserManager.IsEmailConfirmedAsync(user.Id))*/)
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    //return View("ForgotPasswordConfirmation");
+                    return View(model);
+                }
+
+                MailMessage mailMsg = new MailMessage();
+
+                // Init SmtpClient
+                SmtpClient smtpClient = new SmtpClient();
+                NetworkCredential credentials = (NetworkCredential)smtpClient.Credentials;
+
+                // To
+                mailMsg.To.Add(new MailAddress(user.Email, user.UserName));
+
+                // From
+                mailMsg.From = new MailAddress(credentials.UserName, "WhoLends");
+
+                // Subject and multipart/alternative Body
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                mailMsg.Subject = "Reset Password";
+                string text = "Please reset your password by clicking " + callbackUrl;
+                string html = "<p>Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a></p>";
+                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+
+                //send mail
+                smtpClient.Send(mailMsg);
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ForgotPasswordConfirmation
+        [AllowAnonymous]
+        public virtual ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/ResetPassword
+        [AllowAnonymous]
+        public virtual ActionResult ResetPassword(string code)
+        {
+            return code == null ? View("Error") : View();
+        }
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = UserManager.FindByEmail(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            AddErrors(result);
+            return View();
+        }
+
+        //
+        // GET: /Account/ResetPasswordConfirmation
+        [AllowAnonymous]
+        public virtual ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_signInManager != null)
+                {
+                    _signInManager.Dispose();
+                    _signInManager = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #region ----------  not used methods ------------------
+
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -150,149 +378,9 @@ namespace WhoLends.Controllers
         }
 
         //
-        // GET: /Account/Register
+        // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
-        public virtual ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    //creating new User in database
-                    User dddd = new Data.User();
-                    dddd.UserName = user.UserName;
-                    dddd.Email = user.Email;
-                    dddd.PasswordHash = user.PasswordHash;
-                    dddd.RoleId = 2;
-
-                    _userRepository.InsertUser(dddd);
-                    _userRepository.Save();
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
-        public virtual async Task<ActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return View("Error");
-            }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
-
-        //
-        // GET: /Account/ForgotPassword
-        [AllowAnonymous]
-        public virtual ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/ForgotPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
-        public virtual ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPassword
-        [AllowAnonymous]
-        public virtual ActionResult ResetPassword(string code)
-        {
-            return code == null ? View("Error") : View();
-        }
-
-        //
-        // POST: /Account/ResetPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-            return View();
-        }
-
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public virtual ActionResult ResetPasswordConfirmation()
+        public virtual ActionResult ExternalLoginFailure()
         {
             return View();
         }
@@ -411,43 +499,7 @@ namespace WhoLends.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult LogOff()
-        {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
-        }
-
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public virtual ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
+        #endregion
 
         #region Helpers
         // Used for XSRF protection when adding external logins
