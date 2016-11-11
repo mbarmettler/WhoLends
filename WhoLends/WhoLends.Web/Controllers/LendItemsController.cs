@@ -101,12 +101,19 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<Lend, LendViewModel>();
+                    cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
+                    cfg.CreateMap<File, FileViewModel>();
+                });
+                
                 //get currently logged in user            
                 var dbUser = General.GetCurrentUser(_userRepository);
 
                 lendItemVM.CreatedAt = DateTime.Now;
                 
-                var lenditemmodel = LoadModel(lendItemVM);
+                var lenditemmodel = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
                 lenditemmodel.UserId = dbUser.Id;
                 lenditemmodel.User = lendItemVM.CreatedBy;
 
@@ -117,7 +124,7 @@ namespace WhoLends.Controllers
                 if (uploadfile.ContentLength > 0)
                 {
                     FileViewModel fileVM = new FileViewModel();
-                    using (var reader = new System.IO.BinaryReader(uploadfile.InputStream))
+                    using (var reader = new BinaryReader(uploadfile.InputStream))
                     {
                         fileVM.Content = reader.ReadBytes(uploadfile.ContentLength);
                     }
@@ -176,12 +183,16 @@ namespace WhoLends.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(LendItemViewModel lendItemVM)
         {
-            var model = LoadModel(lendItemVM);
+            //todo - does not work yet
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<LendItem, LendItemViewModel>();
+                cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
             });
+
+            var model = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
+            //_lendItemRepository.UpdateLendItem(model);
+            //_lendItemRepository.Save();
 
             LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
 
@@ -245,22 +256,6 @@ namespace WhoLends.Controllers
             }
 
             return lItems;
-        }
-
-        private LendItem LoadModel(LendItemViewModel viewModel)
-        {
-            var model = _lendItemRepository.GetLendItemByID(viewModel.Id) ?? new LendItem();
-
-            model.Id = viewModel.Id;
-            model.Description = viewModel.Description;
-            model.Name = viewModel.Name;
-            model.CreatedAt = viewModel.CreatedAt;
-            model.UserId = viewModel.UserId;
-            model.Quantity = viewModel.Quantity;
-            model.Condition = viewModel.Condition;
-            model.CustomerId = viewModel.CustomerId;
-
-            return model;
         }
 
         private File LoadFileModel(FileViewModel viemwModel)

@@ -75,7 +75,7 @@ namespace WhoLends.Controllers
             
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Lend, LendViewModel>();
                 cfg.CreateMap<LendItem, LendItemViewModel>();
                 cfg.CreateMap<File, FileViewModel>();
             });
@@ -150,8 +150,7 @@ namespace WhoLends.Controllers
                 sortedItemList = lenditems.ToList();
             }
         
-
-        var viewmodel = new LendViewModel()
+            var viewmodel = new LendViewModel()
             {
                 LendItemsList = sortedItemList,
                 UserList = _userRepository.GetUsers(),
@@ -175,7 +174,12 @@ namespace WhoLends.Controllers
                 //get currently logged in user               
                 var dbUser = Web.Helpers.General.GetCurrentUser(_userRepository);
 
-                var model = LoadModel(lendVM);
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
+                });
+
+                var model = Mapper.Map<LendViewModel, Lend>(lendVM);
                 model.UserId = dbUser.Id;
 
                 _lendRepository.InsertLend(model);
@@ -209,12 +213,16 @@ namespace WhoLends.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(LendViewModel viewModel)
         {
-            var model = LoadModel(viewModel);
+            //todo - does not work yet
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Lend, LendViewModel>();
+                cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
             });
+
+            var model = Mapper.Map<LendViewModel, Lend>(viewModel);
+            _lendRepository.UpdateLend(model);
+            //_lendRepository.Save();
 
             LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
 
@@ -257,23 +265,7 @@ namespace WhoLends.Controllers
             }
             return RedirectToAction("Index");
         }
-
         
-        private Data.Lend LoadModel(LendViewModel viewModel)
-        {
-            var model = _lendRepository.GetLendByID(viewModel.Id) ?? new Data.Lend();
-
-            model.Id = viewModel.Id;
-            model.From = viewModel.From;
-            model.To = viewModel.To;
-            model.CreatedAt = viewModel.CreatedAt;
-            model.LendItemId = viewModel.LendItemId;
-            model.UserId = viewModel.UserId;
-            model.LenderUserId = viewModel.LenderUserId;
-
-            return model;
-        }
-
         private List<LendViewModel> LendList()
         {
             Mapper.Initialize(cfg =>
