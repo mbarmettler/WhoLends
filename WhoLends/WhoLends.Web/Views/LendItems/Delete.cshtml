@@ -51,8 +51,12 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Zurück", "Index")
+            <a href="@Url.Action("Index", "LendItems")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Zurück
+            </a>    
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            
         </div>
     }
 </div>

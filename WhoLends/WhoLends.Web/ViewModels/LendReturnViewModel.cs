@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WhoLends.Data;
 
@@ -20,5 +22,7 @@ namespace WhoLends.ViewModels
 
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
+
+        public IEnumerable<FileViewModel> ReturnImageViewModels { get; set; }  
     }
 }

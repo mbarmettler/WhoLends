@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using WhoLends.Data;
 using WhoLends.ViewModels;
 using WhoLends.Web.DAL;
+using WhoLends.Web.Helpers;
 
 namespace WhoLends.Web.Controllers
 {
@@ -46,7 +47,7 @@ namespace WhoLends.Web.Controllers
             LendReturnViewModel lendReturnVm = new LendReturnViewModel();
 
             lendReturnVm.CreatedAt = DateTime.Now;
-            lendReturnVm.CreatedBy = Helpers.General.GetCurrentUser(_userRepository);
+            lendReturnVm.CreatedBy = General.GetCurrentUser(_userRepository);
             lendReturnVm.UserId = lendReturnVm.CreatedBy.Id;
             lendReturnVm.CurrentUserwithID = lendReturnVm.CreatedBy.UserName + " (" + lendReturnVm.UserId + ")";
 
@@ -62,22 +63,24 @@ namespace WhoLends.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(LendReturnViewModel lendReturnVM)
         {
+            //todo refactoring and improvement
             if (ModelState.IsValid)
             {
-                lendReturnVM.UserId = Helpers.General.GetCurrentUser(_userRepository).Id;
+                lendReturnVM.UserId = General.GetCurrentUser(_userRepository).Id;
 
-                var model = LoadModel(lendReturnVM);
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
+                    cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
+                });
+                
+                var model = Mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
 
                 _lendreturnRepository.InsertReturn(model);
                 _lendreturnRepository.Save();
 
                 var lendmodel = _lendRepository.GetLendByID(model.LendId);
                 lendmodel.To = DateTime.Now;
-
-                Mapper.Initialize(cfg =>
-                {
-                    cfg.CreateMap<Lend, LendViewModel>();
-                });
 
                 LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
                 
@@ -95,6 +98,8 @@ namespace WhoLends.Web.Controllers
 
             return View(lendReturnVM);
         }
+
+        #region not used code
 
         // GET: LendReturn/Details/5
         //public ActionResult Details(int? id)
@@ -179,16 +184,6 @@ namespace WhoLends.Web.Controllers
         //    base.Dispose(disposing);
         //}
 
-        private LendReturn LoadModel(LendReturnViewModel viewModel)
-        {
-            var model = new LendReturn();
-
-            model.Description = viewModel.Description;
-            model.CreatedAt = viewModel.CreatedAt;
-            model.UserId = viewModel.UserId;
-            model.LendId = viewModel.LendId;
-
-            return model;
-        }
+        #endregion
     }
 }

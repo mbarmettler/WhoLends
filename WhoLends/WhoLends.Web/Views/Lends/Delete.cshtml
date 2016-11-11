@@ -51,12 +51,16 @@
     </dl>
     <hr/>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Zurück
+            </a>    
+            <input type="submit" value="Delete" class="btn btn-danger"/>
         </div>
     }
 </div>
