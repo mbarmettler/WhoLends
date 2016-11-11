@@ -17,10 +17,10 @@ namespace WhoLends.Web.Controllers
 
         public LendReturnsController()
         {
-            this._lendRepository = new LendRepository(new Entities());
-            this._lendItemRepository = new LendItemRepository(new Entities());
-            this._userRepository = new UserRepository(new Entities());
-            this._lendreturnRepository = new LendReturnRepository(new Entities());
+            _lendRepository = new LendRepository(new Entities());
+            _lendItemRepository = new LendItemRepository(new Entities());
+            _userRepository = new UserRepository(new Entities());
+            _lendreturnRepository = new LendReturnRepository(new Entities());
         }
 
         // GET: LendReturn
@@ -28,7 +28,6 @@ namespace WhoLends.Web.Controllers
         {
             return View();
         }
-
 
         // GET: LendReturn/Create
         public virtual ActionResult Create(int Id)
@@ -42,8 +41,7 @@ namespace WhoLends.Web.Controllers
 
             LendViewModel lendVM = Mapper.Map<Data.Lend, LendViewModel>(model);
             lendVM.To = DateTime.Now;
-
-
+            
             LendReturnViewModel lendReturnVm = new LendReturnViewModel();
 
             lendReturnVm.CreatedAt = DateTime.Now;
