@@ -6,6 +6,7 @@
     <EntitySet Name="Lend" EntityType="Model.Store.Lend" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendItem" EntityType="Model.Store.LendItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendReturn" EntityType="Model.Store.LendReturn" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileSet" EntityType="Model.Store.FileSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_LendItemLend" Association="Model.Store.FK_LendItemLend">
       <End Role="LendItem" EntitySet="LendItem" />
       <End Role="Lend" EntitySet="Lend" />
@@ -33,6 +34,10 @@
     <AssociationSet Name="LendLendReturn" Association="Model.Store.LendLendReturn">
       <End Role="Lend" EntitySet="Lend" />
       <End Role="LendReturn" EntitySet="LendReturn" />
+    </AssociationSet>
+    <AssociationSet Name="FileLendItem" Association="Model.Store.FileLendItem">
+      <End Role="File" EntitySet="FileSet" />
+      <End Role="LendItem" EntitySet="LendItem" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
@@ -80,6 +85,7 @@
     <Property Name="Condition" Type="int" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FileId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -92,6 +98,17 @@
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="SetComplete" Type="bit" Nullable="false" />
+    <Property Name="FileId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FileSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="LendItemId" Type="int" Nullable="false" />
+    <Property Name="LendReturnId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_LendItemLend">
     <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
@@ -176,6 +193,18 @@
       <Dependent Role="Lend">
         <PropertyRef Name="LRId" />
         <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FileLendItem">
+    <End Role="File" Type="Model.Store.FileSet" Multiplicity="*" />
+    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="LendItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="LendItemId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

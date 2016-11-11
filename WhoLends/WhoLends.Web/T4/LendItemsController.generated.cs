@@ -123,6 +123,7 @@ namespace WhoLends.Controllers
         public class ActionParamsClass_Create
         {
             public readonly string lendItemVM = "lendItemVM";
+            public readonly string uploadfile = "uploadfile";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -206,14 +207,15 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendItemViewModel lendItemVM);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendItemViewModel lendItemVM, System.Web.HttpPostedFileBase uploadfile);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendItemViewModel lendItemVM)
+        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendItemViewModel lendItemVM, System.Web.HttpPostedFileBase uploadfile)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendItemVM", lendItemVM);
-            CreateOverride(callInfo, lendItemVM);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "uploadfile", uploadfile);
+            CreateOverride(callInfo, lendItemVM, uploadfile);
             return callInfo;
         }
 

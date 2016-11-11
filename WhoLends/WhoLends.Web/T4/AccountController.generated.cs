@@ -64,13 +64,6 @@ namespace WhoLends.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
-            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ConfirmEmail()
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ConfirmEmail);
@@ -81,6 +74,13 @@ namespace WhoLends.Controllers
         public virtual System.Web.Mvc.ActionResult ResetPassword()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -126,38 +126,38 @@ namespace WhoLends.Controllers
         public class ActionNamesClass
         {
             public readonly string Login = "Login";
-            public readonly string VerifyCode = "VerifyCode";
             public readonly string Register = "Register";
             public readonly string ConfirmEmail = "ConfirmEmail";
             public readonly string ForgotPassword = "ForgotPassword";
             public readonly string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
             public readonly string ResetPassword = "ResetPassword";
             public readonly string ResetPasswordConfirmation = "ResetPasswordConfirmation";
+            public readonly string LogOff = "LogOff";
+            public readonly string VerifyCode = "VerifyCode";
+            public readonly string ExternalLoginFailure = "ExternalLoginFailure";
             public readonly string ExternalLogin = "ExternalLogin";
             public readonly string SendCode = "SendCode";
             public readonly string ExternalLoginCallback = "ExternalLoginCallback";
             public readonly string ExternalLoginConfirmation = "ExternalLoginConfirmation";
-            public readonly string LogOff = "LogOff";
-            public readonly string ExternalLoginFailure = "ExternalLoginFailure";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Login = "Login";
-            public const string VerifyCode = "VerifyCode";
             public const string Register = "Register";
             public const string ConfirmEmail = "ConfirmEmail";
             public const string ForgotPassword = "ForgotPassword";
             public const string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
             public const string ResetPassword = "ResetPassword";
             public const string ResetPasswordConfirmation = "ResetPasswordConfirmation";
+            public const string LogOff = "LogOff";
+            public const string VerifyCode = "VerifyCode";
+            public const string ExternalLoginFailure = "ExternalLoginFailure";
             public const string ExternalLogin = "ExternalLogin";
             public const string SendCode = "SendCode";
             public const string ExternalLoginCallback = "ExternalLoginCallback";
             public const string ExternalLoginConfirmation = "ExternalLoginConfirmation";
-            public const string LogOff = "LogOff";
-            public const string ExternalLoginFailure = "ExternalLoginFailure";
         }
 
 
@@ -168,17 +168,6 @@ namespace WhoLends.Controllers
         public class ActionParamsClass_Login
         {
             public readonly string returnUrl = "returnUrl";
-            public readonly string model = "model";
-        }
-        static readonly ActionParamsClass_VerifyCode s_params_VerifyCode = new ActionParamsClass_VerifyCode();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_VerifyCode VerifyCodeParams { get { return s_params_VerifyCode; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_VerifyCode
-        {
-            public readonly string provider = "provider";
-            public readonly string returnUrl = "returnUrl";
-            public readonly string rememberMe = "rememberMe";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
@@ -213,6 +202,17 @@ namespace WhoLends.Controllers
         public class ActionParamsClass_ResetPassword
         {
             public readonly string code = "code";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_VerifyCode s_params_VerifyCode = new ActionParamsClass_VerifyCode();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_VerifyCode VerifyCodeParams { get { return s_params_VerifyCode; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_VerifyCode
+        {
+            public readonly string provider = "provider";
+            public readonly string returnUrl = "returnUrl";
+            public readonly string rememberMe = "rememberMe";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_ExternalLogin s_params_ExternalLogin = new ActionParamsClass_ExternalLogin();
@@ -261,17 +261,21 @@ namespace WhoLends.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string ConfirmEmail = "ConfirmEmail";
                 public readonly string ForgotPassword = "ForgotPassword";
                 public readonly string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
                 public readonly string Login = "Login";
                 public readonly string Register = "Register";
                 public readonly string ResetPassword = "ResetPassword";
+                public readonly string ResetPasswordConfirmation = "ResetPasswordConfirmation";
             }
+            public readonly string ConfirmEmail = "~/Views/Account/ConfirmEmail.cshtml";
             public readonly string ForgotPassword = "~/Views/Account/ForgotPassword.cshtml";
             public readonly string ForgotPasswordConfirmation = "~/Views/Account/ForgotPasswordConfirmation.cshtml";
             public readonly string Login = "~/Views/Account/Login.cshtml";
             public readonly string Register = "~/Views/Account/Register.cshtml";
             public readonly string ResetPassword = "~/Views/Account/ResetPassword.cshtml";
+            public readonly string ResetPasswordConfirmation = "~/Views/Account/ResetPasswordConfirmation.cshtml";
         }
     }
 
@@ -302,32 +306,6 @@ namespace WhoLends.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
             LoginOverride(callInfo, model, returnUrl);
-            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
-        }
-
-        [NonAction]
-        partial void VerifyCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string provider, string returnUrl, bool rememberMe);
-
-        [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "provider", provider);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "rememberMe", rememberMe);
-            VerifyCodeOverride(callInfo, provider, returnUrl, rememberMe);
-            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
-        }
-
-        [NonAction]
-        partial void VerifyCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.VerifyCodeViewModel model);
-
-        [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode(WhoLends.ViewModels.VerifyCodeViewModel model)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
-            VerifyCodeOverride(callInfo, model);
             return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
@@ -437,6 +415,54 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
+        partial void LogOffOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogOff()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
+            LogOffOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void VerifyCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string provider, string returnUrl, bool rememberMe);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "provider", provider);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "rememberMe", rememberMe);
+            VerifyCodeOverride(callInfo, provider, returnUrl, rememberMe);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
+        }
+
+        [NonAction]
+        partial void VerifyCodeOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.VerifyCodeViewModel model);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> VerifyCode(WhoLends.ViewModels.VerifyCodeViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.VerifyCode);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            VerifyCodeOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
+        }
+
+        [NonAction]
+        partial void ExternalLoginFailureOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ExternalLoginFailure()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ExternalLoginFailure);
+            ExternalLoginFailureOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
         partial void ExternalLoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string provider, string returnUrl);
 
         [NonAction]
@@ -497,28 +523,6 @@ namespace WhoLends.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
             ExternalLoginConfirmationOverride(callInfo, model, returnUrl);
             return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
-        }
-
-        [NonAction]
-        partial void LogOffOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult LogOff()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
-            LogOffOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void ExternalLoginFailureOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult ExternalLoginFailure()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ExternalLoginFailure);
-            ExternalLoginFailureOverride(callInfo);
-            return callInfo;
         }
 
     }

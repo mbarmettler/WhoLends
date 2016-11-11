@@ -48,6 +48,7 @@
           <ScalarProperty Name="Condition" ColumnName="Condition" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -60,6 +61,18 @@
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="SetComplete" ColumnName="SetComplete" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.File)">
+        <MappingFragment StoreEntitySet="FileSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+          <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

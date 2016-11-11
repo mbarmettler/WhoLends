@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Drawing;
+using System.IO;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using WhoLends.Data;
@@ -15,6 +17,13 @@ namespace WhoLends.Web.Helpers
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
 
             return dbUser;
+        }
+
+        public static Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
         }
     }
 }

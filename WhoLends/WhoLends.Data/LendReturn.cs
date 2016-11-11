@@ -26,6 +26,7 @@ namespace WhoLends.Data
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
         public bool SetComplete { get; set; }
+        public int FileId { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

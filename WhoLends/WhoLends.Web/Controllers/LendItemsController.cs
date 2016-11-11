@@ -4,11 +4,18 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WhoLends.Data;
 using WhoLends.ViewModels;
 using WhoLends.Web.DAL;
+using WhoLends.Web.DAL.Implementations;
+using WhoLends.Web.Helpers;
+using File = WhoLends.Data.File;
 
 namespace WhoLends.Controllers
 {
@@ -17,11 +24,13 @@ namespace WhoLends.Controllers
     {
         private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
+        private IFileRepository _fileRepository;
 
         public LendItemsController()
         {
-            this._lendItemRepository = new LendItemRepository(new Entities());
-            this._userRepository = new UserRepository(new Entities());
+            _lendItemRepository = new LendItemRepository(new Entities());
+            _userRepository = new UserRepository(new Entities());
+            _fileRepository = new FileRepository(new Entities());
         }
 
         public LendItemsController(ILendItemRepository lendItemrepository)
@@ -48,9 +57,24 @@ namespace WhoLends.Controllers
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<LendItem, LendItemViewModel>();
+                cfg.CreateMap<File, FileViewModel>();
             });
 
             LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
+
+
+            //get images
+            var lenditemImages = _fileRepository.GetFilesByLendItemId(vm.Id);
+            List<FileViewModel> listimages = new List<FileViewModel>();
+            
+            foreach (var item in lenditemImages)
+            {
+                FileViewModel vmfile = Mapper.Map<File, FileViewModel>(item);
+                listimages.Add(vmfile);
+            }
+
+            //add images to Item VM
+            vm.ItemImageViewModels = listimages.AsEnumerable();
 
             return View(vm);
         }
@@ -73,28 +97,59 @@ namespace WhoLends.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Create(LendItemViewModel lendItemVM)
+        public virtual ActionResult Create(LendItemViewModel lendItemVM, HttpPostedFileBase uploadfile)
         {
             if (ModelState.IsValid)
             {
                 //get currently logged in user            
-                var dbUser = Web.Helpers.General.GetCurrentUser(_userRepository);
+                var dbUser = General.GetCurrentUser(_userRepository);
 
                 lendItemVM.CreatedAt = DateTime.Now;
+                
+                var lenditemmodel = LoadModel(lendItemVM);
+                lenditemmodel.UserId = dbUser.Id;
+                lenditemmodel.User = lendItemVM.CreatedBy;
 
-                var model = LoadModel(lendItemVM);
-                model.UserId = dbUser.Id;
-                model.User = lendItemVM.CreatedBy;
+                _lendItemRepository.InsertLendItem(lenditemmodel);
+                _lendItemRepository.Save();
 
-                _lendItemRepository.InsertLendItem(model);
-                _lendItemRepository.Save();                
+                //process Attached Images
+                if (uploadfile.ContentLength > 0)
+                {
+                    FileViewModel fileVM = new FileViewModel();
+                    using (var reader = new System.IO.BinaryReader(uploadfile.InputStream))
+                    {
+                        fileVM.Content = reader.ReadBytes(uploadfile.ContentLength);
+                    }
+
+                    fileVM.FileName = uploadfile.FileName;
+                    fileVM.LendItemId = lenditemmodel.Id;
+
+                    //add file to DB
+                    var filemodel = LoadFileModel(fileVM);
+                    _fileRepository.InsertFile(filemodel);
+                    _fileRepository.Save();
+
+                    //adding to LendItem VM
+                    List<FileViewModel> list = new List<FileViewModel>();
+                    list.Add(fileVM);
+                    lendItemVM.ItemImageViewModels = list.AsEnumerable();
+
+                    //update lenditem - file ID
+                    lenditemmodel.FileId = filemodel.Id;
+
+                    _lendItemRepository.UpdateLendItem(lenditemmodel);
+                    _lendItemRepository.Save();
+                }
 
                 return RedirectToAction("Index");
             }
 
             return View(lendItemVM);
         }
-             
+
+
+
         // GET: LendItems/Edit/5
         public virtual ActionResult Edit(int Id)
         {
@@ -206,6 +261,20 @@ namespace WhoLends.Controllers
             model.CustomerId = viewModel.CustomerId;
 
             return model;
-        }        
+        }
+
+        private File LoadFileModel(FileViewModel viemwModel)
+        {
+            var model = _fileRepository.GetFileById(viemwModel.Id) ?? new File();
+
+            model.Id = viemwModel.Id;
+            model.LendItemId = viemwModel.LendItemId;
+            model.Content = viemwModel.Content;
+            model.FileName = viemwModel.FileName;
+            model.LendReturnId = viemwModel.LendReturnId;
+
+            return model;
+        }
+
     }
 }

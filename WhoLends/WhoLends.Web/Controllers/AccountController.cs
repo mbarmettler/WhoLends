@@ -191,6 +191,11 @@ namespace WhoLends.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+
+            var user = _userRepository.GetUserById(Convert.ToInt16(userId));
+            user.EmailConfirmed = true;
+            _userRepository.UpdateUser(user);
+
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

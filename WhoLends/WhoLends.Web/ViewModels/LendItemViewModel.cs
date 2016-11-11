@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
+using System.Web.Profile;
 using WhoLends.Data;
 
 namespace WhoLends.ViewModels
@@ -42,5 +45,8 @@ namespace WhoLends.ViewModels
         
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
+        
+        public IEnumerable<FileViewModel> ItemImageViewModels { get; set; }
+        
     }
 }

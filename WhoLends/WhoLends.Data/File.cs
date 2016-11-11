@@ -12,18 +12,14 @@ namespace WhoLends.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class LendItem
+    public partial class File
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string CustomerId { get; set; }
-        public short Quantity { get; set; }
-        public Condition Condition { get; set; }
-        public System.DateTime CreatedAt { get; set; }
-        public int UserId { get; set; }
-        public int FileId { get; set; }
+        public string FileName { get; set; }
+        public byte[] Content { get; set; }
+        public int LendItemId { get; set; }
+        public int LendReturnId { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual LendItem LendItem { get; set; }
     }
 }

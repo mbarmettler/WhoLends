@@ -10,7 +10,7 @@
 <h2>Erstellen</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create","LendItems",FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
@@ -52,15 +52,23 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Condition, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Condition, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+                @Html.EnumDropDownListFor(model => model.Condition, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Condition, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemImageViewModels, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                <input type="file" name="uploadfile"/>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CurrentUserwithID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CurrentUserwithID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.CurrentUserwithID, new { @class = "form-control" })
             </div>

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using WhoLends.Web.DAL.Implementations;
 
 namespace WhoLends.Controllers
 {
@@ -19,19 +20,22 @@ namespace WhoLends.Controllers
         private ILendRepository _lendRepository;
         private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
+        private IFileRepository _fileRepository;
 
         public LendsController()
         {
-            this._lendRepository = new LendRepository(new Entities());
-            this._lendItemRepository = new LendItemRepository(new Entities());
-            this._userRepository = new UserRepository(new Entities());
+            _lendRepository = new LendRepository(new Entities());
+            _lendItemRepository = new LendItemRepository(new Entities());
+            _userRepository = new UserRepository(new Entities());
+            _fileRepository = new FileRepository(new Entities());
         }
 
-        public LendsController(ILendRepository lendrepository, ILendItemRepository lenditemrepository, IUserRepository userrepository)
+        public LendsController(ILendRepository lendrepository, ILendItemRepository lenditemrepository, IUserRepository userrepository, IFileRepository fileRepository)
         {
-            this._lendRepository = lendrepository;
-            this._lendItemRepository = lenditemrepository;
-            this._userRepository = userrepository;
+            _lendRepository = lendrepository;
+            _lendItemRepository = lenditemrepository;
+            _userRepository = userrepository;
+            _fileRepository = fileRepository;
         }
 
         // GET: Lends
@@ -73,6 +77,7 @@ namespace WhoLends.Controllers
             {
                 cfg.CreateMap<Data.Lend, LendViewModel>();
                 cfg.CreateMap<LendItem, LendItemViewModel>();
+                cfg.CreateMap<File, FileViewModel>();
             });
 
             LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
@@ -89,6 +94,19 @@ namespace WhoLends.Controllers
             vm.SelectedLendUser = model.LendUser;
             vm.SelectedLendItem = ItemVM;
             vm.LendLendReturn = lrVM;
+
+            //get images of LendItem
+            var lenditemImages = _fileRepository.GetFilesByLendItemId(ItemVM.Id);
+            List<FileViewModel> listimages = new List<FileViewModel>();
+
+            foreach (var item in lenditemImages)
+            {
+                FileViewModel vmfile = Mapper.Map<File, FileViewModel>(item);
+                listimages.Add(vmfile);
+            }
+
+            //add images to Item VM
+            ItemVM.ItemImageViewModels = listimages.AsEnumerable();
 
             return View(vm);
         }
