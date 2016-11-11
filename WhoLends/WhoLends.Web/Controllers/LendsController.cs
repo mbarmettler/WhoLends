@@ -124,39 +124,35 @@ namespace WhoLends.Controllers
 
             //check lenditems quanitty / availability
 
-            var lenditems = Mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems()).ToList().AsEnumerable();
-            
-            var lendsItemKeyCount = _lendRepository.GetLends()
-                            .GroupBy(f => f.LendItemId)
-                            .Select(g => new { g.Key, Count = g.Count() });
+            var lenditems = Mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems().OrderBy(d=>d.Id)).ToList().AsEnumerable();
+            var alllends = _lendRepository.GetLends();
 
+            var lendsItemKeyCount = alllends.Select(f => new { f.Id, liId = f.LendItemId });
+            
             var sortedItemList = new List<LendItemViewModel>();
 
-            //if there are no lends - just fill all lenditems
-            if (!lendsItemKeyCount.Any())
+            //collect the available Items according their quantity
+            if (lendsItemKeyCount.Any())
             {
-                sortedItemList = lenditems.ToList();
-            }
-            else
-            {
-                foreach (var item in lendsItemKeyCount)
+                foreach (var item in lenditems)
                 {
-                    var itemId = item.Key;
-                    var itemCnt = item.Count;
-                    foreach (var li in lenditems)
+                    var usedItemCounter = lendsItemKeyCount.Count(d => d.liId.Equals(item.Id));
+                    
+                    if (usedItemCounter < item.Quantity)
                     {
-                        if (itemId == li.Id && itemCnt < li.Quantity)
-                        {
-                            sortedItemList.Add(li);
-                        }
+                        sortedItemList.Add(item);
                     }
                 }
             }
-
-            var viewmodel = new LendViewModel()
+            else
             {
-                //todo
+                //adding all items to the list
+                sortedItemList = lenditems.ToList();
+            }
+        
 
+        var viewmodel = new LendViewModel()
+            {
                 LendItemsList = sortedItemList,
                 UserList = _userRepository.GetUsers(),
                 CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"

@@ -129,7 +129,7 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -138,7 +138,7 @@ namespace WhoLends.Controllers
 
                     //creating new User in database
                     User newUserLogin = new User();
-                    newUserLogin.UserName = user.UserName;
+                    newUserLogin.UserName = model.UserName;
                     newUserLogin.Email = user.Email;
                     newUserLogin.PasswordHash = user.PasswordHash;
                     newUserLogin.RoleId = 2;
@@ -191,10 +191,15 @@ namespace WhoLends.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+            
+            //for DB Update
+            var userObj = UserManager.FindById(userId);
 
-            var user = _userRepository.GetUserById(Convert.ToInt16(userId));
+            var user = _userRepository.GetUserByEmail(userObj.Email);
             user.EmailConfirmed = true;
             _userRepository.UpdateUser(user);
+            _userRepository.Save();
+            //
 
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
