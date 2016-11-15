@@ -35,7 +35,7 @@ namespace WhoLends.Controllers
 
         public LendItemsController(ILendItemRepository lendItemrepository)
         {
-            this._lendItemRepository = lendItemrepository;
+            _lendItemRepository = lendItemrepository;
         }
 
         // GET: LendItems
@@ -105,7 +105,7 @@ namespace WhoLends.Controllers
                 {
                     cfg.CreateMap<Lend, LendViewModel>();
                     cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
-                    cfg.CreateMap<File, FileViewModel>();
+                    cfg.CreateMap<File, FileViewModel>().ReverseMap();
                 });
                 
                 //get currently logged in user            
@@ -133,7 +133,7 @@ namespace WhoLends.Controllers
                     fileVM.LendItemId = lenditemmodel.Id;
 
                     //add file to DB
-                    var filemodel = LoadFileModel(fileVM);
+                    var filemodel = Mapper.Map<FileViewModel, File>(fileVM);
                     _fileRepository.InsertFile(filemodel);
                     _fileRepository.Save();
 
@@ -154,8 +154,6 @@ namespace WhoLends.Controllers
 
             return View(lendItemVM);
         }
-
-
 
         // GET: LendItems/Edit/5
         public virtual ActionResult Edit(int Id)
@@ -258,18 +256,18 @@ namespace WhoLends.Controllers
             return lItems;
         }
 
-        private File LoadFileModel(FileViewModel viemwModel)
-        {
-            var model = _fileRepository.GetFileById(viemwModel.Id) ?? new File();
+        //private File LoadFileModel(FileViewModel viemwModel)
+        //{
+        //    var model = _fileRepository.GetFileById(viemwModel.Id) ?? new File();
 
-            model.Id = viemwModel.Id;
-            model.LendItemId = viemwModel.LendItemId;
-            model.Content = viemwModel.Content;
-            model.FileName = viemwModel.FileName;
-            model.LendReturnId = viemwModel.LendReturnId;
+        //    model.Id = viemwModel.Id;
+        //    model.LendItemId = viemwModel.LendItemId;
+        //    model.Content = viemwModel.Content;
+        //    model.FileName = viemwModel.FileName;
+        //    model.LendReturnId = viemwModel.LendReturnId;
 
-            return model;
-        }
+        //    return model;
+        //}
 
     }
 }

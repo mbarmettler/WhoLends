@@ -5,8 +5,6 @@ using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    //[MetadataType(typeof(LendViewModel))]
-    //public partial class Lend { }
     public class LendViewModel
     {
         public int Id { get; set; }
@@ -38,7 +36,7 @@ namespace WhoLends.ViewModels
         [Display(Name = "Ausleiher")]
         public User SelectedLendUser { get; set; }
 
-        public LendReturnViewModel LendLendReturn { get; set; }
+        public LendReturnViewModel LendReturn { get; set; }
 
         public IEnumerable<LendItemViewModel> LendItemsList { get; set; }
         public IEnumerable<User> UserList { get; set; }

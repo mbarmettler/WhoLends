@@ -36,10 +36,11 @@ namespace WhoLends.Web.Controllers
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Data.Lend, LendViewModel>();
+                cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
             });
 
-            LendViewModel lendVM = Mapper.Map<Data.Lend, LendViewModel>(model);
+            LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(model);
             lendVM.To = DateTime.Now;
             
             LendReturnViewModel lendReturnVm = new LendReturnViewModel();
@@ -85,8 +86,7 @@ namespace WhoLends.Web.Controllers
                 //ToDo
                 //set lendreturn id to lend and save
                 //set lendVM LendReturn to VM and save model
-                lendVM.LendLendReturn = lendReturnVM;
-                lendReturnVM.LRId = lendmodel.Id;
+                lendVM.LendReturn = lendReturnVM;
 
                 _lendRepository.UpdateLend(lendmodel);
                 _lendRepository.Save();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using WhoLends.Web.DAL.Implementations;
+using WhoLends.Web.Helpers;
 
 namespace WhoLends.Controllers
 {
@@ -62,11 +63,6 @@ namespace WhoLends.Controllers
         // GET: Lends/Details/5
         public virtual ActionResult Details(int Id)
         {
-            //todo - get more data of lend
-            // lenditem
-            // lenditem.condition
-            // quantity (improve model Lend)
-
             var model = _lendRepository.GetLendByID(Id);
             if (model == null)
             {
@@ -78,23 +74,19 @@ namespace WhoLends.Controllers
                 cfg.CreateMap<Lend, LendViewModel>();
                 cfg.CreateMap<LendItem, LendItemViewModel>();
                 cfg.CreateMap<File, FileViewModel>();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>();
             });
 
             LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
             LendItemViewModel ItemVM = Mapper.Map<LendItem, LendItemViewModel>(model.LendItem);
             //todo create reference on Return object (model)
-            //LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model.LendLendReturn);
-            LendReturnViewModel lrVM = new LendReturnViewModel();
+            LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model.LendReturn);
 
             ItemVM.CreatedBy = model.LendItem.User;
             ItemVM.CurrentUserwithID = ItemVM.CreatedBy.UserName + " (" + ItemVM.CreatedBy.Id + ")";
 
-            vm.CreatedBy = model.User;
-            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
-            vm.SelectedLendUser = model.LendUser;
-            vm.SelectedLendItem = ItemVM;
-            vm.LendLendReturn = lrVM;
 
+            //improve - FIleID to VM - _getFIleById
             //get images of LendItem
             var lenditemImages = _fileRepository.GetFilesByLendItemId(ItemVM.Id);
             List<FileViewModel> listimages = new List<FileViewModel>();
@@ -107,6 +99,13 @@ namespace WhoLends.Controllers
 
             //add images to Item VM
             ItemVM.ItemImageViewModels = listimages.AsEnumerable();
+
+            //stick all to Lend Object
+            vm.CreatedBy = model.User;
+            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
+            vm.SelectedLendUser = model.LendUser;
+            vm.SelectedLendItem = ItemVM;
+            vm.LendReturn = lrVM;
 
             return View(vm);
         }
@@ -152,6 +151,7 @@ namespace WhoLends.Controllers
         
             var viewmodel = new LendViewModel()
             {
+                From = DateTime.Now,
                 LendItemsList = sortedItemList,
                 UserList = _userRepository.GetUsers(),
                 CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
@@ -172,11 +172,12 @@ namespace WhoLends.Controllers
                 lendVM.CreatedAt = DateTime.Now;
 
                 //get currently logged in user               
-                var dbUser = Web.Helpers.General.GetCurrentUser(_userRepository);
+                var dbUser = General.GetCurrentUser(_userRepository);
 
                 Mapper.Initialize(cfg =>
                 {
                     cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
+                    cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
                 });
 
                 var model = Mapper.Map<LendViewModel, Lend>(lendVM);
@@ -202,6 +203,7 @@ namespace WhoLends.Controllers
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Lend, LendViewModel>();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
             });
 
             LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
@@ -218,6 +220,7 @@ namespace WhoLends.Controllers
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
             });
 
             var model = Mapper.Map<LendViewModel, Lend>(viewModel);
@@ -299,7 +302,7 @@ namespace WhoLends.Controllers
                 item.LenderUserId = l.LendUser.Id;
                 item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
                 item.SelectedLendItem = liVM;
-                item.LendLendReturn = lrVM;
+                item.LendReturn = lrVM;
                 item.CreatedBy = _userRepository.GetUserById(item.UserId);
 
                 lItems.Add(item);

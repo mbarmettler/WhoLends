@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Web.Profile;
 using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    //[MetadataType(typeof(LendItemViewModel))]
-    //public partial class LendItem { }
     public class LendItemViewModel
     {
         public int Id { get; set; }

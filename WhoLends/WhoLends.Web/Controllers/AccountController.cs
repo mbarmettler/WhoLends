@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -36,9 +34,9 @@ namespace WhoLends.Controllers
 
         public AccountController()
         {
-            this._userRepository = new UserRepository(new Entities());
+            _userRepository = new UserRepository(new Entities());
 
-            this.ApplicationDbContext = new ApplicationDbContext();
+            ApplicationDbContext = new ApplicationDbContext();
             UserManager2 = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext));
         }
 
