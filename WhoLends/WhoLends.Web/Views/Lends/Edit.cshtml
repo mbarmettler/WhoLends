@@ -43,15 +43,21 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Speichern" class="btn btn-default" />
+            <div class="col-md-offset-2 col-md-10">                
+                <button type="submit" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Speichern
+                </button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Zurück", "Index")
+    <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>   
 </div>
 
 @section Scripts {

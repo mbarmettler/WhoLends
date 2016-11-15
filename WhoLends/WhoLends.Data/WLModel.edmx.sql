@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/21/2016 10:28:59
+-- Date Created: 11/11/2016 09:05:05
 -- Generated from EDMX file: D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\WLModel.edmx
 -- --------------------------------------------------
 
@@ -32,11 +32,14 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_RoleUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_RoleUser];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LendLendReturn]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LendReturn] DROP CONSTRAINT [FK_LendLendReturn];
-GO
 IF OBJECT_ID(N'[dbo].[FK_LendUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendUser];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LendLendReturn]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lend] DROP CONSTRAINT [FK_LendLendReturn];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FileLendItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[FileSet] DROP CONSTRAINT [FK_FileLendItem];
 GO
 
 -- --------------------------------------------------
@@ -57,6 +60,9 @@ IF OBJECT_ID(N'[dbo].[LendItem]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[LendReturn]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LendReturn];
+GO
+IF OBJECT_ID(N'[dbo].[FileSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[FileSet];
 GO
 
 -- --------------------------------------------------
@@ -91,7 +97,8 @@ CREATE TABLE [dbo].[Lend] (
     [CreatedAt] datetime  NOT NULL,
     [LendItemId] int  NOT NULL,
     [UserId] int  NOT NULL,
-    [LenderUserId] int  NOT NULL
+    [LenderUserId] int  NOT NULL,
+    [LRId] int  NULL
 );
 GO
 
@@ -104,7 +111,8 @@ CREATE TABLE [dbo].[LendItem] (
     [Quantity] smallint  NOT NULL,
     [Condition] int  NOT NULL,
     [CreatedAt] datetime  NOT NULL,
-    [UserId] int  NOT NULL
+    [UserId] int  NOT NULL,
+    [FileId] int  NOT NULL
 );
 GO
 
@@ -115,7 +123,18 @@ CREATE TABLE [dbo].[LendReturn] (
     [Description] nvarchar(max)  NOT NULL,
     [CreatedAt] datetime  NOT NULL,
     [UserId] int  NOT NULL,
-    [Lend_Id] int  NOT NULL
+    [SetComplete] bit  NOT NULL,
+    [FileId] int  NOT NULL
+);
+GO
+
+-- Creating table 'FileSet'
+CREATE TABLE [dbo].[FileSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [FileName] nvarchar(max)  NOT NULL,
+    [Content] varbinary(max)  NOT NULL,
+    [LendItemId] int  NOT NULL,
+    [LendReturnId] int  NOT NULL
 );
 GO
 
@@ -151,6 +170,12 @@ GO
 ALTER TABLE [dbo].[LendReturn]
 ADD CONSTRAINT [PK_LendReturn]
     PRIMARY KEY CLUSTERED ([Id], [LendId] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'FileSet'
+ALTER TABLE [dbo].[FileSet]
+ADD CONSTRAINT [PK_FileSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -232,21 +257,6 @@ ON [dbo].[User]
     ([RoleId]);
 GO
 
--- Creating foreign key on [Lend_Id] in table 'LendReturn'
-ALTER TABLE [dbo].[LendReturn]
-ADD CONSTRAINT [FK_LendLendReturn]
-    FOREIGN KEY ([Lend_Id])
-    REFERENCES [dbo].[Lend]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LendLendReturn'
-CREATE INDEX [IX_FK_LendLendReturn]
-ON [dbo].[LendReturn]
-    ([Lend_Id]);
-GO
-
 -- Creating foreign key on [LenderUserId] in table 'Lend'
 ALTER TABLE [dbo].[Lend]
 ADD CONSTRAINT [FK_LendUser]
@@ -260,6 +270,36 @@ GO
 CREATE INDEX [IX_FK_LendUser]
 ON [dbo].[Lend]
     ([LenderUserId]);
+GO
+
+-- Creating foreign key on [LRId], [Id] in table 'Lend'
+ALTER TABLE [dbo].[Lend]
+ADD CONSTRAINT [FK_LendLendReturn]
+    FOREIGN KEY ([LRId], [Id])
+    REFERENCES [dbo].[LendReturn]
+        ([Id], [LendId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LendLendReturn'
+CREATE INDEX [IX_FK_LendLendReturn]
+ON [dbo].[Lend]
+    ([LRId], [Id]);
+GO
+
+-- Creating foreign key on [LendItemId] in table 'FileSet'
+ALTER TABLE [dbo].[FileSet]
+ADD CONSTRAINT [FK_FileLendItem]
+    FOREIGN KEY ([LendItemId])
+    REFERENCES [dbo].[LendItem]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FileLendItem'
+CREATE INDEX [IX_FK_FileLendItem]
+ON [dbo].[FileSet]
+    ([LendItemId]);
 GO
 
 -- --------------------------------------------------

@@ -1,4 +1,5 @@
-﻿@using WhoLends.ViewModels;
+﻿@using Links
+@using WhoLends.ViewModels;
 
 @model LendItemViewModel
 
@@ -7,29 +8,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Detail</h2>
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <div>
-    <h4>Ausleihgegenstand</h4>
+    <h4>Detail - Ausleihgegenstand</h4>
     <br/>
     @*Image*@
     <div class="row">
-        <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-                <img src="~/Content/img/noimg.PNG" />
-            </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-                <img src="~/Content/img/noimg.PNG" />
-            </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-            <a href="#" class="thumbnail">
-                <img src="~/Content/img/noimg.PNG" />
-            </a>
-        </div>
-     </div>
+        @if (!Model.ItemImageViewModels.Any())
+        {
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail">
+                    <img src="~/Content/img/noimg.PNG"/>
+                </a>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail">
+                    <img src="~/Content/img/noimg.PNG"/>
+                </a>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <a href="#" class="thumbnail">
+                    <img src="~/Content/img/noimg.PNG"/>
+                </a>
+            </div>
+        }
+        else
+        {
+            foreach (var im in Model.ItemImageViewModels)
+            {
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail">
+                        <img src="data:image;base64,@Convert.ToBase64String(im.Content)" />
+                    </a>
+                </div>
+            }
+        }
+    </div>
     <hr />
     <div class="row">
         <div class="col-xs-4 col-md-2">
@@ -75,6 +90,14 @@
     </div>
 
     <br/>
-    @Html.ActionLink("Bearbeiten", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Zurück", "Index")
+
+    <a href="@Url.Action("Index", "LendItems")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>
+    <a href="@Url.Action("Edit", "LendItems", new {  id = Model.Id })" class="btn btn-default">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        Bearbeiten
+    </a>   
+    @*@Html.ActionLink("Bearbeiten", "Edit", new { id = Model.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" })*@
 </div>

@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace WhoLends
 {
@@ -10,6 +9,7 @@ namespace WhoLends
         {
             //Scripts
 
+            #region JQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -22,20 +22,26 @@ namespace WhoLends
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            #endregion
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/moment.js",
+                      "~/Scripts/moment.min.js",
+                      "~/Scripts/moment-with-locales.js",
+                      "~/Scripts/moment-with-locales.min.js",
+                      "~/Scripts/locate/de.js",
+                      "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+                    "~/Scripts/modernizr-*"));
 
             //styles
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-datepicker.css",
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/site.css",
                       "~/Content/jquery.jqGrid/ui.jqgrid.css"));            
         }

@@ -1,0 +1,66 @@
+﻿@using WhoLends.ViewModels;
+
+@model LendViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Löschen</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Ausleihung #@Model.Id</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectedLendUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelectedLendUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.From)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.From)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.To)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.To)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentUserwithID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentUserwithID)
+        </dd>
+    </dl>
+    <hr/>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Zurück
+            </a>    
+            <input type="submit" value="Delete" class="btn btn-danger"/>
+        </div>
+    }
+</div>

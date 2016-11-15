@@ -9,7 +9,6 @@
 
 <h2>Erstellen</h2>
 
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -19,43 +18,61 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.LendItemId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.LendItemId, new { @class = "control-label col-md-2" })            
+            <div class="col-md-10">                
                 @Html.DropDownListFor(model => model.LendItemId, new SelectList(Model.LendItemsList, "id", "Name", "--select--"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LendItemId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LenderUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.LenderUserId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.LenderUserId, new SelectList(Model.UserList, "id", "UserName", "--select--"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LenderUserId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.From, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.From, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+                @Html.TextBoxFor(model => model.From, new {@class = "form-control datepicker", placeholder = "Enter Drop-off date here..."})
+                @Html.ValidationMessageFor(model => model.From, "", new {@class = "text-danger"})
+            </div>
+        </div>*@
 
-                @*if datetypes are date then use this*@            
-                @*@Html.Editor(model => model.From, new { @class = "input-xlarge" })*@
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.From, new {@class = "control-label col-md-2"})
+            <div class='input-group date col-md-10' id='datetimepickerFrom'>
+                @Html.TextBoxFor(model => model.From, new { @class = "form-control col-md-10", placeholder = "Enter From date here..." })
+                <span class="input-group-addon col-md-10">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
                 @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.To, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.To, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..."})
+                @Html.TextBoxFor(model => model.To, new {@class = "form-control datepicker", placeholder = "Enter Drop-off date here..."})
+                @Html.ValidationMessageFor(model => model.To, "", new {@class = "text-danger"})
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.To, new { @class = "control-label col-md-2" })
+            <div class='input-group date col-md-10' id='datetimepickerTo'>
+                @Html.TextBoxFor(model => model.To, new { @class = "form-control col-md-10", placeholder = "(optional)" })
+                <span class="input-group-addon col-md-10">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
                 @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CurrentUserwithID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CurrentUserwithID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.CurrentUserwithID, new { @class = "control-label col-md-2" })
             </div>
@@ -63,22 +80,32 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Erstellen" class="btn btn-default" />
+                <button type="submit" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Erstellen
+                </button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Zurück", "Index")
+    <a href="@Url.Action("Index", "Lends")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>   
 </div>
 
 @section Scripts {
-    @*@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Content/css")*@
+    @Scripts.Render("~/Content/css")
 
     <script type="text/javascript">
-        $('.datepicker').datepicker(); //Initialise any date pickers
+        //Initialise any date pickers
+        $(function() {
+            $('#datetimepickerFrom').datetimepicker();
+            $('#datetimepickerTo').datetimepicker();
+        });
     </script>
 }

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    [MetadataType(typeof(LendItemViewModel))]
-    public partial class LendItem { }
-    public partial class LendItemViewModel
+    public class LendItemViewModel
     {
         public int Id { get; set; }
 
@@ -30,15 +29,20 @@ namespace WhoLends.ViewModels
         [Required]
         public Condition Condition { get; set; }
 
+        [Display(Name = "Ersteller ID")]
         public int UserId { get; set; }
 
+        [Display(Name = "Erstellt von")]
         public User CreatedBy { get; set; }
 
-        public System.DateTime CreatedAt { get; set; }
-
-        public IEnumerable<LendItemViewModel> LendItemList { get; set; }
-
+        [Display(Name = "Erstellt am")]
+        [Required]
+        public DateTime CreatedAt { get; set; }
+        
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
+        
+        public IEnumerable<FileViewModel> ItemImageViewModels { get; set; }
+        
     }
 }

@@ -36,6 +36,10 @@ namespace WhoLends.Web.DAL
         public void InsertReturn(LendReturn _return)
         {
             context.LendReturn.Add(_return);
+
+            //var lend = context.Lend.Find(_return.LendId);
+            //var lr = context.LRSet.ToList().Where(e => e.Lend.FirstOrDefault().Id.Equals(lend.Id));
+            //context.Entry(lr).State = EntityState.Modified; ;
         }
 
         public void DeleteReturn(int returnId)

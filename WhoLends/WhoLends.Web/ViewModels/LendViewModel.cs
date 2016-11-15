@@ -5,39 +5,41 @@ using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
-    [MetadataType(typeof(LendViewModel))]
-    public partial class Lend { }
-    public partial class LendViewModel
+    public class LendViewModel
     {
         public int Id { get; set; }
 
         [Display(Name = "Von")]
         [Required]
-        public System.DateTime From { get; set; }
-        [Display(Name = "Bis")]
-        public Nullable<System.DateTime> To { get; set; }
+        public DateTime From { get; set; }
 
+        [Display(Name = "Bis")]
+        public DateTime? To { get; set; }
+
+        [Display(Name = "Erstellt am")]
         [Required]
-        public System.DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+
         [Required]
         public int LendItemId { get; set; }
 
-        public Data.LendItem SelectedLendItem { get; set; }
+        public LendItemViewModel SelectedLendItem { get; set; }
 
         public int UserId { get; set; }
 
+        [Display(Name = "Erstellt von")]
         public User CreatedBy { get; set; }
 
         [Required]
         public int LenderUserId { get; set; }
 
+        [Display(Name = "Ausleiher")]
         public User SelectedLendUser { get; set; }
 
-        public LendReturn LendLendReturn { get; set; }
+        public LendReturnViewModel LendReturn { get; set; }
 
-        public IEnumerable<Data.LendItem> LendItemsList { get; set; }
+        public IEnumerable<LendItemViewModel> LendItemsList { get; set; }
         public IEnumerable<User> UserList { get; set; }
-        public IEnumerable<LendViewModel> LendList { get; set; }
 
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }

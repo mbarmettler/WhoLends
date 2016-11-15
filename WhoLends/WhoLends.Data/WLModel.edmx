@@ -11,6 +11,7 @@
     <EntitySet Name="Lend" EntityType="Model.Store.Lend" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendItem" EntityType="Model.Store.LendItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LendReturn" EntityType="Model.Store.LendReturn" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileSet" EntityType="Model.Store.FileSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_LendItemLend" Association="Model.Store.FK_LendItemLend">
       <End Role="LendItem" EntitySet="LendItem" />
       <End Role="Lend" EntitySet="Lend" />
@@ -34,6 +35,14 @@
     <AssociationSet Name="FK_LendUser" Association="Model.Store.FK_LendUser">
       <End Role="User" EntitySet="User" />
       <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
+    <AssociationSet Name="LendLendReturn" Association="Model.Store.LendLendReturn">
+      <End Role="Lend" EntitySet="Lend" />
+      <End Role="LendReturn" EntitySet="LendReturn" />
+    </AssociationSet>
+    <AssociationSet Name="FileLendItem" Association="Model.Store.FileLendItem">
+      <End Role="File" EntitySet="FileSet" />
+      <End Role="LendItem" EntitySet="LendItem" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Role">
@@ -67,6 +76,7 @@
     <Property Name="LendItemId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="LenderUserId" Type="int" Nullable="false" />
+    <Property Name="LRId" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
@@ -80,6 +90,7 @@
     <Property Name="Condition" Type="int" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FileId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -91,6 +102,18 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="SetComplete" Type="bit" Nullable="false" />
+    <Property Name="FileId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FileSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="LendItemId" Type="int" Nullable="false" />
+    <Property Name="LendReturnId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_LendItemLend">
     <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
@@ -152,18 +175,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_LendLendReturn">
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="1" />
-    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Lend">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="LendReturn">
-        <PropertyRef Name="LendId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_LendUser">
     <End Role="User" Type="Model.Store.User" Multiplicity="1" />
     <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
@@ -173,6 +184,32 @@
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="LenderUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LendLendReturn">
+    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
+    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="LendReturn">
+        <PropertyRef Name="Id" />
+        <PropertyRef Name="LendId" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LRId" />
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FileLendItem">
+    <End Role="File" Type="Model.Store.FileSet" Multiplicity="*" />
+    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="LendItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="LendItemId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -236,7 +273,16 @@
             <End Role="User" EntitySet="User" />
             <End Role="Lend" EntitySet="Lend" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="LendLendReturn" Association="Model.LendLendReturn">
+            <End Role="Lend" EntitySet="Lend" />
+            <End Role="LendReturn" EntitySet="LendReturn" />
+          </AssociationSet>
+          <EntitySet Name="FileSet" EntityType="Model.File" />
+          <AssociationSet Name="FileLendItem" Association="Model.FileLendItem">
+            <End Role="File" EntitySet="FileSet" />
+            <End Role="LendItem" EntitySet="LendItem" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="LendItem">
           <Key>
             <PropertyRef Name="Id" />
@@ -248,9 +294,9 @@
           <Property Name="Quantity" Type="Int16" Nullable="false" />
           <Property Name="Condition" Type="Model.Condition" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Lend" Relationship="Model.FK_LendItemLend" FromRole="LendItem" ToRole="Lend" />
           <NavigationProperty Name="User" Relationship="Model.FK_UserLendItem" FromRole="LendItem" ToRole="User" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="FileId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Lend">
           <Key>
@@ -266,6 +312,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="LendUser" Relationship="Model.FK_LendUser" FromRole="Lend" ToRole="User" />
           <Property Name="LenderUserId" Type="Int32" Nullable="false" />
+          <Property Name="LRId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="LendReturn" Relationship="Model.LendLendReturn" FromRole="Lend" ToRole="LendReturn" />
         </EntityType>
         <EntityType Name="LendReturn">
           <Key>
@@ -278,6 +326,9 @@
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Model.FK_UserLendReturn" FromRole="LendReturn" ToRole="User" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SetComplete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Lend" Relationship="Model.LendLendReturn" FromRole="LendReturn" ToRole="Lend" />
+          <Property Name="FileId" Type="Int32" Nullable="false" />
         </EntityType>
         <EnumType Name="Condition">
           <Member Name="Neuwertig" />
@@ -357,7 +408,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="LendLendReturn">
+          <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
+          <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="LendReturn">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="LendId" />
+            </Principal>
+            <Dependent Role="Lend">
+              <PropertyRef Name="LRId" />
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" Nullable="false" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <Property Name="LendItemId" Type="Int32" Nullable="false" />
+          <Property Name="LendReturnId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LendItem" Relationship="Model.FileLendItem" FromRole="File" ToRole="LendItem" />
+        </EntityType>
+        <Association Name="FileLendItem">
+          <End Type="Model.File" Role="File" Multiplicity="*" />
+          <End Type="Model.LendItem" Role="LendItem" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="LendItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="File">
+              <PropertyRef Name="LendItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -395,6 +483,7 @@
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LenderUserId" ColumnName="LenderUserId" />
+          <ScalarProperty Name="LRId" ColumnName="LRId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -409,6 +498,7 @@
           <ScalarProperty Name="Condition" ColumnName="Condition" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -420,6 +510,19 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SetComplete" ColumnName="SetComplete" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FileSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.File)">
+        <MappingFragment StoreEntitySet="FileSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+          <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

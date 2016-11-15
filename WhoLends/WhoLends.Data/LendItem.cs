@@ -14,12 +14,6 @@ namespace WhoLends.Data
     
     public partial class LendItem
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LendItem()
-        {
-            this.Lend = new HashSet<Lend>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -28,9 +22,8 @@ namespace WhoLends.Data
         public Condition Condition { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
+        public int FileId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lend> Lend { get; set; }
         public virtual User User { get; set; }
     }
 }

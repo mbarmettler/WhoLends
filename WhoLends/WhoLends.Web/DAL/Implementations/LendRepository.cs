@@ -41,6 +41,11 @@ namespace WhoLends.Web.DAL
             this.context.Lend.Remove(lend);
         }
 
+        public LendReturn GetLRByID(int lrID)
+        {
+            return context.LendReturn.Find(lrID);
+        }
+
         public void Save()
         {
             try

@@ -70,9 +70,9 @@ namespace WhoLends.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult DeleteConfirmed()
+        public virtual System.Web.Mvc.ActionResult Delete()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,7 +94,7 @@ namespace WhoLends.Controllers
             public readonly string Details = "Details";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
-            public readonly string DeleteConfirmed = "Delete";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -104,7 +104,7 @@ namespace WhoLends.Controllers
             public const string Details = "Details";
             public const string Create = "Create";
             public const string Edit = "Edit";
-            public const string DeleteConfirmed = "Delete";
+            public const string Delete = "Delete";
         }
 
 
@@ -123,6 +123,7 @@ namespace WhoLends.Controllers
         public class ActionParamsClass_Create
         {
             public readonly string lendItemVM = "lendItemVM";
+            public readonly string uploadfile = "uploadfile";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -133,12 +134,13 @@ namespace WhoLends.Controllers
             public readonly string Id = "Id";
             public readonly string lendItemVM = "lendItemVM";
         }
-        static readonly ActionParamsClass_DeleteConfirmed s_params_DeleteConfirmed = new ActionParamsClass_DeleteConfirmed();
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeleteConfirmed DeleteConfirmedParams { get { return s_params_DeleteConfirmed; } }
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeleteConfirmed
+        public class ActionParamsClass_Delete
         {
+            public readonly string id = "id";
             public readonly string Id = "Id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -205,14 +207,15 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendItemViewModel lendItemVM);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendItemViewModel lendItemVM, System.Web.HttpPostedFileBase uploadfile);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendItemViewModel lendItemVM)
+        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendItemViewModel lendItemVM, System.Web.HttpPostedFileBase uploadfile)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendItemVM", lendItemVM);
-            CreateOverride(callInfo, lendItemVM);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "uploadfile", uploadfile);
+            CreateOverride(callInfo, lendItemVM, uploadfile);
             return callInfo;
         }
 
@@ -241,14 +244,26 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void DeleteConfirmedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int Id);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult DeleteConfirmed(int Id)
+        public override System.Web.Mvc.ActionResult Delete(int? id)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DeleteOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int Id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Delete(int Id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
-            DeleteConfirmedOverride(callInfo, Id);
+            DeleteOverride(callInfo, Id);
             return callInfo;
         }
 
