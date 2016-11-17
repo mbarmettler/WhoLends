@@ -364,6 +364,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\General.cs" />
+    <Compile Include="Helpers\Mailer.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="T4\AccountController.generated.cs">
@@ -440,6 +441,8 @@
     <Content Include="Views\Lends\Delete.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\LendItems\_LendItemDetail.cshtml" />
+    <Content Include="Views\LendReturns\_LendReturnDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

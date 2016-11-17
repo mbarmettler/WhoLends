@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using WhoLends.Data;
 
 namespace WhoLends.Web.DAL.Implementations
 {
-    public class FileRepository : IFileRepository, IDisposable
+    public class FileRepository : IFileRepository
     {
         private Entities context;
         private bool disposed;

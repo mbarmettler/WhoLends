@@ -10,11 +10,6 @@ namespace WhoLends.ViewModels
         public string Email { get; set; }
     }
 
-    public class ExternalLoginListViewModel
-    {
-        public string ReturnUrl { get; set; }
-    }
-
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
@@ -37,13 +32,6 @@ namespace WhoLends.ViewModels
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
-    }
-
-    public class ForgotViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
     }
 
     public class LoginViewModel
@@ -113,4 +101,18 @@ namespace WhoLends.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    #region not used yet
+    public class ForgotViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
+    public class ExternalLoginListViewModel
+    {
+        public string ReturnUrl { get; set; }
+    }
+    #endregion
 }

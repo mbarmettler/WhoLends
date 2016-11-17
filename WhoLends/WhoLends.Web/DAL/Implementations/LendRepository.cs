@@ -6,7 +6,7 @@ using WhoLends.Data;
 
 namespace WhoLends.Web.DAL
 {
-    public class LendRepository : ILendRepository, IDisposable
+    public class LendRepository : ILendRepository
     {
         private Entities context;
         private bool disposed = false;
@@ -17,12 +17,12 @@ namespace WhoLends.Web.DAL
 
         public IEnumerable<Lend> GetLends()
         {
-            return this.context.Lend.ToList();
+            return context.Lend.ToList();
         }
 
         public Lend GetLendByID(int lendId)
         {
-            return this.context.Lend.Find(lendId);
+            return context.Lend.Find(lendId);
         }
 
         public void InsertLend(Lend lend)
@@ -37,13 +37,8 @@ namespace WhoLends.Web.DAL
 
         public void DeleteLend(int lendId)
         {
-            Lend lend = this.context.Lend.Find(lendId);
-            this.context.Lend.Remove(lend);
-        }
-
-        public LendReturn GetLRByID(int lrID)
-        {
-            return context.LendReturn.Find(lrID);
+            Lend lend = context.Lend.Find(lendId);
+            context.Lend.Remove(lend);
         }
 
         public void Save()
@@ -60,14 +55,14 @@ namespace WhoLends.Web.DAL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

@@ -11,175 +11,79 @@
 
 <div>
     <h4>Detail - Ausleihung</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SelectedLendUser)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SelectedLendUser.UserName)
-        </dd>
+    <hr/>
+    <!-- Lend Area -->
+    <div class="row">
+        <div class="col-xs-4 col-md-2">
+            <dt>
+                @Html.DisplayNameFor(model => model.SelectedLendUser)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.From)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.To)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentUserwithID)
+            </dt>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.From)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.From)
-        </dd>
+        <div class="col-xs-6 col-md-3">
+            <dd>
+                @Html.DisplayFor(model => model.SelectedLendUser.UserName)
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.From)
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.To)
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedAt)
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentUserwithID)
+            </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.To)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.To)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentUserwithID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CurrentUserwithID)
-        </dd>
-    </dl>
-
+    <br/>
+    <!-- LendItem Area -->
     <div class="row">
         <div class="panel panel-primary">
             <div class="panel-heading">Lend Item</div>
             <br />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.Name)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.Description)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.Description)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.CustomerId)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.CustomerId)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.Quantity)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.Quantity)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.Condition)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.Condition)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.CreatedAt)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.CreatedAt)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SelectedLendItem.CreatedBy)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelectedLendItem.CurrentUserwithID)
-                </dd>
-            </dl>
-            
             <div class="container">
-                <div class="row">
-                    @if (!Model.SelectedLendItem.ItemImageViewModels.Any())
-                    {
-                        <div class="col-xs-6 col-md-3">
-                            <a href="#" class="thumbnail">
-                                <img src="~/Content/img/noimg.PNG" />
-                            </a>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <a href="#" class="thumbnail">
-                                <img src="~/Content/img/noimg.PNG" />
-                            </a>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <a href="#" class="thumbnail">
-                                <img src="~/Content/img/noimg.PNG" />
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        foreach (var im in Model.SelectedLendItem.ItemImageViewModels)
-                        {
-                            <div class="col-xs-6 col-md-3">
-                                <a href="#" class="thumbnail">
-                                    <img src="data:image;base64,@Convert.ToBase64String(im.Content)" />
-                                </a>
-                            </div>
-                        }
-                    }
-                </div>
+                @Html.Partial("~/Views/LendItems/_LendItemDetail.cshtml", Model.SelectedLendItem)
             </div>
-            <br/>
+            <br />
         </div>
     </div>
 
     <br />
-    <!-- Lend Return Area -->
-
+    <!-- LendReturn Area -->
     <div class="row">
         <div class="panel panel-success">
             <div class="panel-heading">Lend Return</div>
-            <br />
-            <!-- if not yet returned -->
-            @if (Model.To == null)
-            {
-                @Html.ActionLink(" erfassen", "../LendReturns/Create", new { id = Model.Id }, new { @class = "btn btn-default" })
+            <br/>
+            <div class="container">
+                <!-- if not yet returned -->
+                @if (Model.To == null)
+                {
+                    @Html.ActionLink(" erfassen", "../LendReturns/Create", new { id = Model.Id }, new { @class = "btn btn-default" })
+                }
+                else
+                {
+                    <!-- Return Detail Partial View -->
+                    @Html.Partial("~/Views/LendReturns/_LendReturnDetail.cshtml", Model.LendReturn)
+                    @*@Html.Action("GetReturn", "LendReturns", Model.LendReturn.Id)*@
+                }
                 <br />
-            }
-            else
-            {                
-                <!-- if already returned -->
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.LendReturn.Description)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.LendReturn.Description)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.LendReturn.CreatedAt)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.LendReturn.CreatedAt)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.LendReturn.CreatedBy)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.LendReturn.CurrentUserwithID)
-                    </dd>
-                </dl>
-            }
+            </div>
         </div>
     </div>
 </div>

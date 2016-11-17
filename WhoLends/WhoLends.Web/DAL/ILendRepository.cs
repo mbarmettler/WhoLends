@@ -12,7 +12,5 @@ namespace WhoLends.Web.DAL
         void DeleteLend(int lendId);
         void UpdateLend(Lend lend);
         void Save();
-
-        LendReturn GetLRByID(int lrId);
     }
 }

@@ -30,5 +30,5 @@
         columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
         columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" }));
         columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
-    }).WithPaging(3).Sortable(true)
+    }).WithPaging(5).Sortable(true)
 </div>

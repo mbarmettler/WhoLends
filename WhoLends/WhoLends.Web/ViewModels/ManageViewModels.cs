@@ -20,11 +20,6 @@ namespace WhoLends.ViewModels
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
-    public class FactorViewModel
-    {
-        public string Purpose { get; set; }
-    }
-
     public class SetPasswordViewModel
     {
         [Required]
@@ -58,6 +53,12 @@ namespace WhoLends.ViewModels
         public string ConfirmPassword { get; set; }
     }
 
+    #region not used yet
+    public class FactorViewModel
+    {
+        public string Purpose { get; set; }
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]
@@ -65,4 +66,5 @@ namespace WhoLends.ViewModels
         [Display(Name = "Phone Number")]
         public string Number { get; set; }
     }
+    #endregion
 }

@@ -38,12 +38,13 @@ namespace WhoLends.ViewModels
 
         public LendReturnViewModel LendReturn { get; set; }
 
+        public int LRId { get; set; }
+        
         public IEnumerable<LendItemViewModel> LendItemsList { get; set; }
+
         public IEnumerable<User> UserList { get; set; }
 
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
-
-        public User CurrentUser { get; set; }
     }
 }

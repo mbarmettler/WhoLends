@@ -6,7 +6,7 @@ using WhoLends.Data;
 
 namespace WhoLends.Web.DAL
 {
-    public class LendItemRepository : ILendItemRepository, IDisposable
+    public class LendItemRepository : ILendItemRepository
     {
         private Entities context;
         private bool disposed;

@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using WhoLends.Data;
 
 namespace WhoLends.Web.DAL
 {
-    public class UserRepository : IUserRepository, IDisposable
+    public class UserRepository : IUserRepository
     {
         private Entities context;
-        private bool disposed = false;
+        private bool disposed;
         public UserRepository(Entities context)
         {
             this.context = context;
@@ -18,12 +17,12 @@ namespace WhoLends.Web.DAL
 
         public IEnumerable<User> GetUsers()
         {
-            return this.context.User.ToList();
+            return context.User.ToList();
         }
         
         public User GetUserById(int userId)
         {
-            return this.context.User.Find(userId);
+            return context.User.Find(userId);
         }
 
         public User GetUserByEmail(string email)
@@ -33,18 +32,18 @@ namespace WhoLends.Web.DAL
 
         public void UpdateUser(User user)
         {
-            this.context.Entry(user).State = EntityState.Modified;
+            context.Entry(user).State = EntityState.Modified;
         }
 
         public void InsertUser(User user)
         {
-            this.context.User.Add(user);
+            context.User.Add(user);
         }
         
         public void DeleteUser(int userId)
         {
-            User user = this.context.User.Find(userId);
-            this.context.User.Remove(user);
+            User user = context.User.Find(userId);
+            context.User.Remove(user);
         }
 
         public void Save()
@@ -61,14 +60,14 @@ namespace WhoLends.Web.DAL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

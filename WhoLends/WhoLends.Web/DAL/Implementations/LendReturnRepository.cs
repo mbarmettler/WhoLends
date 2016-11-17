@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using WhoLends.Data;
 
 namespace WhoLends.Web.DAL
 {
-    public class LendReturnRepository : ILendReturnRepository, IDisposable
+    public class LendReturnRepository : ILendReturnRepository
     {
         private Entities context;
         private bool disposed = false;
@@ -67,14 +66,14 @@ namespace WhoLends.Web.DAL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()
