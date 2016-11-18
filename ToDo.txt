@@ -1,0 +1,9 @@
+================
+ToDo
+================
+
+Issues:
+- save Lend to DB (Id FK exception) 
+
+Tasks:
+- Phase 2: improve DB Layer - to code first models
