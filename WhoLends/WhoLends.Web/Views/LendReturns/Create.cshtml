@@ -48,9 +48,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SetComplete, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SetComplete, new { @class = "form-control" })
+                @*@Html.EditorFor(model => model.SetComplete, new { @class = "form-control" })*@
+                @Html.Label("Ja")
+                @Html.RadioButtonFor(model => model.SetComplete, "True")
+                @Html.Label("Nein")
+                @Html.RadioButtonFor(model => model.SetComplete, "False")
                 @Html.ValidationMessageFor(model => model.SetComplete, "", new { @class = "text-danger" })
-            </div>
+            </div>  
         </div>
 
         <div class="form-group">

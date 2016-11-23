@@ -82,52 +82,48 @@ namespace WhoLends.Controllers
 
             LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
             LendItemViewModel ItemVM = Mapper.Map<LendItem, LendItemViewModel>(model.LendItem);
-            //todo create reference on Return object (model)ö
-            LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model.LendReturn);
-            //lrVM.CurrentUserwithID = _userRepository.GetUserById(lrVM.UserId).UserName + " (" + lrVM.CreatedBy.Id + ")";
+            LendReturnViewModel lrVM = new LendReturnViewModel();
+            if (model.LendReturn != null)
+            {
+                lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model.LendReturn);
+                //get images of LendReturn
+                //FIleID to VM - _getFIleById
+                File lendreturnImages = _fileRepository.GetFileById(lrVM.FileId);
+                List<FileViewModel> lrimageslist = new List<FileViewModel>();
+                FileViewModel lrFileVM = Mapper.Map<File, FileViewModel>(lendreturnImages);
+                lrimageslist.Add(lrFileVM);
 
-            ItemVM.CreatedBy = model.LendItem.User;
-            ItemVM.CurrentUserwithID = ItemVM.CreatedBy.UserName + " (" + ItemVM.CreatedBy.Id + ")";
+                //add images to Return VM
+                lrVM.ReturnImageViewModels = lrimageslist.AsEnumerable();
+                lrVM.CurrentUserwithID = _userRepository.GetUserById(lrVM.UserId).UserName + " (" + lrVM.CreatedBy.Id + ")";
+            }
 
             #region images to VMs
 
-            //improve - FIleID to VM - _getFIleById
             //get images of LendItem
-            var lenditemImages = _fileRepository.GetFilesByLendItemId(ItemVM.Id);
+            //FIleID to VM - _getFIleById
+            File lenditemImages = _fileRepository.GetFileById(ItemVM.FileId);
             List<FileViewModel> listimages = new List<FileViewModel>();
-
-            foreach (var item in lenditemImages)
-            {
-                FileViewModel vmfile = Mapper.Map<File, FileViewModel>(item);
-                listimages.Add(vmfile);
-            }
-
-            //add images to Item VM
+            FileViewModel itemFileVM = Mapper.Map<File, FileViewModel>(lenditemImages);
+            listimages.Add(itemFileVM);
+       
+            //add values to Item VM
             ItemVM.ItemImageViewModels = listimages.AsEnumerable();
+            ItemVM.CreatedBy = model.LendItem.User;
+            ItemVM.CurrentUserwithID = ItemVM.CreatedBy.UserName + " (" + ItemVM.CreatedBy.Id + ")";
 
 
-            //improve - FIleID to VM - _getFIleById
-            //get images of LendReturn
-            var lendreturnImages = _fileRepository.GetFilesByLendItemId(lrVM.Id);
-            List<FileViewModel> lrimageslist = new List<FileViewModel>();
-
-            foreach (var item in lendreturnImages)
-            {
-                FileViewModel vmfile = Mapper.Map<File, FileViewModel>(item);
-                lrimageslist.Add(vmfile);
-            }
-
-            //add images to Return VM
-            lrVM.ReturnImageViewModels = lrimageslist.AsEnumerable();
-            
             #endregion
-            
+
             //stick all to Lend Object
             vm.CreatedBy = model.User;
             vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
             vm.SelectedLendUser = model.LendUser;
             vm.SelectedLendItem = ItemVM;
-            vm.LendReturn = lrVM;
+            if (lrVM.Id != 0)
+            {
+                vm.LendReturn = lrVM;
+            }
 
             return View(vm);
         }

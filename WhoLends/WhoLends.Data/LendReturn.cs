@@ -17,7 +17,6 @@ namespace WhoLends.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LendReturn()
         {
-            this.File = new HashSet<File>();
             this.Lend = new HashSet<Lend>();
         }
     
@@ -25,14 +24,13 @@ namespace WhoLends.Data
         public int UserId { get; set; }
         public string Description { get; set; }
         public System.DateTime CreatedAt { get; set; }
-        public bool SetComplete { get; set; }
+        public Nullable<bool> SetComplete { get; set; }
         public int LendId { get; set; }
+        public Nullable<int> FileId { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<File> File { get; set; }
-        public virtual Lend Lend1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lend> Lend { get; set; }
+        public virtual File File1 { get; set; }
     }
 }

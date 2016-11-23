@@ -63,14 +63,10 @@ namespace WhoLends.Controllers
             vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
 
             //get images
-            var lenditemImages = _fileRepository.GetFilesByLendItemId(vm.Id);
+            var lenditemImages = _fileRepository.GetFileById(vm.FileId);
             List<FileViewModel> listimages = new List<FileViewModel>();
-            
-            foreach (var item in lenditemImages)
-            {
-                FileViewModel vmfile = Mapper.Map<File, FileViewModel>(item);
-                listimages.Add(vmfile);
-            }
+            FileViewModel itemFileVM = Mapper.Map<File, FileViewModel>(lenditemImages);
+            listimages.Add(itemFileVM);
 
             //add images to Item VM
             vm.ItemImageViewModels = listimages.AsEnumerable();
@@ -117,7 +113,7 @@ namespace WhoLends.Controllers
                 lenditemmodel.User = lendItemVM.CreatedBy;
                 
                 //process Attached Images
-                lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile, lendItemVM.Id).AsEnumerable();
+                lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
                 //update lenditem - file ID (only for one image)
                 var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
@@ -169,7 +165,7 @@ namespace WhoLends.Controllers
             var model = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
 
             //process Attached Images
-            lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile, lendItemVM.Id).AsEnumerable();
+            lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
             //update lenditem - file ID (only for one image)
             var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();

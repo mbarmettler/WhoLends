@@ -14,12 +14,6 @@ namespace WhoLends.Data
     
     public partial class Lend
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Lend()
-        {
-            this.LendReturn1 = new HashSet<LendReturn>();
-        }
-    
         public int Id { get; set; }
         public System.DateTime From { get; set; }
         public Nullable<System.DateTime> To { get; set; }
@@ -32,8 +26,6 @@ namespace WhoLends.Data
         public virtual LendItem LendItem { get; set; }
         public virtual User User { get; set; }
         public virtual User LendUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LendReturn> LendReturn1 { get; set; }
         public virtual LendReturn LendReturn { get; set; }
     }
 }

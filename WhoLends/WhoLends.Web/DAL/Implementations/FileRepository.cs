@@ -25,14 +25,6 @@ namespace WhoLends.Web.DAL.Implementations
             return context.File.Find(fileId);
         }
 
-        public IEnumerable<File> GetFilesByLendItemId(int lendItemId)
-        {
-            var allfiles = GetFiles();
-            var allspecificFiles = allfiles.Where(d => d.LendItemId.Equals(lendItemId));
-
-            return allspecificFiles;
-        }
-
         public void InsertFile(File fileitem)
         {
             context.File.Add(fileitem);

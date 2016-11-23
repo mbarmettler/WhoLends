@@ -22,8 +22,9 @@ namespace WhoLends.Data
         public Condition Condition { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
-        public int FileId { get; set; }
+        public Nullable<int> FileId { get; set; }
     
         public virtual User User { get; set; }
+        public virtual File File { get; set; }
     }
 }

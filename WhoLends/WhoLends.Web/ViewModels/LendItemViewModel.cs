@@ -33,6 +33,6 @@ namespace WhoLends.ViewModels
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
         public IEnumerable<FileViewModel> ItemImageViewModels { get; set; }
-        
+        public int FileId { get; set; }  
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using AutoMapper;
 using WhoLends.Data;
@@ -27,7 +28,7 @@ namespace WhoLends.Web.Helpers
             });
         }
 
-        public static List<FileViewModel> InsertImages(HttpPostedFileBase uploadfile, int targetObjectId)
+        public static List<FileViewModel> InsertImages(HttpPostedFileBase uploadfile)
         {
             InitiateAutoMapper();
 
@@ -41,14 +42,29 @@ namespace WhoLends.Web.Helpers
                 }
 
                 fileVM.FileName = uploadfile.FileName;
-                fileVM.LendItemId = targetObjectId;
 
-                //add file to DB
-                var filemodel = Mapper.Map<FileViewModel, File>(fileVM);
-                _fileRepository.InsertFile(filemodel);
-                _fileRepository.Save();
+                var sameimage = _fileRepository
+                                .GetFiles()
+                                .FirstOrDefault(d => d.Content.Length.Equals(fileVM.Content.Length) && d.FileName.Equals(fileVM.FileName));
+
+                File obj = new File();
+
+                if (sameimage != null)
+                {
+                    obj = sameimage;
+                }
+                else
+                {
+                    //add file to DB
+                    var filemodel = Mapper.Map<FileViewModel, File>(fileVM);
+                    _fileRepository.InsertFile(filemodel);
+                    _fileRepository.Save();
+                }
 
                 //adding to LendItem VM
+                var fileId = Mapper.Map<File, FileViewModel>(obj).Id;
+                fileVM.Id = fileId;
+
                 List<FileViewModel> list = new List<FileViewModel>();
                 list.Add(fileVM);
 

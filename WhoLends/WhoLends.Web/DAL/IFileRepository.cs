@@ -8,7 +8,6 @@ namespace WhoLends.Web.DAL
     {
         IEnumerable<File> GetFiles();
         File GetFileById(int fileId);
-        IEnumerable<File> GetFilesByLendItemId(int lenditemId);
         void InsertFile(File fileitem);
         void DeleteFile(int fileid);
         void UpdateFile(File fileitem);

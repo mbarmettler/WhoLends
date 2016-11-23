@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WhoLends.Data;
@@ -67,6 +68,16 @@ namespace WhoLends.Web.Controllers
             if (ModelState.IsValid)
             {
                 lendReturnVM.UserId = General.GetCurrentUser(_userRepository).Id;
+                lendReturnVM.CreatedBy = General.GetCurrentUser(_userRepository);
+                lendReturnVM.CreatedAt = DateTime.Now;
+
+                //process Attached Images
+                lendReturnVM.ReturnImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
+
+                //update lenditem - file ID (only for one image)
+                var firstOrDefault = lendReturnVM.ReturnImageViewModels.FirstOrDefault();
+                if (firstOrDefault != null)
+                    lendReturnVM.FileId = firstOrDefault.Id;
 
                 Mapper.Initialize(cfg =>
                 {
@@ -75,22 +86,19 @@ namespace WhoLends.Web.Controllers
                 });
 
                 var model = Mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
-
                 _lendreturnRepository.InsertReturn(model);
                 _lendreturnRepository.Save();
 
-                //var lendmodel = _lendRepository.GetLendByID(model.LendId);
-                //lendmodel.To = DateTime.Now;
+                //get Lend and update it
+                var lendmodel = _lendRepository.GetLendByID(model.LendId);
+                lendmodel.To = DateTime.Now;
 
-                //LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
+                LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
+                
+                lendVM.LendReturn = lendReturnVM;
+                lendVM.LRId = model.Id;
 
-                //ToDo
-                //set lendreturn id to lend and save
-                //set lendVM LendReturn to VM and save model
-                //lendVM.LendReturn = lendReturnVM;
-                //lendVM.LRId = model.Id;
-
-                //_lendRepository.UpdateLend(lendmodel);
+                _lendRepository.UpdateLend(lendmodel);
                 _lendRepository.Save();
 
                 return RedirectToAction("..\\Lends\\Index");

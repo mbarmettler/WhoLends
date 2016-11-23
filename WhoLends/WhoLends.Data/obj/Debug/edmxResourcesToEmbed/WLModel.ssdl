@@ -7,8 +7,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Content" Type="varbinary(max)" Nullable="false" />
-    <Property Name="LendItemId" Type="int" Nullable="false" />
-    <Property Name="LendReturnId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Lend">
     <Key>
@@ -35,7 +33,7 @@
     <Property Name="Condition" Type="int" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="FileId" Type="int" Nullable="false" />
+    <Property Name="FileId" Type="int" />
   </EntityType>
   <EntityType Name="LendReturn">
     <Key>
@@ -46,7 +44,8 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="SetComplete" Type="bit" Nullable="false" />
+    <Property Name="SetComplete" Type="bit" />
+    <Property Name="FileId" Type="int" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -68,27 +67,29 @@
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="RoleId" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK_FileLendItem">
-    <End Role="LendItem" Type="Self.LendItem" Multiplicity="1" />
-    <End Role="File" Type="Self.File" Multiplicity="*" />
+  <Association Name="FK_LenderUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Lend" Type="Self.Lend" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="LendItem">
+      <Principal Role="User">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="File">
-        <PropertyRef Name="LendItemId" />
+      <Dependent Role="Lend">
+        <PropertyRef Name="LenderUserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_FileLendReturn">
-    <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="1" />
-    <End Role="File" Type="Self.File" Multiplicity="*" />
+  <Association Name="FK_LendItemFile">
+    <End Role="File" Type="Self.File" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LendItem" Type="Self.LendItem" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="LendReturn">
+      <Principal Role="File">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="File">
-        <PropertyRef Name="LendReturnId" />
+      <Dependent Role="LendItem">
+        <PropertyRef Name="FileId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -113,6 +114,18 @@
       </Principal>
       <Dependent Role="Lend">
         <PropertyRef Name="LendReturnId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LendReturnFile">
+    <End Role="File" Type="Self.File" Multiplicity="0..1" />
+    <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="File">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendReturn">
+        <PropertyRef Name="FileId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -183,13 +196,13 @@
     <EntitySet Name="LendReturn" EntityType="Self.LendReturn" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_FileLendItem" Association="Self.FK_FileLendItem">
-      <End Role="LendItem" EntitySet="LendItem" />
-      <End Role="File" EntitySet="File" />
+    <AssociationSet Name="FK_LenderUser" Association="Self.FK_LenderUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Lend" EntitySet="Lend" />
     </AssociationSet>
-    <AssociationSet Name="FK_FileLendReturn" Association="Self.FK_FileLendReturn">
-      <End Role="LendReturn" EntitySet="LendReturn" />
+    <AssociationSet Name="FK_LendItemFile" Association="Self.FK_LendItemFile">
       <End Role="File" EntitySet="File" />
+      <End Role="LendItem" EntitySet="LendItem" />
     </AssociationSet>
     <AssociationSet Name="FK_LendItemLend" Association="Self.FK_LendItemLend">
       <End Role="LendItem" EntitySet="LendItem" />
@@ -198,6 +211,10 @@
     <AssociationSet Name="FK_LendReturn" Association="Self.FK_LendReturn">
       <End Role="LendReturn" EntitySet="LendReturn" />
       <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LendReturnFile" Association="Self.FK_LendReturnFile">
+      <End Role="File" EntitySet="File" />
+      <End Role="LendReturn" EntitySet="LendReturn" />
     </AssociationSet>
     <AssociationSet Name="FK_LendReturnUser" Association="Self.FK_LendReturnUser">
       <End Role="User" EntitySet="User" />

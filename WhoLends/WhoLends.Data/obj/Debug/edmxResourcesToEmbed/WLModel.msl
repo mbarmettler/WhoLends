@@ -58,14 +58,13 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FileName" ColumnName="FileName" />
           <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
-          <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LendReturn">
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendReturn)">
         <MappingFragment StoreEntitySet="LendReturn">
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
           <ScalarProperty Name="LendId" ColumnName="LendId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
