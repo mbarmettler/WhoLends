@@ -75,12 +75,12 @@
                 @if (Model.To == null)
                 {
                     @Html.ActionLink(" erfassen", "../LendReturns/Create", new { id = Model.Id }, new { @class = "btn btn-default" })
+                    <br />
                 }
                 else
                 {
                     <!-- Return Detail Partial View -->
                     @Html.Partial("~/Views/LendReturns/_LendReturnDetail.cshtml", Model.LendReturn)
-                    @*@Html.Action("GetReturn", "LendReturns", Model.LendReturn.Id)*@
                 }
                 <br />
             </div>

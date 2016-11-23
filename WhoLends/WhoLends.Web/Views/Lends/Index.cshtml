@@ -55,25 +55,19 @@
         @Html.Grid(Model).Columns(
             columns =>
             {
-            columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
-            columns.Add(c => c.Id).Titled("ID");
-            columns.Add(c => c.SelectedLendUser.UserName).Titled("Ausleiher").Filterable(true);
-            columns.Add(c => c.From).Titled("Von").Filterable(true);
-            columns.Add(c => c.To).Titled("Bis").Filterable(true);
-            columns.Add(c => c.SelectedLendItem.Name).Titled("Gegenstand Name").Filterable(true);
-            columns.Add(c => c.SelectedLendItem.CustomerId).Titled("interne ID").Filterable(true);
-            columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
-            columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
-            //if (Model.CurrentUser.RoleId == 1)
-            if (Request.IsAuthenticated)
-            {
+                columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
+                columns.Add(c => c.Id).Titled("ID");
+                columns.Add(c => c.SelectedLendUser.UserName).Titled("Ausleiher").Filterable(true);
+                columns.Add(c => c.From).Titled("Von").Filterable(true);
+                columns.Add(c => c.To).Titled("Bis").Filterable(true);
+                columns.Add(c => c.SelectedLendItem.Name).Titled("Gegenstand Name").Filterable(true);
+                columns.Add(c => c.SelectedLendItem.CustomerId).Titled("interne ID").Filterable(true);
+                columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
+                columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
+                //if (Model.CurrentUser.RoleId == 1)
                 columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" }));
                 columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
-            }
-            //if (Model.First().LendLendReturn == null)
-            //{
-            columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "../LendReturns/Create", new {id = c.Id}, new {@class = "btn btn-success glyphicon glyphicon-share-alt"}));
-            //}
-        }).WithPaging(4).Sortable(true)
+                columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "../LendReturns/Create", new {id = c.Id}, new {@class = "btn btn-success glyphicon glyphicon-share-alt"}));
+            }).WithPaging(4).Sortable(true)
     </div>
 }

@@ -74,7 +74,7 @@ namespace WhoLends.Web.Controllers
                 //process Attached Images
                 lendReturnVM.ReturnImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
-                //update lenditem - file ID (only for one image)
+                //create Return model
                 var firstOrDefault = lendReturnVM.ReturnImageViewModels.FirstOrDefault();
                 if (firstOrDefault != null)
                     lendReturnVM.FileId = firstOrDefault.Id;
@@ -91,12 +91,8 @@ namespace WhoLends.Web.Controllers
 
                 //get Lend and update it
                 var lendmodel = _lendRepository.GetLendByID(model.LendId);
+                lendmodel.LendReturnId = model.Id;
                 lendmodel.To = DateTime.Now;
-
-                LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
-                
-                lendVM.LendReturn = lendReturnVM;
-                lendVM.LRId = model.Id;
 
                 _lendRepository.UpdateLend(lendmodel);
                 _lendRepository.Save();

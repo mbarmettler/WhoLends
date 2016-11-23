@@ -46,5 +46,7 @@ namespace WhoLends.ViewModels
 
         [Display(Name = "Ersteller")]
         public string CurrentUserwithID { get; set; }
+
+        public bool ShowLendReturnButton { get; set; }
     }
 }

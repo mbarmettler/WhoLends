@@ -31,6 +31,6 @@ namespace WhoLends.Data
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lend> Lend { get; set; }
-        public virtual File File1 { get; set; }
+        public virtual File File { get; set; }
     }
 }

@@ -93,15 +93,14 @@ namespace WhoLends.Controllers
                 FileViewModel lrFileVM = Mapper.Map<File, FileViewModel>(lendreturnImages);
                 lrimageslist.Add(lrFileVM);
 
-                //add images to Return VM
+                //add values to Return VM
                 lrVM.ReturnImageViewModels = lrimageslist.AsEnumerable();
-                lrVM.CurrentUserwithID = _userRepository.GetUserById(lrVM.UserId).UserName + " (" + lrVM.CreatedBy.Id + ")";
+                lrVM.CreatedBy = model.LendReturn.User;
+                lrVM.CurrentUserwithID = lrVM.CreatedBy.UserName + " (" + lrVM.CreatedBy.Id + ")";
             }
 
-            #region images to VMs
-
-            //get images of LendItem
-            //FIleID to VM - _getFIleById
+            #region get images of LendItem
+            
             File lenditemImages = _fileRepository.GetFileById(ItemVM.FileId);
             List<FileViewModel> listimages = new List<FileViewModel>();
             FileViewModel itemFileVM = Mapper.Map<File, FileViewModel>(lenditemImages);
@@ -111,8 +110,7 @@ namespace WhoLends.Controllers
             ItemVM.ItemImageViewModels = listimages.AsEnumerable();
             ItemVM.CreatedBy = model.LendItem.User;
             ItemVM.CurrentUserwithID = ItemVM.CreatedBy.UserName + " (" + ItemVM.CreatedBy.Id + ")";
-
-
+        
             #endregion
 
             //stick all to Lend Object
@@ -300,29 +298,29 @@ namespace WhoLends.Controllers
             {
                 var LImodel = _lendItemRepository.GetLendItemByID(l.LendItemId);
                 LendItemViewModel liVM = Mapper.Map<LendItem, LendItemViewModel>(LImodel);
-
                 LendReturnViewModel lrVM = null;
-                //if (l.LRId != null)
-                //{
-                //    //todo exception
-                //    //var LRmodel = _lendReturnRepository.GetReturnById(l.LRId.Value);
-                //    //lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(LRmodel);
-                //}
+                LendViewModel lendobj = new LendViewModel();
 
-                var item = new LendViewModel();
-                item.Id = l.Id;
-                item.From = l.From;
-                item.To = l.To;
-                item.CreatedAt = l.CreatedAt;
-                item.UserId = l.UserId;
-                item.LendItemId = l.LendItemId;
-                item.LenderUserId = l.LendUser.Id;
-                item.SelectedLendUser = _userRepository.GetUserById(item.LenderUserId);
-                item.SelectedLendItem = liVM;
-                item.LendReturn = lrVM;
-                item.CreatedBy = _userRepository.GetUserById(item.UserId);
+                if (l.LendReturn != null)
+                {
+                    var LRmodel = _lendReturnRepository.GetReturnById(l.LendReturnId.Value);
+                    lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(LRmodel);
+                    lendobj.ShowLendReturnButton = true;
+                }
 
-                lItems.Add(item);
+                lendobj.Id = l.Id;
+                lendobj.From = l.From;
+                lendobj.To = l.To;
+                lendobj.CreatedAt = l.CreatedAt;
+                lendobj.UserId = l.UserId;
+                lendobj.LendItemId = l.LendItemId;
+                lendobj.LenderUserId = l.LendUser.Id;
+                lendobj.SelectedLendUser = _userRepository.GetUserById(lendobj.LenderUserId);
+                lendobj.SelectedLendItem = liVM;
+                lendobj.LendReturn = lrVM;
+                lendobj.CreatedBy = _userRepository.GetUserById(lendobj.UserId);
+
+                lItems.Add(lendobj);
             }
 
             return lItems;

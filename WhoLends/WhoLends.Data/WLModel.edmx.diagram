@@ -15,7 +15,7 @@
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_RoleUser" />
         <AssociationConnector Association="Model.FK_LendUser" />
-        <EntityTypeShape EntityType="Model.File" Width="1.5" PointX="12.625" PointY="4.625" />
+        <EntityTypeShape EntityType="Model.File" Width="1.5" PointX="12.875" PointY="4.375" />
         <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="3.75" PointY="7" />
         <AssociationConnector Association="Model.LendReturnUser" />
         <AssociationConnector Association="Model.FK_LendReturn" />

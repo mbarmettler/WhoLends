@@ -56,8 +56,8 @@ namespace WhoLends.Web.Helpers
                 else
                 {
                     //add file to DB
-                    var filemodel = Mapper.Map<FileViewModel, File>(fileVM);
-                    _fileRepository.InsertFile(filemodel);
+                    obj = Mapper.Map<FileViewModel, File>(fileVM);
+                    _fileRepository.InsertFile(obj);
                     _fileRepository.Save();
                 }
 
