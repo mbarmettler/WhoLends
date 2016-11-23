@@ -20,18 +20,17 @@
     <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
     <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="LendItem" Relationship="Model.FK_UserLendItem" FromRole="User" ToRole="LendItem" />
-    <NavigationProperty Name="LendReturn" Relationship="Model.FK_UserLendReturn" FromRole="User" ToRole="LendReturn" />
     <NavigationProperty Name="Lend" Relationship="Model.FK_UserLend" FromRole="User" ToRole="Lend" />
     <NavigationProperty Name="Role" Relationship="Model.FK_RoleUser" FromRole="User" ToRole="Role" />
     <Property Name="RoleId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LendUserLend" Relationship="Model.FK_LendUser" FromRole="User" ToRole="Lend" />
+    <NavigationProperty Name="LendReturn" Relationship="Model.LendReturnUser" FromRole="User" ToRole="LendReturn" />
   </EntityType>
   <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Role" EntityType="Model.Role" />
     <EntitySet Name="User" EntityType="Model.User" />
     <EntitySet Name="Lend" EntityType="Model.Lend" />
     <EntitySet Name="LendItem" EntityType="Model.LendItem" />
-    <EntitySet Name="LendReturn" EntityType="Model.LendReturn" />
     <AssociationSet Name="FK_LendItemLend" Association="Model.FK_LendItemLend">
       <End Role="LendItem" EntitySet="LendItem" />
       <End Role="Lend" EntitySet="Lend" />
@@ -39,10 +38,6 @@
     <AssociationSet Name="FK_UserLendItem" Association="Model.FK_UserLendItem">
       <End Role="User" EntitySet="User" />
       <End Role="LendItem" EntitySet="LendItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLendReturn" Association="Model.FK_UserLendReturn">
-      <End Role="User" EntitySet="User" />
-      <End Role="LendReturn" EntitySet="LendReturn" />
     </AssociationSet>
     <AssociationSet Name="FK_UserLend" Association="Model.FK_UserLend">
       <End EntitySet="User" Role="User" />
@@ -56,14 +51,27 @@
       <End Role="User" EntitySet="User" />
       <End Role="Lend" EntitySet="Lend" />
     </AssociationSet>
-    <AssociationSet Name="LendLendReturn" Association="Model.LendLendReturn">
+    <EntitySet Name="File" EntityType="Model.File" />
+    <AssociationSet Name="FileLendItem" Association="Model.FileLendItem">
+      <End Role="File" EntitySet="File" />
+      <End Role="LendItem" EntitySet="LendItem" />
+    </AssociationSet>
+    <EntitySet Name="LendReturn" EntityType="Model.LendReturn" />
+    <AssociationSet Name="LendReturnUser" Association="Model.LendReturnUser">
+      <End Role="LendReturn" EntitySet="LendReturn" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FileLendReturn" Association="Model.FileLendReturn">
+      <End Role="File" EntitySet="File" />
+      <End Role="LendReturn" EntitySet="LendReturn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LendReturnLend" Association="Model.FK_LendReturnLend">
       <End Role="Lend" EntitySet="Lend" />
       <End Role="LendReturn" EntitySet="LendReturn" />
     </AssociationSet>
-    <EntitySet Name="FileSet" EntityType="Model.File" />
-    <AssociationSet Name="FileLendItem" Association="Model.FileLendItem">
-      <End Role="File" EntitySet="FileSet" />
-      <End Role="LendItem" EntitySet="LendItem" />
+    <AssociationSet Name="FK_LendReturn" Association="Model.FK_LendReturn">
+      <End Role="LendReturn" EntitySet="LendReturn" />
+      <End Role="Lend" EntitySet="Lend" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="LendItem">
@@ -71,12 +79,12 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
-    <Property Name="Name" Type="String" Nullable="false" />
-    <Property Name="Description" Type="String" Nullable="false" />
-    <Property Name="CustomerId" Type="String" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Quantity" Type="Int16" Nullable="false" />
     <Property Name="Condition" Type="Model.Condition" Nullable="false" />
-    <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="User" Relationship="Model.FK_UserLendItem" FromRole="LendItem" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="FileId" Type="Int32" Nullable="false" />
@@ -86,32 +94,18 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="From" Type="DateTime" Nullable="false" />
-    <Property Name="To" Type="DateTime" Nullable="true" />
-    <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
+    <Property Name="From" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="To" Type="DateTime" Nullable="true" Precision="3" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="LendItem" Relationship="Model.FK_LendItemLend" FromRole="Lend" ToRole="LendItem" />
     <Property Name="LendItemId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Model.FK_UserLend" FromRole="Lend" ToRole="User" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LendUser" Relationship="Model.FK_LendUser" FromRole="Lend" ToRole="User" />
     <Property Name="LenderUserId" Type="Int32" Nullable="false" />
-    <Property Name="LRId" Type="Int32" Nullable="true" />
-    <NavigationProperty Name="LendReturn" Relationship="Model.LendLendReturn" FromRole="Lend" ToRole="LendReturn" />
-  </EntityType>
-  <EntityType Name="LendReturn">
-    <Key>
-      <PropertyRef Name="Id" />
-      <PropertyRef Name="LendId" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
-    <Property Name="LendId" Type="Int32" Nullable="false" />
-    <Property Name="Description" Type="String" Nullable="false" />
-    <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="Model.FK_UserLendReturn" FromRole="LendReturn" ToRole="User" />
-    <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="SetComplete" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Lend" Relationship="Model.LendLendReturn" FromRole="LendReturn" ToRole="Lend" />
-    <Property Name="FileId" Type="Int32" Nullable="false" />
+    <Property Name="LendReturnId" Type="Int32" />
+    <NavigationProperty Name="LendReturn1" Relationship="Model.FK_LendReturnLend" FromRole="Lend" ToRole="LendReturn" />
+    <NavigationProperty Name="LendReturn" Relationship="Model.FK_LendReturn" FromRole="Lend" ToRole="LendReturn" />
   </EntityType>
   <EnumType Name="Condition">
     <Member Name="Neuwertig" />
@@ -139,18 +133,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="LendItem">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserLendReturn">
-    <End Type="Model.User" Role="User" Multiplicity="1" />
-    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="LendReturn">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
@@ -191,30 +173,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LendLendReturn">
-    <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
-    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="LendReturn">
-        <PropertyRef Name="Id" />
-        <PropertyRef Name="LendId" />
-      </Principal>
-      <Dependent Role="Lend">
-        <PropertyRef Name="LRId" />
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="File">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FileName" Type="String" Nullable="false" />
-    <Property Name="Content" Type="Binary" Nullable="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
     <Property Name="LendItemId" Type="Int32" Nullable="false" />
     <Property Name="LendReturnId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="LendItem" Relationship="Model.FileLendItem" FromRole="File" ToRole="LendItem" />
+    <NavigationProperty Name="LendReturn" Relationship="Model.FileLendReturn" FromRole="File" ToRole="LendReturn" />
   </EntityType>
   <Association Name="FileLendItem">
     <End Type="Model.File" Role="File" Multiplicity="*" />
@@ -225,6 +194,69 @@
       </Principal>
       <Dependent Role="File">
         <PropertyRef Name="LendItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LendReturn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="Model.LendReturnUser" FromRole="LendReturn" ToRole="User" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SetComplete" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="File" Relationship="Model.FileLendReturn" FromRole="LendReturn" ToRole="File" />
+    <Property Name="LendId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Lend1" Relationship="Model.FK_LendReturnLend" FromRole="LendReturn" ToRole="Lend" />
+    <NavigationProperty Name="Lend" Relationship="Model.FK_LendReturn" FromRole="LendReturn" ToRole="Lend" />
+  </EntityType>
+  <Association Name="LendReturnUser">
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="*" />
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendReturn">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FileLendReturn">
+    <End Type="Model.File" Role="File" Multiplicity="*" />
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="LendReturn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="LendReturnId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LendReturnLend">
+    <End Type="Model.Lend" Role="Lend" Multiplicity="1" />
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lend">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendReturn">
+        <PropertyRef Name="LendId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LendReturn">
+    <End Type="Model.LendReturn" Role="LendReturn" Multiplicity="0..1" />
+    <End Type="Model.Lend" Role="Lend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LendReturn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LendReturnId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

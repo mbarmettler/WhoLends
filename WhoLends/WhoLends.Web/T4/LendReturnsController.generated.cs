@@ -62,6 +62,12 @@ namespace WhoLends.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.PartialViewResult GetReturn()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GetReturn);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public LendReturnsController Actions { get { return MVC.LendReturns; } }
@@ -80,6 +86,7 @@ namespace WhoLends.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string Create = "Create";
+            public readonly string GetReturn = "GetReturn";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,6 +94,7 @@ namespace WhoLends.Web.Controllers
         {
             public const string Index = "Index";
             public const string Create = "Create";
+            public const string GetReturn = "GetReturn";
         }
 
 
@@ -98,6 +106,15 @@ namespace WhoLends.Web.Controllers
         {
             public readonly string Id = "Id";
             public readonly string lendReturnVM = "lendReturnVM";
+            public readonly string uploadfile = "uploadfile";
+        }
+        static readonly ActionParamsClass_GetReturn s_params_GetReturn = new ActionParamsClass_GetReturn();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GetReturn GetReturnParams { get { return s_params_GetReturn; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GetReturn
+        {
+            public readonly string lrId = "lrId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -109,12 +126,14 @@ namespace WhoLends.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _LendReturnDetail = "_LendReturnDetail";
                 public readonly string Create = "Create";
                 public readonly string Delete = "Delete";
                 public readonly string Details = "Details";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
+            public readonly string _LendReturnDetail = "~/Views/LendReturns/_LendReturnDetail.cshtml";
             public readonly string Create = "~/Views/LendReturns/Create.cshtml";
             public readonly string Delete = "~/Views/LendReturns/Delete.cshtml";
             public readonly string Details = "~/Views/LendReturns/Details.cshtml";
@@ -152,14 +171,27 @@ namespace WhoLends.Web.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendReturnViewModel lendReturnVM);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendReturnViewModel lendReturnVM, System.Web.HttpPostedFileBase uploadfile);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendReturnViewModel lendReturnVM)
+        public override System.Web.Mvc.ActionResult Create(WhoLends.ViewModels.LendReturnViewModel lendReturnVM, System.Web.HttpPostedFileBase uploadfile)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendReturnVM", lendReturnVM);
-            CreateOverride(callInfo, lendReturnVM);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "uploadfile", uploadfile);
+            CreateOverride(callInfo, lendReturnVM, uploadfile);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void GetReturnOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, int lrId);
+
+        [NonAction]
+        public override System.Web.Mvc.PartialViewResult GetReturn(int lrId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.GetReturn);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lrId", lrId);
+            GetReturnOverride(callInfo, lrId);
             return callInfo;
         }
 

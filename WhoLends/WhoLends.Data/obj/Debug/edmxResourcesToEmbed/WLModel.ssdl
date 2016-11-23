@@ -1,64 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="ModelStoreContainer">
-    <EntitySet Name="Role" EntityType="Model.Store.Role" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="User" EntityType="Model.Store.User" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Lend" EntityType="Model.Store.Lend" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LendItem" EntityType="Model.Store.LendItem" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LendReturn" EntityType="Model.Store.LendReturn" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="FileSet" EntityType="Model.Store.FileSet" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_LendItemLend" Association="Model.Store.FK_LendItemLend">
-      <End Role="LendItem" EntitySet="LendItem" />
-      <End Role="Lend" EntitySet="Lend" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLendItem" Association="Model.Store.FK_UserLendItem">
-      <End Role="User" EntitySet="User" />
-      <End Role="LendItem" EntitySet="LendItem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLendReturn" Association="Model.Store.FK_UserLendReturn">
-      <End Role="User" EntitySet="User" />
-      <End Role="LendReturn" EntitySet="LendReturn" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLend" Association="Model.Store.FK_UserLend">
-      <End Role="User" EntitySet="User" />
-      <End Role="Lend" EntitySet="Lend" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RoleUser" Association="Model.Store.FK_RoleUser">
-      <End Role="Role" EntitySet="Role" />
-      <End Role="User" EntitySet="User" />
-    </AssociationSet>
-    <AssociationSet Name="FK_LendUser" Association="Model.Store.FK_LendUser">
-      <End Role="User" EntitySet="User" />
-      <End Role="Lend" EntitySet="Lend" />
-    </AssociationSet>
-    <AssociationSet Name="LendLendReturn" Association="Model.Store.LendLendReturn">
-      <End Role="Lend" EntitySet="Lend" />
-      <End Role="LendReturn" EntitySet="LendReturn" />
-    </AssociationSet>
-    <AssociationSet Name="FileLendItem" Association="Model.Store.FileLendItem">
-      <End Role="File" EntitySet="FileSet" />
-      <End Role="LendItem" EntitySet="LendItem" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Role">
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="File">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
-  </EntityType>
-  <EntityType Name="User">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
-    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
-    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
-    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="LendItemId" Type="int" Nullable="false" />
+    <Property Name="LendReturnId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Lend">
     <Key>
@@ -66,12 +16,12 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="From" Type="datetime" Nullable="false" />
-    <Property Name="To" Type="datetime" Nullable="true" />
+    <Property Name="To" Type="datetime" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="LendItemId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="LenderUserId" Type="int" Nullable="false" />
-    <Property Name="LRId" Type="int" Nullable="true" />
+    <Property Name="LendReturnId" Type="int" />
   </EntityType>
   <EntityType Name="LendItem">
     <Key>
@@ -90,7 +40,6 @@
   <EntityType Name="LendReturn">
     <Key>
       <PropertyRef Name="Id" />
-      <PropertyRef Name="LendId" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LendId" Type="int" Nullable="false" />
@@ -98,21 +47,54 @@
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="SetComplete" Type="bit" Nullable="false" />
-    <Property Name="FileId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="FileSet">
+  <EntityType Name="Role">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
-    <Property Name="LendItemId" Type="int" Nullable="false" />
-    <Property Name="LendReturnId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FileLendItem">
+    <End Role="LendItem" Type="Self.LendItem" Multiplicity="1" />
+    <End Role="File" Type="Self.File" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LendItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="LendItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FileLendReturn">
+    <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="1" />
+    <End Role="File" Type="Self.File" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LendReturn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="LendReturnId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_LendItemLend">
-    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
+    <End Role="LendItem" Type="Self.LendItem" Multiplicity="1" />
+    <End Role="Lend" Type="Self.Lend" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="LendItem">
         <PropertyRef Name="Id" />
@@ -122,9 +104,57 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_LendReturn">
+    <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="0..1" />
+    <End Role="Lend" Type="Self.Lend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LendReturn">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="LendReturnId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LendReturnUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LendReturn">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserLend">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Lend" Type="Self.Lend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lend">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserLendItem">
-    <End Role="User" Type="Model.Store.User" Multiplicity="1" />
-    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="*" />
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="LendItem" Type="Self.LendItem" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id" />
@@ -135,8 +165,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserLendReturn">
-    <End Role="User" Type="Model.Store.User" Multiplicity="1" />
-    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="*" />
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id" />
@@ -146,66 +176,48 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserLend">
-    <End Role="User" Type="Model.Store.User" Multiplicity="1" />
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Lend">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RoleUser">
-    <End Role="Role" Type="Model.Store.Role" Multiplicity="1" />
-    <End Role="User" Type="Model.Store.User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Role">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="RoleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_LendUser">
-    <End Role="User" Type="Model.Store.User" Multiplicity="1" />
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Lend">
-        <PropertyRef Name="LenderUserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="LendLendReturn">
-    <End Role="Lend" Type="Model.Store.Lend" Multiplicity="*" />
-    <End Role="LendReturn" Type="Model.Store.LendReturn" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="LendReturn">
-        <PropertyRef Name="Id" />
-        <PropertyRef Name="LendId" />
-      </Principal>
-      <Dependent Role="Lend">
-        <PropertyRef Name="LRId" />
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FileLendItem">
-    <End Role="File" Type="Model.Store.FileSet" Multiplicity="*" />
-    <End Role="LendItem" Type="Model.Store.LendItem" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="LendItem">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="File">
-        <PropertyRef Name="LendItemId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lend" EntityType="Self.Lend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LendItem" EntityType="Self.LendItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LendReturn" EntityType="Self.LendReturn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_FileLendItem" Association="Self.FK_FileLendItem">
+      <End Role="LendItem" EntitySet="LendItem" />
+      <End Role="File" EntitySet="File" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FileLendReturn" Association="Self.FK_FileLendReturn">
+      <End Role="LendReturn" EntitySet="LendReturn" />
+      <End Role="File" EntitySet="File" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LendItemLend" Association="Self.FK_LendItemLend">
+      <End Role="LendItem" EntitySet="LendItem" />
+      <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LendReturn" Association="Self.FK_LendReturn">
+      <End Role="LendReturn" EntitySet="LendReturn" />
+      <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LendReturnUser" Association="Self.FK_LendReturnUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="LendReturn" EntitySet="LendReturn" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role" Association="Self.FK_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLend" Association="Self.FK_UserLend">
+      <End Role="User" EntitySet="User" />
+      <End Role="Lend" EntitySet="Lend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLendItem" Association="Self.FK_UserLendItem">
+      <End Role="User" EntitySet="User" />
+      <End Role="LendItem" EntitySet="LendItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLendReturn" Association="Self.FK_UserLendReturn">
+      <End Role="User" EntitySet="User" />
+      <End Role="LendReturn" EntitySet="LendReturn" />
+    </AssociationSet>
+  </EntityContainer>
 </Schema>

@@ -10,14 +10,18 @@ namespace WhoLends.Web
         {
             #region old mappings - maybe later for central mapping
 
-            //Mapper.Initialize(cfg => {
-            //    cfg.CreateMap<Lend, LendViewModel>()
-            //    .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
-            //    .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"))
-            //    .ReverseMap();
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Lend, LendViewModel>()
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
+                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"))
+                .ReverseMap();
 
-            //    //cfg.CreateMap<LendViewModel, Data.Lend>();
-            //});
+                cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
+
+                //cfg.CreateMap<LendViewModel, Data.Lend>();
+            });
 
             ////Mapper.Configuration.AssertConfigurationIsValid();
 

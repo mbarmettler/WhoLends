@@ -12,6 +12,7 @@ using WhoLends.ViewModels;
 using WhoLends.Web.DAL;
 using WhoLends.Data;
 using Microsoft.AspNet.Identity.EntityFramework;
+using WhoLends.Web.Helpers;
 
 namespace WhoLends.Controllers
 {
@@ -143,33 +144,13 @@ namespace WhoLends.Controllers
 
                     _userRepository.InsertUser(newUserLogin);
                     _userRepository.Save();
-
                     
-                    MailMessage mailMsg = new MailMessage();
-
-                    // Init SmtpClient
-                    SmtpClient smtpClient = new SmtpClient();
-                    NetworkCredential credentials = (NetworkCredential)smtpClient.Credentials;
-
-                    // To
-                    mailMsg.To.Add(new MailAddress(newUserLogin.Email, newUserLogin.UserName));
-
-                    // From
-                    mailMsg.From = new MailAddress(credentials.UserName, "WhoLends");
-
                     // Subject and multipart/alternative Body
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                    mailMsg.Subject = "Confirm your account";
-                    string text = "Please confirm your account by clicking " + callbackUrl;
-                    string html = $"<p>Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a></p>";
-                    mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-                    mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+                    Mailer.SendRegistrationConfirmation(newUserLogin, callbackUrl);
                     
-                    //send mail
-                    smtpClient.Send(mailMsg);
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -227,31 +208,12 @@ namespace WhoLends.Controllers
                     return View(model);
                 }
 
-                MailMessage mailMsg = new MailMessage();
-
-                // Init SmtpClient
-                SmtpClient smtpClient = new SmtpClient();
-                NetworkCredential credentials = (NetworkCredential)smtpClient.Credentials;
-
-                // To
-                mailMsg.To.Add(new MailAddress(user.Email, user.UserName));
-
-                // From
-                mailMsg.From = new MailAddress(credentials.UserName, "WhoLends");
-
                 // Subject and multipart/alternative Body
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-                mailMsg.Subject = "Reset Password";
-                string text = "Please reset your password by clicking " + callbackUrl;
-                string html = "<p>Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a></p>";
-                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
-
-                //send mail
-                smtpClient.Send(mailMsg);
-
+                Mailer.SendPasswordReset(user, callbackUrl);
+                
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 

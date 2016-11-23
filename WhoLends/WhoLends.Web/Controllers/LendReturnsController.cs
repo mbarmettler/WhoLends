@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using WhoLends.Data;
 using WhoLends.ViewModels;
@@ -42,16 +43,16 @@ namespace WhoLends.Web.Controllers
 
             LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(model);
             lendVM.To = DateTime.Now;
-            
-            LendReturnViewModel lendReturnVm = new LendReturnViewModel();
 
-            lendReturnVm.CreatedAt = DateTime.Now;
-            lendReturnVm.CreatedBy = General.GetCurrentUser(_userRepository);
+            LendReturnViewModel lendReturnVm = new LendReturnViewModel
+            {
+                LendId =  lendVM.Id,
+                CreatedAt = DateTime.Now,
+                CreatedBy = General.GetCurrentUser(_userRepository)
+            };
             lendReturnVm.UserId = lendReturnVm.CreatedBy.Id;
             lendReturnVm.CurrentUserwithID = lendReturnVm.CreatedBy.UserName + " (" + lendReturnVm.UserId + ")";
-
-            lendReturnVm.LendId = lendVM.Id;
-
+            
             return View(lendReturnVm);
         }
 
@@ -60,9 +61,9 @@ namespace WhoLends.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Create(LendReturnViewModel lendReturnVM)
+        public virtual ActionResult Create(LendReturnViewModel lendReturnVM, HttpPostedFileBase uploadfile)
         {
-            //todo refactoring and improvement
+            //todo refactoring and improvement§
             if (ModelState.IsValid)
             {
                 lendReturnVM.UserId = General.GetCurrentUser(_userRepository).Id;
@@ -72,29 +73,42 @@ namespace WhoLends.Web.Controllers
                     cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
                     cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
                 });
-                
+
                 var model = Mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
 
                 _lendreturnRepository.InsertReturn(model);
                 _lendreturnRepository.Save();
 
-                var lendmodel = _lendRepository.GetLendByID(model.LendId);
-                lendmodel.To = DateTime.Now;
+                //var lendmodel = _lendRepository.GetLendByID(model.LendId);
+                //lendmodel.To = DateTime.Now;
 
-                LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
-                
+                //LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(lendmodel);
+
                 //ToDo
                 //set lendreturn id to lend and save
                 //set lendVM LendReturn to VM and save model
-                lendVM.LendReturn = lendReturnVM;
+                //lendVM.LendReturn = lendReturnVM;
+                //lendVM.LRId = model.Id;
 
-                _lendRepository.UpdateLend(lendmodel);
+                //_lendRepository.UpdateLend(lendmodel);
                 _lendRepository.Save();
 
                 return RedirectToAction("..\\Lends\\Index");
             }
 
             return View(lendReturnVM);
+        }
+
+
+        //improve - load return-partial view from here
+
+        [ChildActionOnly]
+        public virtual PartialViewResult GetReturn(int lrId)
+        {
+            var model = _lendreturnRepository.GetReturnById(lrId);
+            LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model);
+
+            return PartialView("~/Views/LendReturns/_LendReturnDetail.cshtml", lrVM);
         }
 
         #region not used code

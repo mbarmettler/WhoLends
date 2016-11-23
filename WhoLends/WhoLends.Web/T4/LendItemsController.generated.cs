@@ -133,6 +133,7 @@ namespace WhoLends.Controllers
         {
             public readonly string Id = "Id";
             public readonly string lendItemVM = "lendItemVM";
+            public readonly string uploadfile = "uploadfile";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -153,12 +154,14 @@ namespace WhoLends.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _LendItemDetail = "_LendItemDetail";
                 public readonly string Create = "Create";
                 public readonly string Delete = "Delete";
                 public readonly string Details = "Details";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
+            public readonly string _LendItemDetail = "~/Views/LendItems/_LendItemDetail.cshtml";
             public readonly string Create = "~/Views/LendItems/Create.cshtml";
             public readonly string Delete = "~/Views/LendItems/Delete.cshtml";
             public readonly string Details = "~/Views/LendItems/Details.cshtml";
@@ -232,14 +235,15 @@ namespace WhoLends.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendItemViewModel lendItemVM);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, WhoLends.ViewModels.LendItemViewModel lendItemVM, System.Web.HttpPostedFileBase uploadfile);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(WhoLends.ViewModels.LendItemViewModel lendItemVM)
+        public override System.Web.Mvc.ActionResult Edit(WhoLends.ViewModels.LendItemViewModel lendItemVM, System.Web.HttpPostedFileBase uploadfile)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lendItemVM", lendItemVM);
-            EditOverride(callInfo, lendItemVM);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "uploadfile", uploadfile);
+            EditOverride(callInfo, lendItemVM, uploadfile);
             return callInfo;
         }
 

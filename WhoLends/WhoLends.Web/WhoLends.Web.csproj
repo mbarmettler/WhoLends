@@ -364,6 +364,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\General.cs" />
+    <Compile Include="Helpers\ImageInsert.cs" />
     <Compile Include="Helpers\Mailer.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

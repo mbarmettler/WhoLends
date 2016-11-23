@@ -33,7 +33,7 @@
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="LenderUserId" ColumnName="LenderUserId" />
-          <ScalarProperty Name="LRId" ColumnName="LRId" />
+          <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -52,27 +52,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LendReturn">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.LendReturn)">
-        <MappingFragment StoreEntitySet="LendReturn">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="LendId" ColumnName="LendId" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="SetComplete" ColumnName="SetComplete" />
-          <ScalarProperty Name="FileId" ColumnName="FileId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FileSet">
+    <EntitySetMapping Name="File">
       <EntityTypeMapping TypeName="IsTypeOf(Model.File)">
-        <MappingFragment StoreEntitySet="FileSet">
+        <MappingFragment StoreEntitySet="File">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FileName" ColumnName="FileName" />
           <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
           <ScalarProperty Name="LendReturnId" ColumnName="LendReturnId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LendReturn">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.LendReturn)">
+        <MappingFragment StoreEntitySet="LendReturn">
+          <ScalarProperty Name="LendId" ColumnName="LendId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="SetComplete" ColumnName="SetComplete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

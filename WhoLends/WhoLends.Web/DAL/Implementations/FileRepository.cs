@@ -17,12 +17,12 @@ namespace WhoLends.Web.DAL.Implementations
 
         public IEnumerable<File> GetFiles()
         {
-            return context.FileSet.ToList();
+            return context.File.ToList();
         }
 
         public File GetFileById(int fileId)
         {
-            return context.FileSet.Find(fileId);
+            return context.File.Find(fileId);
         }
 
         public IEnumerable<File> GetFilesByLendItemId(int lendItemId)
@@ -35,7 +35,7 @@ namespace WhoLends.Web.DAL.Implementations
 
         public void InsertFile(File fileitem)
         {
-            context.FileSet.Add(fileitem);
+            context.File.Add(fileitem);
         }
 
         public void UpdateFile(File fileitem)
@@ -57,8 +57,8 @@ namespace WhoLends.Web.DAL.Implementations
 
         public void DeleteFile(int fileid)
         {
-            File fileitem = context.FileSet.Find(fileid);
-            context.FileSet.Remove(fileitem);
+            File fileitem = context.File.Find(fileid);
+            context.File.Remove(fileitem);
         }
 
         protected virtual void Dispose(bool disposing)

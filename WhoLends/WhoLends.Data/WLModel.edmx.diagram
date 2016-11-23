@@ -8,18 +8,26 @@
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" FillColor="Gray" />
         <EntityTypeShape EntityType="Model.User" Width="1.75" PointX="3" PointY="1.75" IsExpanded="true" FillColor="Gray" />
         <EntityTypeShape EntityType="Model.LendItem" Width="1.5" PointX="9" PointY="1.5" FillColor="RoyalBlue" />
-        <EntityTypeShape EntityType="Model.Lend" Width="2.125" PointX="8.875" PointY="6.25" FillColor="RoyalBlue" />
-        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="3.625" PointY="6.875" FillColor="RoyalBlue" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Lend" Width="2.125" PointX="9" PointY="6.25" FillColor="RoyalBlue" />
         <AssociationConnector Association="Model.FK_LendItemLend" />
         <AssociationConnector Association="Model.FK_UserLendItem" />
-        <AssociationConnector Association="Model.FK_UserLendReturn" />
         <AssociationConnector ManuallyRouted="false" Association="Model.FK_UserLend">
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_RoleUser" />
         <AssociationConnector Association="Model.FK_LendUser" />
-        <AssociationConnector Association="Model.LendLendReturn" />
         <EntityTypeShape EntityType="Model.File" Width="1.5" PointX="12.625" PointY="4.625" />
         <AssociationConnector Association="Model.FileLendItem" />
+        <EntityTypeShape EntityType="Model.LendReturn" Width="1.5" PointX="3.75" PointY="7" />
+        <AssociationConnector Association="Model.LendReturnUser" />
+        <AssociationConnector Association="Model.FileLendReturn" ManuallyRouted="true" >
+          <ConnectorPoint PointX="12.625" PointY="5.7593489583333328" />
+          <ConnectorPoint PointX="9.8333333333333339" PointY="5.7593489583333319" />
+          <ConnectorPoint PointX="9.6666666666666661" PointY="5.7593489583333328" />
+          <ConnectorPoint PointX="5.03125" PointY="5.7593489583333328" />
+          <ConnectorPoint PointX="5.03125" PointY="7.0000000000000018" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_LendReturnLend" />
+        <AssociationConnector Association="Model.FK_LendReturn" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
