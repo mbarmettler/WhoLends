@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 40px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -23,9 +24,12 @@ textarea {
     max-width: 280px;
 }
 
-footer#master {
+/*footer {
+    position: absolute;
     background: #000000;
     color: #ffffff;
-    margin-top: 20px;
+    margin-top: 20px !important;
+    margin-bottom: 0px !important;
     height: 40px;
-}
+    width: 100%;
+}*/
