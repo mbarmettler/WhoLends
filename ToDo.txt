@@ -3,7 +3,7 @@ ToDo
 ================
 
 Issues:
-- save Lend to DB (Id FK exception) 
+- (done) save Lend to DB (Id FK exception) 
 
 Tasks:
-- Phase 2: improve DB Layer - to code first models
+- (done) Phase 2: improve DB Layer - to code first models
