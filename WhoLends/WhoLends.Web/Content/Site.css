@@ -24,12 +24,9 @@ textarea {
     max-width: 280px;
 }
 
-/*footer {
-    position: absolute;
-    background: #000000;
-    color: #ffffff;
-    margin-top: 20px !important;
-    margin-bottom: 0px !important;
-    height: 40px;
-    width: 100%;
-}*/
+/* override for empty lines, keep the height */
+/* Keep this the same as line-height */
+dt, dd {
+  line-height: 20px;
+  min-height: 20px;
+ }

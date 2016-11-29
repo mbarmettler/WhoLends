@@ -19,6 +19,7 @@
                     <p>
                         Einen neuen Gegenstand ausleihen
                     </p>
+                    <br />
                     <p>
                         @Html.ActionLink(" erfassen", "Create", null, new { @class = "btn btn-default" })
                     </p>
@@ -32,6 +33,7 @@
                     <p>
                         Einen neuen Gegenstand zum Ausleihen
                     </p>
+                    <br/>
                     <p>
                         @Html.ActionLink(" erfassen", "../LendItems/Create", null, new { @class = "btn btn-default" })
                     </p>
@@ -41,9 +43,11 @@
         <div class="col-md-4">
             <div class="thumbnail">
                 <div class="caption">
-                    <h3>Web Hosting</h3>
-                    <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-                    <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+                    <h3><span class="label label-warning">BETA</span> Benachrichtigungen</h3>
+                    <p>
+                        E-Mail Benachrichtigungen für Termine oder fällige Rückgaben.
+                    </p>
+                    <p><a class="btn btn-default" href="#">Verwalten &raquo;</a></p>
                 </div>
             </div>
         </div>

@@ -4,30 +4,34 @@
 
 <div class="jumbotron">
     <h1>WhoLends - WL</h1>
-    <p class="lead">WhoLends (kurz WL) bietet die Möglichkeit Ausleihgegenstände zu verwalten und langfristig zu beobachten.</p>
-    <p><a href="#" class="btn btn-primary btn-lg">weiterlesen &raquo;</a></p>
+    @*<p class="lead"></p>*@
+    <p>
+        @Html.ActionLink("zur Übersicht »", "../Lends/Index", null, new { @class = "btn btn-primary btn-lg" })
+    </p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Einführung</h2>
         <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            WhoLends (kurz WL) bietet die Möglichkeit Ausleihgegenstände zu verwalten und langfristig zu beobachten.
         </p>
         <p><a class="btn btn-default" href="#">weiterlesen &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Verwaltung</h2>
         <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Einfache und übersichtliche Verwaltung und Überwachung von Inventar Gegenständen.
         </p>
+        <br/>
         <p><a class="btn btn-default" href="#">weiterlesen &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Benachrichtigung</h2>
+        <h2><span class="label label-warning">BETA</span> Benachrichtigung</h2>
         <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Sofortige Benachrichtigung bei Terminen oder fälligen Rückgaben.
         </p>
+        <br />
         <p><a class="btn btn-default" href="#">weiterlesen &raquo;</a></p>
     </div>
 </div>

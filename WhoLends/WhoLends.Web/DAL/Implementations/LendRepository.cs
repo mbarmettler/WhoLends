@@ -33,6 +33,7 @@ namespace WhoLends.Web.DAL
         public void UpdateLend(Lend lend)
         {
             context.Entry(lend).State = EntityState.Modified;
+            Save();
         }
 
         public void DeleteLend(int lendId)

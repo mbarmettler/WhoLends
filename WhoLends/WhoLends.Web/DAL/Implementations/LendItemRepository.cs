@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using AutoMapper;
 using WhoLends.Data;
 
 namespace WhoLends.Web.DAL
@@ -33,6 +35,7 @@ namespace WhoLends.Web.DAL
         public void UpdateLendItem(LendItem lenditem)
         {
             context.Entry(lenditem).State = EntityState.Modified;
+            Save();
         }
 
         public void DeleteLendItem(int lenditemId)

@@ -61,6 +61,7 @@ namespace WhoLends.Controllers
             LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
             vm.CreatedBy = model.User;
             vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
+            vm.Description = model.Description.Replace("\r\n", ", ");
 
             //get images
             var lenditemImages = _fileRepository.GetFileById(vm.FileId);
@@ -155,30 +156,33 @@ namespace WhoLends.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(LendItemViewModel lendItemVM, HttpPostedFileBase uploadfile)
         {
-            //todo - does not work yet
+            //get data from DB
+            var model = _lendItemRepository.GetLendItemByID(lendItemVM.Id);
 
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
             });
 
-            var model = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
+            //convert model into VM for updating values
+            var livm = Mapper.Map<LendItem, LendItemViewModel>(model);
 
             //process Attached Images
-            lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
+            if (uploadfile != null)
+            {
+                livm.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
-            //update lenditem - file ID (only for one image)
-            var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
-            if (firstOrDefault != null)
-                model.FileId = firstOrDefault.Id;
+                //update lenditem - file ID (only for one image)
+                var firstOrDefault = livm.ItemImageViewModels.FirstOrDefault();
+                if (firstOrDefault != null)
+                    livm.FileId = firstOrDefault.Id;
+            }
 
-
-            _lendItemRepository.UpdateLendItem(model);
-            _lendItemRepository.Save();
-
-            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
-
-            return View(vm);
+            var updatedmodel = Mapper.Map<LendItemViewModel, LendItem>(livm);
+            
+            _lendItemRepository.UpdateLendItem(updatedmodel);
+            
+            return RedirectToAction("Index");
         }
 
         // LendItems/Delete/5

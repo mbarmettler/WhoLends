@@ -95,7 +95,6 @@ namespace WhoLends.Web.Controllers
                 lendmodel.To = DateTime.Now;
 
                 _lendRepository.UpdateLend(lendmodel);
-                _lendRepository.Save();
 
                 return RedirectToAction("..\\Lends\\Index");
             }

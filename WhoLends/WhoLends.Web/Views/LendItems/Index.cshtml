@@ -25,7 +25,7 @@
         columns.Add(c => c.Id).Titled("ID");
         columns.Add(c => c.CustomerId).Titled("interne ID").Filterable(true);
         columns.Add(c => c.Name).Titled("Name").Filterable(true);
-        //columns.Add(c => c.Description).Titled("Beschreibung").Filterable(true);
+        columns.Add(c => c.Quantity).Titled("Anzahl").Filterable(true);
         columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
         columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
         columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" }));

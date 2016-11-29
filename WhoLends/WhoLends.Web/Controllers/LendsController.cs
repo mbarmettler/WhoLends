@@ -239,7 +239,6 @@ namespace WhoLends.Controllers
 
             var model = Mapper.Map<LendViewModel, Lend>(viewModel);
             _lendRepository.UpdateLend(model);
-            _lendRepository.Save();
 
             LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
 
