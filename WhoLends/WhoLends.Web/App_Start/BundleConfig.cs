@@ -11,14 +11,8 @@ namespace WhoLends
 
             #region JQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jquerygrid").Include(
-                        "~/Scripts/jquery-ui-{version}.js",
-                        "~/Scripts/jquery-ui-1.10.0.js",
-                        "~/Scripts/jquery.jqGrid.js",
-                        "~/Scripts/i18nD/grid.locale-de.js"
-                        ));            
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-{version}.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -37,12 +31,19 @@ namespace WhoLends
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                     "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/mvcGrid").Include(
+                    "~/Scripts/gridmvc.js",
+                    "~/Scripts/gridmvc.min.js",
+                    "~/Content/Gridmvc.css"
+                    ));
+
             //styles
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/site.css",
+                      "~/Content/Gridmvc.css",
                       "~/Content/jquery.jqGrid/ui.jqgrid.css",
                       "~/Content/font-awesome.css"));            
         }
