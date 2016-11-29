@@ -4,6 +4,19 @@ ToDo
 
 Issues:
 - (done) save Lend to DB (Id FK exception) 
+- Edit LendItem
+- Edit Lend
 
 Tasks:
 - (done) Phase 2: improve DB Layer - to code first models
+- Grid Column Filter
+
+
+===================
+
+Rolf Meyer Inputs:
+
+- LendItem:
+	- Anschaffungsjahr
+	- Anschaffungspreis
+	
