@@ -43,7 +43,8 @@ namespace WhoLends
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/site.css",
-                      "~/Content/jquery.jqGrid/ui.jqgrid.css"));            
+                      "~/Content/jquery.jqGrid/ui.jqgrid.css",
+                      "~/Content/font-awesome.css"));            
         }
     }
 }

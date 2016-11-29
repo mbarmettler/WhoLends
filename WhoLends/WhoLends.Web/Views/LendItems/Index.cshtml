@@ -28,7 +28,7 @@
         columns.Add(c => c.Quantity).Titled("Anzahl").Filterable(true);
         columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
         columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
-        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" }));
+        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default fa fa-pencil" }));
         columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
     }).WithPaging(5).Sortable(true)
 </div>

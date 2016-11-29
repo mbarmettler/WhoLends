@@ -9,9 +9,9 @@
 
 @using (Html.BeginForm("Create", "LendReturns", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+    <div class="form-horizontal">
         <h4>LendReturn</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -53,18 +53,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SetComplete, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SetComplete, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.SetComplete, new { @class = "form-control" })*@
                 @Html.Label("Ja")
                 @Html.RadioButtonFor(model => model.SetComplete, "True")
                 @Html.Label("Nein")
                 @Html.RadioButtonFor(model => model.SetComplete, "False")
-                @Html.ValidationMessageFor(model => model.SetComplete, "", new { @class = "text-danger" })
-            </div>  
+                @Html.ValidationMessageFor(model => model.SetComplete, "", new {@class = "text-danger"})
+            </div>
         </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
