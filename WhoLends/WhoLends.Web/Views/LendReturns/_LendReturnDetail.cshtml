@@ -2,11 +2,11 @@
 
 <div>
     <div class="row">
-        @if (!Model.ReturnImageViewModels.Any())
+        @if (Model.ReturnImageViewModels == null || !Model.ReturnImageViewModels.Any())
         {
             <div class="col-xs-6 col-md-3">
                 <a href="#" class="thumbnail">
-                    <img src="~/Content/img/noimg.PNG" />
+                    <img src="~/Content/img/noimg.PNG"/>
                 </a>
             </div>
         }
@@ -16,7 +16,7 @@
             {
                 <div class="col-xs-6 col-md-3">
                     <a href="#" class="thumbnail">
-                        <img src="data:image;base64,@Convert.ToBase64String(im.Content)" />
+                        <img src="data:image;base64,@Convert.ToBase64String(im.Content)"/>
                     </a>
                 </div>
             }

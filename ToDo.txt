@@ -3,12 +3,18 @@ ToDo
 ===============
 
 Issues:
-- 
+- AutoMapper - Lend Detail Load
+- AutoMapper - Lend Create Load
+- AutoMapper - Lend Delete Load
+-
+- AutoMapper - LendItem Detail Load
+- AutoMapper - LendItem Create Load
 
 Tasks:
 - AutoMapper Configs refactoring through all objects
 - Testing & Refactoring
 - Delete Lend View: missing fields "Ausleiher", "Ersteller"
+- Delete LendItem View: show Picture
 
 ===============
 DONE:

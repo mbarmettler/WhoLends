@@ -13,39 +13,10 @@
 <div>
     <h4>Gegenstand #@Model.Id</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Condition)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Condition)
-        </dd>
-    </dl>
+    <!--partial view-->
+    @Html.Partial("~/Views/LendItems/_LendItemDetail.cshtml", Model)
+    <!---->
+    <br/>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
@@ -55,7 +26,7 @@
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                 Zurück
             </a>    
-            <input type="submit" value="Delete" class="btn btn-danger" />
+            <input type="submit" value="Löschen" class="btn btn-danger" />
             
         </div>
     }

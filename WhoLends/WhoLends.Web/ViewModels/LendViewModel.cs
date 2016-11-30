@@ -37,8 +37,6 @@ namespace WhoLends.ViewModels
         public User SelectedLendUser { get; set; }
 
         public LendReturnViewModel LendReturn { get; set; }
-
-        public int LRId { get; set; }
         
         public IEnumerable<LendItemViewModel> LendItemsList { get; set; }
 

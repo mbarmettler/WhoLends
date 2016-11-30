@@ -360,7 +360,7 @@
 }
 .input-group.date .input-group-addon {
   cursor: pointer;
-  padding: 8px 28px; 
+  padding: 8px 28px 8px 10px; 
 }
 .sr-only {
   position: absolute;
