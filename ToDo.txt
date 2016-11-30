@@ -6,7 +6,9 @@ Issues:
 - 
 
 Tasks:
+- AutoMapper Configs refactoring through all objects
 - Testing & Refactoring
+- Delete Lend View: missing fields "Ausleiher", "Ersteller"
 
 ===============
 DONE:
