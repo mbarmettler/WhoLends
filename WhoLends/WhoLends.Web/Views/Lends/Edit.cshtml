@@ -27,17 +27,23 @@
         @Html.HiddenFor(model => model.CreatedAt)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.From, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+            @Html.LabelFor(model => model.From, new { @class = "control-label col-md-2" })
+            <div class="input-group date col-md-10"  id="datetimepickerFrom">
+                @Html.TextBoxFor(model => model.From, new { @class = "form-control col-md-10", placeholder = "Enter Drop-off date here..." })
+                <span class="input-group-addon col-md-10">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
                 @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.To, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+            @Html.LabelFor(model => model.To, new { @class = "control-label col-md-2" })
+            <div class="input-group date col-md-10" id="datetimepickerTo">
+                @Html.TextBoxFor(model => model.To, new { @class = "form-control col-md-10", placeholder = "Enter Drop-off date here..." })
+                <span class="input-group-addon col-md-10">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
                 @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -64,7 +70,22 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Content/css")
+
     <script type="text/javascript">
-        $('.datepicker').datepicker(); //Initialise any date pickers
+        //Initialise any date pickers
+        $(function() {
+            $('#datetimepickerFrom').datetimepicker();
+            $('#datetimepickerTo').datetimepicker();
+
+            $('#datetimepickerTo')
+                .click(function () {
+                    $('#datetimepickerTo ').data("DateTimePicker").show();
+                });
+
+            $('#datetimepickerFrom')
+                .click(function () {
+                    $('#datetimepickerFrom ').data("DateTimePicker").show();
+                });
+        });
     </script>
 }

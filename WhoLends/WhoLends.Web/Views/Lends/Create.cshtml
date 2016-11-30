@@ -106,6 +106,16 @@
         $(function() {
             $('#datetimepickerFrom').datetimepicker();
             $('#datetimepickerTo').datetimepicker();
+
+            $('#datetimepickerTo')
+                .click(function () {
+                    $('#datetimepickerTo ').data("DateTimePicker").show();
+                });
+
+            $('#datetimepickerFrom')
+                .click(function () {
+                    $('#datetimepickerFrom ').data("DateTimePicker").show();
+                });
         });
     </script>
 }

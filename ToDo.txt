@@ -6,10 +6,7 @@ Issues:
 - 
 
 Tasks:
-- styling DateTimePicker
-- OnClick opens DateTimePicker
-- improve Lend Edit View with DateTimePicker
-- optimize DAL: Insert Method - save statment direct in method
+- Testing & Refactoring
 
 ===============
 DONE:
@@ -22,6 +19,10 @@ Issues:
 Tasks:
 - (done) Phase 2: improve DB Layer - to code first models
 - (done) Grid Column Filter
+- (done) styling DateTimePicker
+- (done) OnClick opens DateTimePicker
+- (done) improve Lend Edit View with DateTimePicker
+- (done) optimize DAL: Insert Method - save statment direct in method
 
 ___________________
 ===================
