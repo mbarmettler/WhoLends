@@ -28,6 +28,7 @@ namespace WhoLends.Web.DAL.Implementations
         public void InsertFile(File fileitem)
         {
             context.File.Add(fileitem);
+            Save();
         }
 
         public void UpdateFile(File fileitem)

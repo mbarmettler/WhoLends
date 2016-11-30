@@ -30,6 +30,7 @@ namespace WhoLends.Web.DAL
         public void InsertLendItem(LendItem lenditem)
         {
             context.LendItem.Add(lenditem);
+            Save();
         }
 
         public void UpdateLendItem(LendItem lenditem)

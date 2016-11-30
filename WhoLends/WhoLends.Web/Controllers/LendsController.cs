@@ -200,7 +200,7 @@ namespace WhoLends.Controllers
                 model.UserId = dbUser.Id;
 
                 _lendRepository.InsertLend(model);
-                _lendRepository.Save();
+
                 return RedirectToAction("Index");
             }
 
@@ -231,18 +231,25 @@ namespace WhoLends.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(LendViewModel viewModel)
         {
+            //get data from DB
+            var model = _lendRepository.GetLendByID(viewModel.Id);
+
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
                 cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
             });
 
-            var model = Mapper.Map<LendViewModel, Lend>(viewModel);
+            var updatedLendmodel = Mapper.Map<LendViewModel, Lend>(viewModel);
+
+            //updating values to model
+            model.From = updatedLendmodel.From;
+            model.To = updatedLendmodel.To;
+
             _lendRepository.UpdateLend(model);
+            
 
-            LendViewModel vm = Mapper.Map<Lend, LendViewModel>(model);
-
-            return View(vm);
+            return RedirectToAction("Index");
         }
 
         // Lends/Delete/5

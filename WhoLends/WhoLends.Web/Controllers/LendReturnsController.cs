@@ -87,7 +87,6 @@ namespace WhoLends.Web.Controllers
 
                 var model = Mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
                 _lendreturnRepository.InsertReturn(model);
-                _lendreturnRepository.Save();
 
                 //get Lend and update it
                 var lendmodel = _lendRepository.GetLendByID(model.LendId);

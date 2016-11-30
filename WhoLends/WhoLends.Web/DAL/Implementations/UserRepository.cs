@@ -38,6 +38,7 @@ namespace WhoLends.Web.DAL
         public void InsertUser(User user)
         {
             context.User.Add(user);
+            Save();
         }
         
         public void DeleteUser(int userId)

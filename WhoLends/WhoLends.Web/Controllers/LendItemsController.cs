@@ -122,7 +122,6 @@ namespace WhoLends.Controllers
                     lenditemmodel.FileId = firstOrDefault.Id;
                 
                 _lendItemRepository.InsertLendItem(lenditemmodel);
-                _lendItemRepository.Save();
 
                 return RedirectToAction("Index");
             }
@@ -164,23 +163,39 @@ namespace WhoLends.Controllers
                 cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
             });
 
-            //convert model into VM for updating values
-            var livm = Mapper.Map<LendItem, LendItemViewModel>(model);
+            //convert vm into Model for comparing / updating values
+            var updatedlineitemmodel = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
 
+            model.Id = updatedlineitemmodel.Id;
+            model.Name = updatedlineitemmodel.Name;
+            model.Quantity = updatedlineitemmodel.Quantity;
+            model.Description = updatedlineitemmodel.Description;
+            model.CustomerId = updatedlineitemmodel.CustomerId;
+            model.Condition = updatedlineitemmodel.Condition;
+            
             //process Attached Images
             if (uploadfile != null)
             {
-                livm.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
+                lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
                 //update lenditem - file ID (only for one image)
-                var firstOrDefault = livm.ItemImageViewModels.FirstOrDefault();
+                var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
                 if (firstOrDefault != null)
-                    livm.FileId = firstOrDefault.Id;
-            }
+                {
+                    lendItemVM.FileId = firstOrDefault.Id;
+                }
 
-            var updatedmodel = Mapper.Map<LendItemViewModel, LendItem>(livm);
+                model.FileId = lendItemVM.FileId;
+            }
+            else
+            {
+                if (updatedlineitemmodel.FileId != 0)
+                {
+                    model.FileId = updatedlineitemmodel.FileId;
+                }
+            }
             
-            _lendItemRepository.UpdateLendItem(updatedmodel);
+            _lendItemRepository.UpdateLendItem(model);
             
             return RedirectToAction("Index");
         }

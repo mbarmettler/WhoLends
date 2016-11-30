@@ -1,19 +1,30 @@
-================
+===============
 ToDo
-================
+===============
 
 Issues:
+- 
+
+Tasks:
+- styling DateTimePicker
+- OnClick opens DateTimePicker
+- improve Lend Edit View with DateTimePicker
+- optimize DAL: Insert Method - save statment direct in method
+
+===============
+DONE:
+===============
+Issues:
 - (done) save Lend to DB (Id FK exception) 
-- Edit LendItem
-- Edit Lend
+- (done) Edit LendItem
+- (done) Edit Lend
 
 Tasks:
 - (done) Phase 2: improve DB Layer - to code first models
-- Grid Column Filter
+- (done) Grid Column Filter
 
-
+___________________
 ===================
-
 Rolf Meyer Inputs:
 
 - LendItem:

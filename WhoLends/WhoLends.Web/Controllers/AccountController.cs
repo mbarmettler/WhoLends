@@ -143,7 +143,6 @@ namespace WhoLends.Controllers
                     newUserLogin.RoleId = 2;
 
                     _userRepository.InsertUser(newUserLogin);
-                    _userRepository.Save();
                     
                     // Subject and multipart/alternative Body
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

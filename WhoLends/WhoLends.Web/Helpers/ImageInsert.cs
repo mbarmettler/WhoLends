@@ -58,7 +58,6 @@ namespace WhoLends.Web.Helpers
                     //add file to DB
                     obj = Mapper.Map<FileViewModel, File>(fileVM);
                     _fileRepository.InsertFile(obj);
-                    _fileRepository.Save();
                 }
 
                 //adding to LendItem VM
