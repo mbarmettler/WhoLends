@@ -16,6 +16,7 @@ namespace WhoLends.Web.Controllers
         private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
         private ILendReturnRepository _lendreturnRepository;
+        private IMapper _mapper;
 
         public LendReturnsController()
         {
@@ -23,6 +24,8 @@ namespace WhoLends.Web.Controllers
             _lendItemRepository = new LendItemRepository(new Entities());
             _userRepository = new UserRepository(new Entities());
             _lendreturnRepository = new LendReturnRepository(new Entities());
+
+            _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
         }
 
         // GET: LendReturn
@@ -36,13 +39,7 @@ namespace WhoLends.Web.Controllers
         {
             var model = _lendRepository.GetLendByID(Id);
 
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
-                cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
-            });
-
-            LendViewModel lendVM = Mapper.Map<Lend, LendViewModel>(model);
+            LendViewModel lendVM = _mapper.Map<Lend, LendViewModel>(model);
             lendVM.To = DateTime.Now;
 
             LendReturnViewModel lendReturnVm = new LendReturnViewModel
@@ -58,8 +55,6 @@ namespace WhoLends.Web.Controllers
         }
 
         // POST: LendReturn/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(LendReturnViewModel lendReturnVM, HttpPostedFileBase uploadfile)
@@ -72,20 +67,17 @@ namespace WhoLends.Web.Controllers
                 lendReturnVM.CreatedAt = DateTime.Now;
 
                 //process Attached Images
-                lendReturnVM.ReturnImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
-
-                //create Return model
-                var firstOrDefault = lendReturnVM.ReturnImageViewModels.FirstOrDefault();
-                if (firstOrDefault != null)
-                    lendReturnVM.FileId = firstOrDefault.Id;
-
-                Mapper.Initialize(cfg =>
+                if (uploadfile != null)
                 {
-                    cfg.CreateMap<Lend, LendViewModel>().ReverseMap();
-                    cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
-                });
+                    lendReturnVM.ReturnImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
-                var model = Mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
+                    //create Return model
+                    var firstOrDefault = lendReturnVM.ReturnImageViewModels.FirstOrDefault();
+                    if (firstOrDefault != null)
+                        lendReturnVM.FileId = firstOrDefault.Id;
+                }
+
+                var model = _mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
                 _lendreturnRepository.InsertReturn(model);
 
                 //get Lend and update it
@@ -103,15 +95,14 @@ namespace WhoLends.Web.Controllers
 
 
         //improve - load return-partial view from here
+        //[ChildActionOnly]
+        //public virtual PartialViewResult GetReturn(int lrId)
+        //{
+        //    var model = _lendreturnRepository.GetReturnById(lrId);
+        //    LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model);
 
-        [ChildActionOnly]
-        public virtual PartialViewResult GetReturn(int lrId)
-        {
-            var model = _lendreturnRepository.GetReturnById(lrId);
-            LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model);
-
-            return PartialView("~/Views/LendReturns/_LendReturnDetail.cshtml", lrVM);
-        }
+        //    return PartialView("~/Views/LendReturns/_LendReturnDetail.cshtml", lrVM);
+        //}
 
         #region not used code
 
