@@ -41,6 +41,7 @@ namespace WhoLends.Web.DAL
         {
             Lend lend = context.Lend.Find(lendId);
             context.Lend.Remove(lend);
+            Save();
         }
 
         public void Save()

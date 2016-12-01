@@ -43,6 +43,7 @@ namespace WhoLends.Web.DAL
         {
             LendItem lenditem = context.LendItem.Find(lenditemId);
             context.LendItem.Remove(lenditem);
+            Save();
         }
 
         public void Save()

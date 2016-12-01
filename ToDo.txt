@@ -13,6 +13,8 @@ Tasks:
 - Multiline fields: handling on view (display)
 - Lend Index Load Logic (best practice)
 - Lend Item Index Load logic (best practice)
+- Notification System (E-Mail)
+- UI Notification System (Bootstrap Popups) - FK Verletzungen (Item löschen das Ausgeleiht ist)
 
 ===============
 DONE:

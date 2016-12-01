@@ -35,6 +35,7 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CustomerId" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Quantity" Type="smallint" Nullable="false" />
+          <Property Name="Avialable" Type="smallint" Nullable="false" />
           <Property Name="Condition" Type="int" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
@@ -309,6 +310,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="CustomerId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Quantity" Type="Int16" Nullable="false" />
+          <Property Name="Avialable" Type="Int16" Nullable="false" />
           <Property Name="Condition" Type="Model.Condition" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="Model.FK_UserLendItem" FromRole="LendItem" ToRole="User" />
@@ -517,7 +519,8 @@
     <EntitySetMapping Name="LendItem">
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendItem)">
         <MappingFragment StoreEntitySet="LendItem">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Avialable" ColumnName="Avialable" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />

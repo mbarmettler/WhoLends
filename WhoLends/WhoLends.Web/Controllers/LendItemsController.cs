@@ -104,6 +104,7 @@ namespace WhoLends.Controllers
                 var lenditemmodel = _mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
                 lenditemmodel.UserId = dbUser.Id;
                 lenditemmodel.User = lendItemVM.CreatedBy;
+                lenditemmodel.Avialable = lenditemmodel.Quantity;
 
                 //process Attached Images
                 if (uploadfile != null)
@@ -220,7 +221,6 @@ namespace WhoLends.Controllers
             {
                 _lendItemRepository.GetLendItemByID(Id);
                 _lendItemRepository.DeleteLendItem(Id);
-                _lendItemRepository.Save();
             }
             catch (DataException /* dex */)
             {

@@ -22,7 +22,7 @@ namespace WhoLends.ViewModels
 
         [Required]
         public int LendItemId { get; set; }
-
+        
         public LendItemViewModel SelectedLendItem { get; set; }
 
         public int UserId { get; set; }

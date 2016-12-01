@@ -114,32 +114,17 @@ namespace WhoLends.Controllers
         {
             ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
-
-            //check lenditems quanitty / availability
-            var lenditems = _mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems().OrderBy(d=>d.Id)).ToList().AsEnumerable();
-            var alllends = _lendRepository.GetLends();
-
-            var lendsItemKeyCount = alllends.Select(f => new { f.Id, liId = f.LendItemId });
             
+            //check lenditems quanitty / availability
+            var lenditems = _mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems().OrderBy(d=>d.Id)).ToList();
             var sortedItemList = new List<LendItemViewModel>();
 
-            //collect the available Items according their quantity
-            if (lendsItemKeyCount.Any())
+            foreach (var item in lenditems)
             {
-                foreach (var item in lenditems)
+                if (item.Avialable != 0 && item.Avialable <= item.Quantity)
                 {
-                    var usedItemCounter = lendsItemKeyCount.Count(d => d.liId.Equals(item.Id));
-                    
-                    if (usedItemCounter < item.Quantity)
-                    {
-                        sortedItemList.Add(item);
-                    }
+                    sortedItemList.Add(item);
                 }
-            }
-            else
-            {
-                //adding all items to the list
-                sortedItemList = lenditems.ToList();
             }
         
             var viewmodel = new LendViewModel()
@@ -168,9 +153,13 @@ namespace WhoLends.Controllers
                 var dbUser = General.GetCurrentUser(_userRepository);
                 var model = _mapper.Map<LendViewModel, Lend>(lendVM);
                 model.UserId = dbUser.Id;
-
                 _lendRepository.InsertLend(model);
 
+                //update Availability of LendItem
+                var lenditem = _lendItemRepository.GetLendItemByID(lendVM.LendItemId);
+                lenditem.Avialable --;
+                _lendItemRepository.UpdateLendItem(lenditem);
+                
                 return RedirectToAction("Index");
             }
 
@@ -229,9 +218,14 @@ namespace WhoLends.Controllers
         {
             try
             {
-                var model = _lendRepository.GetLendByID(Id);
+                //update availablity of LendItem
+                var model =_lendRepository.GetLendByID(Id);
+                var lenditemmodel = _lendItemRepository.GetLendItemByID(model.LendItemId);
+                lenditemmodel.Avialable ++;
+                _lendItemRepository.UpdateLendItem(lenditemmodel);
+
+                //Delete Lend
                 _lendRepository.DeleteLend(Id);
-                _lendRepository.Save();
             }
             catch (DataException /* dex */)
             {

@@ -19,6 +19,7 @@ namespace WhoLends.Data
         public string Description { get; set; }
         public string CustomerId { get; set; }
         public short Quantity { get; set; }
+        public short Avialable { get; set; }
         public Condition Condition { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public int UserId { get; set; }
