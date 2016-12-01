@@ -19,12 +19,11 @@ namespace WhoLends.Web
 
                 cfg.CreateMap<Lend, LendViewModel>()
                     .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
-                    .ForMember(x => x.SelectedLendItem, y => y.Ignore())
-                    .ForMember(x => x.CreatedBy, y => y.Ignore())
-                    .ForMember(x => x.SelectedLendUser, y => y.Ignore())
+                    .ForMember(x => x.CreatedBy, y => y.MapFrom(d => d.User))
+                    .ForMember(x => x.SelectedLendUser, y => y.MapFrom(d => d.LendUser))
                     .ForMember(x => x.LendItemsList, y => y.Ignore())
                     .ForMember(x => x.UserList, y => y.Ignore())
-                    .ForMember(x => x.CurrentUserwithID, y => y.Ignore())
+                    .ForMember(x => x.SelectedLendItem, y => y.MapFrom(d=> d.LendItem))
                     .ForMember(x => x.ShowLendReturnButton, y => y.Ignore());
                 
                 cfg.CreateMap<LendViewModel, Lend>()
@@ -34,15 +33,13 @@ namespace WhoLends.Web
 
                 cfg.CreateMap<LendItem, LendItemViewModel>()
                     .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
-                    .ForMember(x => x.CreatedBy, y => y.Ignore())
-                    .ForMember(x => x.CurrentUserwithID, y => y.Ignore())
+                    .ForMember(x => x.CreatedBy, y => y.MapFrom(d => d.User))
                     .ForMember(x => x.ItemImageViewModels, y => y.Ignore())
                     .ReverseMap();
 
                 cfg.CreateMap<LendReturn, LendReturnViewModel>()
                     .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
-                    .ForMember(x => x.CreatedBy, y => y.Ignore())
-                    .ForMember(x => x.CurrentUserwithID, y => y.Ignore())
+                    .ForMember(x => x.CreatedBy, y => y.MapFrom(d => d.User))
                     .ForMember(x => x.ReturnImageViewModels, y => y.Ignore())
                     .ReverseMap();
             });

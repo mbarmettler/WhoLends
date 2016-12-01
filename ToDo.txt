@@ -7,11 +7,12 @@ Issues:
 - LendReturn loses Images on the way to _Shared View
 
 Tasks:
-
 - Testing & Refactoring
 - Delete Lend View: missing fields "Ausleiher", "Ersteller"
 - Remove obsolete filling of "CurrentUserwithID" when AutoMapper works proper
 - Multiline fields: handling on view (display)
+- Lend Index Load Logic (best practice)
+- Lend Item Index Load logic (best practice)
 
 ===============
 DONE:

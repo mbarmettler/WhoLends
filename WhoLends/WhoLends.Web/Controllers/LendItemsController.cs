@@ -42,8 +42,10 @@ namespace WhoLends.Controllers
         // GET: LendItems
         public virtual ActionResult Index()
         {
-            var itemlist = LendItemList();
-            return View(itemlist);
+            IEnumerable<LendItem> _lenditems = _lendItemRepository.GetLendItems();
+
+            List<LendItemViewModel> viewModelList = _mapper.Map<IEnumerable<LendItem>, IEnumerable<LendItemViewModel>>(_lenditems).ToList();
+            return View(viewModelList);
         }
         
         // GET: LendItems/Details/5
@@ -227,28 +229,5 @@ namespace WhoLends.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        private List<LendItemViewModel> LendItemList()
-        {
-            List<LendItemViewModel> lItems = new List<LendItemViewModel>();
-            foreach (var l in _lendItemRepository.GetLendItems())
-            {
-                var item = new LendItemViewModel();
-                item.Id = l.Id;
-                item.Name = l.Name;
-                item.Description = l.Description;
-                item.Condition = l.Condition;
-                item.CreatedAt = l.CreatedAt;
-                item.CustomerId = l.CustomerId;
-                item.Quantity = l.Quantity;
-                item.UserId = l.UserId;
-                item.CreatedBy = _userRepository.GetUserById(item.UserId);
-
-                lItems.Add(item);
-            }
-
-            return lItems;
-        }
-
     }
 }

@@ -68,7 +68,6 @@
                 columns.Add(c => c.SelectedLendItem.CustomerId).Titled("interne ID").Filterable(true);
                 columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
                 columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
-                //if (Model.CurrentUser.RoleId == 1)
                 columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new {id = c.Id}, new {@class = "btn btn-default fa fa-pencil"}));
                 columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new {id = c.Id}, new {@class = "btn btn-danger glyphicon glyphicon-trash"}));
                 columns.Add().Titled("Return").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "../LendReturns/Create", new {id = c.Id}, new {@class = "btn btn-success glyphicon glyphicon-share-alt"}));

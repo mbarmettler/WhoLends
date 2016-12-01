@@ -49,22 +49,10 @@ namespace WhoLends.Controllers
         // GET: Lends
         public virtual ActionResult Index()
         {
-            var lendlist = LendList();
-            return View(lendlist);
+            IEnumerable<Lend> _lends = _lendRepository.GetLends();
 
-            //best practive way
-            //
-            //IEnumerable<Lend> _lends = _lendRepository.GetLends();
-
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.CreateMap<Lend, LendViewModel>();
-            //    cfg.CreateMap<LendItem, LendItemViewModel>();
-            //    cfg.CreateMap<LendReturn, LendReturnViewModel>();
-            //});
-
-            //IEnumerable<LendViewModel> viewModelList = Mapper.Map<IEnumerable<Lend>, IEnumerable<LendViewModel>>(_lends);
-            //return View(viewModelList.ToList());
+            List<LendViewModel> viewModelList = _mapper.Map<IEnumerable<Lend>, IEnumerable<LendViewModel>>(_lends).ToList();
+            return View(viewModelList);
         }
 
         // GET: Lends/Details/5
@@ -253,39 +241,5 @@ namespace WhoLends.Controllers
             return RedirectToAction("Index");
         }
         
-        private List<LendViewModel> LendList()
-        {
-            List<LendViewModel> lItems = new List<LendViewModel>();
-            foreach (var l in _lendRepository.GetLends())
-            {
-                var LImodel = _lendItemRepository.GetLendItemByID(l.LendItemId);
-                LendItemViewModel liVM = _mapper.Map<LendItem, LendItemViewModel>(LImodel);
-                LendReturnViewModel lrVM = null;
-                LendViewModel lendobj = new LendViewModel();
-
-                if (l.LendReturn != null)
-                {
-                    var LRmodel = _lendReturnRepository.GetReturnById(l.LendReturnId.Value);
-                    lrVM = _mapper.Map<LendReturn, LendReturnViewModel>(LRmodel);
-                    lendobj.ShowLendReturnButton = true;
-                }
-
-                lendobj.Id = l.Id;
-                lendobj.From = l.From;
-                lendobj.To = l.To;
-                lendobj.CreatedAt = l.CreatedAt;
-                lendobj.UserId = l.UserId;
-                lendobj.LendItemId = l.LendItemId;
-                lendobj.LenderUserId = l.LendUser.Id;
-                lendobj.SelectedLendUser = _userRepository.GetUserById(lendobj.LenderUserId);
-                lendobj.SelectedLendItem = liVM;
-                lendobj.LendReturn = lrVM;
-                lendobj.CreatedBy = _userRepository.GetUserById(lendobj.UserId);
-
-                lItems.Add(lendobj);
-            }
-
-            return lItems;
-        }
      }
 }
