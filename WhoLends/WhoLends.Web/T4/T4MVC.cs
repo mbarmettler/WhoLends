@@ -65,19 +65,6 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
-{
-    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
-    {
-        this.InitMVCT4Result(area, controller, action, protocol);
-    }
-    
-    public string Controller { get; set; }
-    public string Action { get; set; }
-    public string Protocol { get; set; }
-    public RouteValueDictionary RouteValueDictionary { get; set; }
-}
 
 
 
@@ -144,6 +131,8 @@ namespace Links
         public static readonly string bootstrap_datetimepicker_min_css = Url("bootstrap-datetimepicker.min.css");
         public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
         public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+        public static readonly string font_awesome_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/font-awesome.min.css") ? Url("font-awesome.min.css") : Url("font-awesome.css");
+        public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
         public static readonly string Gridmvc_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/Gridmvc.min.css") ? Url("Gridmvc.min.css") : Url("Gridmvc.css");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class img {
@@ -380,6 +369,8 @@ namespace Links
                 public const string bootstrap_datetimepicker_min_css = "~/Content/bootstrap-datetimepicker.min.css";
                 public const string bootstrap_css = "~/Content/bootstrap.css";
                 public const string bootstrap_min_css = "~/Content/bootstrap.min.css";
+                public const string font_awesome_css = "~/Content/font-awesome.css";
+                public const string font_awesome_min_css = "~/Content/font-awesome.min.css";
                 public const string Gridmvc_css = "~/Content/Gridmvc.css";
                 public const string Site_css = "~/Content/Site.css";
             }

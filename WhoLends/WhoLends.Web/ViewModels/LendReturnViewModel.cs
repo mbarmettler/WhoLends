@@ -7,7 +7,7 @@ namespace WhoLends.ViewModels
 {
     public class LendReturnViewModel
     {
-        public int Id { get; }
+        public int Id { get; set; }
         public int LendId { get; set; }
         [Required(ErrorMessage = "Bitte kurz eine Beschreibung der Ware bei Rückgabe geben (z.B. Verschleiss)")]
         [Display(Name = "Beschreibung")]

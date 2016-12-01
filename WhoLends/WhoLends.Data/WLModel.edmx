@@ -182,18 +182,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserLendReturn">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="LendReturn" Type="Self.LendReturn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LendReturn">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lend" EntityType="Self.Lend" Schema="dbo" store:Type="Tables" />
@@ -236,10 +224,6 @@
           <AssociationSet Name="FK_UserLendItem" Association="Self.FK_UserLendItem">
             <End Role="User" EntitySet="User" />
             <End Role="LendItem" EntitySet="LendItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserLendReturn" Association="Self.FK_UserLendReturn">
-            <End Role="User" EntitySet="User" />
-            <End Role="LendReturn" EntitySet="LendReturn" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
