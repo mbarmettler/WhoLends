@@ -9,10 +9,11 @@ namespace WhoLends.Web
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.ConfigureMappers();
+
+            AreaRegistration.RegisterAllAreas();
         }
     }
 }

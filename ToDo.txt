@@ -3,34 +3,38 @@ ToDo
 ===============
 
 Issues:
-- AutoMapper - Lend Detail Load
-- AutoMapper - Lend Create Load
-- AutoMapper - Lend Delete Load
--
-- AutoMapper - LendItem Detail Load
-- AutoMapper - LendItem Create Load
+- LendReturn loses "CreatedBy" Infos zu Ersteller
+- LendReturn loses Images on the way to _Shared View
 
 Tasks:
-- AutoMapper Configs refactoring through all objects
+
 - Testing & Refactoring
 - Delete Lend View: missing fields "Ausleiher", "Ersteller"
-- Delete LendItem View: show Picture
+- Remove obsolete filling of "CurrentUserwithID" when AutoMapper works proper
+- Multiline fields: handling on view (display)
 
 ===============
 DONE:
 ===============
 Issues:
+- (done) AutoMapper - LendItem Detail Load
+- (done) AutoMapper - LendItem Create Load
+- (done) AutoMapper - Lend Detail Load
+- (done) AutoMapper - Lend Create Load
+- (done) AutoMapper - Lend Delete Load
 - (done) save Lend to DB (Id FK exception) 
 - (done) Edit LendItem
 - (done) Edit Lend
 
 Tasks:
+- (done) - AutoMapper Configs refactoring through all objects
 - (done) Phase 2: improve DB Layer - to code first models
 - (done) Grid Column Filter
 - (done) styling DateTimePicker
 - (done) OnClick opens DateTimePicker
 - (done) improve Lend Edit View with DateTimePicker
 - (done) optimize DAL: Insert Method - save statment direct in method
+- (done) Delete LendItem View: show Picture
 
 ___________________
 ===================

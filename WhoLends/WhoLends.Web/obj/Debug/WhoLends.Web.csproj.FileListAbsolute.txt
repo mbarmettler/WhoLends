@@ -86,3 +86,4 @@ D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\System.Web.Webpages.Razor.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\System.Web.Helpers.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\obj\Debug\WhoLends.Web.dll
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\obj\Debug\WhoLends.Web.pdb
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Web\bin\WebActivatorEx.dll

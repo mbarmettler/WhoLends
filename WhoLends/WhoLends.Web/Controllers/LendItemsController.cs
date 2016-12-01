@@ -4,12 +4,12 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WhoLends.Data;
 using WhoLends.ViewModels;
+using WhoLends.Web;
 using WhoLends.Web.DAL;
 using WhoLends.Web.DAL.Implementations;
 using WhoLends.Web.Helpers;
@@ -23,12 +23,15 @@ namespace WhoLends.Controllers
         private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
         private IFileRepository _fileRepository;
+        private IMapper _mapper;
 
         public LendItemsController()
         {
             _lendItemRepository = new LendItemRepository(new Entities());
             _userRepository = new UserRepository(new Entities());
             _fileRepository = new FileRepository(new Entities());
+
+            _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
         }
 
         public LendItemsController(ILendItemRepository lendItemrepository)
@@ -52,13 +55,7 @@ namespace WhoLends.Controllers
                 return RedirectToAction(Actions.Index());
             }
 
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<LendItem, LendItemViewModel>();
-                cfg.CreateMap<File, FileViewModel>();
-            });
-
-            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
+            LendItemViewModel vm = _mapper.Map<LendItem, LendItemViewModel>(model);
             vm.CreatedBy = model.User;
             vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
             vm.Description = model.Description.Replace("\r\n", ", ");
@@ -66,7 +63,7 @@ namespace WhoLends.Controllers
             //get images
             var lenditemImages = _fileRepository.GetFileById(vm.FileId);
             List<FileViewModel> listimages = new List<FileViewModel>();
-            FileViewModel itemFileVM = Mapper.Map<File, FileViewModel>(lenditemImages);
+            FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
             listimages.Add(itemFileVM);
 
             //add images to Item VM
@@ -97,30 +94,26 @@ namespace WhoLends.Controllers
         {
             if (ModelState.IsValid)
             {
-                Mapper.Initialize(cfg =>
-                {
-                    cfg.CreateMap<Lend, LendViewModel>();
-                    cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
-                    cfg.CreateMap<File, FileViewModel>().ReverseMap();
-                });
-                
                 //get currently logged in user            
                 var dbUser = General.GetCurrentUser(_userRepository);
 
                 lendItemVM.CreatedAt = DateTime.Now;
                 
-                var lenditemmodel = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
+                var lenditemmodel = _mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
                 lenditemmodel.UserId = dbUser.Id;
                 lenditemmodel.User = lendItemVM.CreatedBy;
-                
-                //process Attached Images
-                lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
 
-                //update lenditem - file ID (only for one image)
-                var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
-                if (firstOrDefault != null)
-                    lenditemmodel.FileId = firstOrDefault.Id;
-                
+                //process Attached Images
+                if (uploadfile != null)
+                {
+                    lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
+
+                    //update lenditem - file ID (only for one image)
+                    var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
+                    if (firstOrDefault != null)
+                        lenditemmodel.FileId = firstOrDefault.Id;
+                }
+
                 _lendItemRepository.InsertLendItem(lenditemmodel);
 
                 return RedirectToAction("Index");
@@ -138,12 +131,7 @@ namespace WhoLends.Controllers
                 return RedirectToAction(Actions.Index());
             }
 
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<LendItem, LendItemViewModel>();
-            });
-
-            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
+            LendItemViewModel vm = _mapper.Map<LendItem, LendItemViewModel>(model);
 
             return View(vm);
         }
@@ -158,13 +146,8 @@ namespace WhoLends.Controllers
             //get data from DB
             var model = _lendItemRepository.GetLendItemByID(lendItemVM.Id);
 
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
-            });
-
             //convert vm into Model for comparing / updating values
-            var updatedlineitemmodel = Mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
+            var updatedlineitemmodel = _mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
 
             model.Id = updatedlineitemmodel.Id;
             model.Name = updatedlineitemmodel.Name;
@@ -208,13 +191,21 @@ namespace WhoLends.Controllers
             {
                 return RedirectToAction(Actions.Index());
             }
+            
+            LendItemViewModel vm = _mapper.Map<LendItem, LendItemViewModel>(model);
+            vm.CreatedBy = model.User;
+            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
+            vm.Description = model.Description.Replace("\r\n", ", ");
 
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<LendItem, LendItemViewModel>();
-            });
+            //get images
+            var lenditemImages = _fileRepository.GetFileById(vm.FileId);
+            List<FileViewModel> listimages = new List<FileViewModel>();
+            FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
+            listimages.Add(itemFileVM);
 
-            LendItemViewModel vm = Mapper.Map<LendItem, LendItemViewModel>(model);
+            //add images to Item VM
+            vm.ItemImageViewModels = listimages.AsEnumerable();
+            
             return View(vm);
         }
 
@@ -225,7 +216,7 @@ namespace WhoLends.Controllers
         {
             try
             {
-                var model = _lendItemRepository.GetLendItemByID(Id);
+                _lendItemRepository.GetLendItemByID(Id);
                 _lendItemRepository.DeleteLendItem(Id);
                 _lendItemRepository.Save();
             }
@@ -258,19 +249,6 @@ namespace WhoLends.Controllers
 
             return lItems;
         }
-
-        //private File LoadFileModel(FileViewModel viemwModel)
-        //{
-        //    var model = _fileRepository.GetFileById(viemwModel.Id) ?? new File();
-
-        //    model.Id = viemwModel.Id;
-        //    model.LendItemId = viemwModel.LendItemId;
-        //    model.Content = viemwModel.Content;
-        //    model.FileName = viemwModel.FileName;
-        //    model.LendReturnId = viemwModel.LendReturnId;
-
-        //    return model;
-        //}
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using WhoLends.ViewModels;
 using WhoLends.Data;
 
@@ -6,48 +7,48 @@ namespace WhoLends.Web
 {
     public static class AutoMapperConfig
     {
+        public static MapperConfiguration _mapperConfiguration;
+
         public static void ConfigureMappers()
         {
-            #region old mappings - maybe later for central mapping
+            #region order of map creation matters
 
-            Mapper.Initialize(cfg =>
-            {
+            _mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<File, FileViewModel>()
+                    .ReverseMap();
+
                 cfg.CreateMap<Lend, LendViewModel>()
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
-                .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"))
-                .ReverseMap();
+                    .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
+                    .ForMember(x => x.SelectedLendItem, y => y.Ignore())
+                    .ForMember(x => x.CreatedBy, y => y.Ignore())
+                    .ForMember(x => x.SelectedLendUser, y => y.Ignore())
+                    .ForMember(x => x.LendItemsList, y => y.Ignore())
+                    .ForMember(x => x.UserList, y => y.Ignore())
+                    .ForMember(x => x.CurrentUserwithID, y => y.Ignore())
+                    .ForMember(x => x.ShowLendReturnButton, y => y.Ignore());
+                
+                cfg.CreateMap<LendViewModel, Lend>()
+                    .ForMember(x => x.LendItem, y => y.Ignore())
+                    .ForMember(x => x.User, y => y.Ignore())
+                    .ForMember(x => x.LendUser, y => y.Ignore());
 
-                cfg.CreateMap<LendItem, LendItemViewModel>().ReverseMap();
-                cfg.CreateMap<LendReturn, LendReturnViewModel>().ReverseMap();
+                cfg.CreateMap<LendItem, LendItemViewModel>()
+                    .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
+                    .ForMember(x => x.CreatedBy, y => y.Ignore())
+                    .ForMember(x => x.CurrentUserwithID, y => y.Ignore())
+                    .ForMember(x => x.ItemImageViewModels, y => y.Ignore())
+                    .ReverseMap();
 
-                //cfg.CreateMap<LendViewModel, Data.Lend>();
+                cfg.CreateMap<LendReturn, LendReturnViewModel>()
+                    .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
+                    .ForMember(x => x.CreatedBy, y => y.Ignore())
+                    .ForMember(x => x.CurrentUserwithID, y => y.Ignore())
+                    .ForMember(x => x.ReturnImageViewModels, y => y.Ignore())
+                    .ReverseMap();
             });
-
-            ////Mapper.Configuration.AssertConfigurationIsValid();
-
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.CreateMap<LendItem, LendItemViewModel>()
-            //    .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(m => m.User))
-            //    .ForMember(dest => dest.CurrentUserwithID, opt => opt.MapFrom(m => m.User.UserName + " (" + m.User.Id + ")"))
-            //    .ForMember(dest => dest.ItemImage, opt => opt.MapFrom(m => m.FileId))
-            //    .ReverseMap();
-
-            //    //cfg.CreateMap<LendItemViewModel, Data.LendItem>();
-            //});
-
+            
             //Mapper.Configuration.AssertConfigurationIsValid();
-
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.CreateMap<LendReturn, LendReturnViewModel>()
-            //    .ReverseMap();
-
-            //    //cfg.CreateMap<LendReturnViewModel, Data.LendReturn>();
-            //});
-
-            //Mapper.Configuration.AssertConfigurationIsValid();
-
+            
             #endregion
         }
     }
