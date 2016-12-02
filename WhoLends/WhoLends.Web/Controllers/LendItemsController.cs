@@ -34,11 +34,6 @@ namespace WhoLends.Controllers
             _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
         }
 
-        public LendItemsController(ILendItemRepository lendItemrepository)
-        {
-            _lendItemRepository = lendItemrepository;
-        }
-
         // GET: LendItems
         public virtual ActionResult Index()
         {

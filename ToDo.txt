@@ -11,8 +11,8 @@ Tasks:
 - Testing & Refactoring
 - Multiline fields: handling on view (display)
 - Notification System (E-Mail)
-- UI Notification System (Bootstrap Popups) - FK Verletzungen (Item löschen das Ausgeleiht ist)
-
+- UI Notification System (Bootstrap Popups) 
+	- FK Verletzungen (Item löschen das Ausgeleiht ist)
 
 ===============
 DONE:

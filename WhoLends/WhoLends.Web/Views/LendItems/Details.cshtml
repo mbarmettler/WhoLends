@@ -7,7 +7,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<h2>
+    <a href="@Url.Action("Edit", "LendItems", new {  id = Model.Id })">
+        <span class="glyphicon fa fa-pencil" aria-hidden="true"></span>
+    </a>
+    @Html.DisplayFor(model => model.Name)
+</h2>
 
 <div>
     <h4>Detail - Ausleihgegenstand</h4>
@@ -21,9 +27,9 @@
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
         Zurück
     </a>
-    <a href="@Url.Action("Edit", "LendItems", new {  id = Model.Id })" class="btn btn-default">
+    @*<a href="@Url.Action("Edit", "LendItems", new {  id = Model.Id })" class="btn btn-default">
         <span class="glyphicon fa fa-pencil" aria-hidden="true"></span>
         Bearbeiten
-    </a>   
+    </a>*@   
     @*@Html.ActionLink("Bearbeiten", "Edit", new { id = Model.Id }, new { @class = "btn btn-default glyphicon glyphicon-edit" })*@
 </div>

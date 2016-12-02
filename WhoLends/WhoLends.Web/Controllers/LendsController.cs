@@ -36,14 +36,6 @@ namespace WhoLends.Controllers
             _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
         }
 
-        public LendsController(ILendRepository lendrepository, ILendItemRepository lenditemrepository, IUserRepository userrepository, IFileRepository fileRepository)
-        {
-            _lendRepository = lendrepository;
-            _lendItemRepository = lenditemrepository;
-            _userRepository = userrepository;
-            _fileRepository = fileRepository;
-        }
-
         // GET: Lends
         public virtual ActionResult Index()
         {
