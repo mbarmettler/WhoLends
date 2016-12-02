@@ -23,7 +23,6 @@ namespace WhoLends.Controllers
         private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
         private IFileRepository _fileRepository;
-        private ILendReturnRepository _lendReturnRepository;
         private IMapper _mapper;
 
         public LendsController()
@@ -32,18 +31,17 @@ namespace WhoLends.Controllers
             _lendItemRepository = new LendItemRepository(new Entities());
             _userRepository = new UserRepository(new Entities());
             _fileRepository = new FileRepository(new Entities());
-            _lendReturnRepository = new LendReturnRepository(new Entities());
+            new LendReturnRepository(new Entities());
 
             _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
         }
 
-        public LendsController(ILendRepository lendrepository, ILendItemRepository lenditemrepository, IUserRepository userrepository, IFileRepository fileRepository, ILendReturnRepository lendreturnrepository)
+        public LendsController(ILendRepository lendrepository, ILendItemRepository lenditemrepository, IUserRepository userrepository, IFileRepository fileRepository)
         {
             _lendRepository = lendrepository;
             _lendItemRepository = lenditemrepository;
             _userRepository = userrepository;
             _fileRepository = fileRepository;
-            _lendReturnRepository = lendreturnrepository;
         }
 
         // GET: Lends
@@ -73,32 +71,35 @@ namespace WhoLends.Controllers
             {
                 lrVM = _mapper.Map<LendReturn, LendReturnViewModel>(model.LendReturn);
 
-                File lendreturnImages = _fileRepository.GetFileById(lrVM.FileId);
-                List<FileViewModel> lrimageslist = new List<FileViewModel>();
+                if (lrVM.FileId != null)
+                {
+                    File lendreturnImages = _fileRepository.GetFileById(lrVM.FileId.Value);
+                    List<FileViewModel> lrimageslist = new List<FileViewModel>();
                 
-                FileViewModel lrFileVM = _mapper.Map<File, FileViewModel>(lendreturnImages);
-                lrimageslist.Add(lrFileVM);
+                    FileViewModel lrFileVM = _mapper.Map<File, FileViewModel>(lendreturnImages);
+                    lrimageslist.Add(lrFileVM);
 
-                //add values to Return VM
-                lrVM.ReturnImageViewModels = lrimageslist.AsEnumerable();
+                    //add values to Return VM
+                    lrVM.ReturnImageViewModels = lrimageslist.AsEnumerable();
+                }
                 lrVM.CreatedBy = model.LendReturn.User;
-                lrVM.CurrentUserwithID = lrVM.CreatedBy.UserName + " (" + lrVM.CreatedBy.Id + ")";
             }
 
            //get images of LendItem
-            File lenditemImages = _fileRepository.GetFileById(ItemVM.FileId);
-            List<FileViewModel> listimages = new List<FileViewModel>();
-            FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
-            listimages.Add(itemFileVM);
+            if (ItemVM.FileId != null)
+            {
+                File lenditemImages = _fileRepository.GetFileById(ItemVM.FileId.Value);
+                List<FileViewModel> listimages = new List<FileViewModel>();
+                FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
+                listimages.Add(itemFileVM);
        
-            //add values to ItemVM
-            ItemVM.ItemImageViewModels = listimages.AsEnumerable();
+                //add values to ItemVM
+                ItemVM.ItemImageViewModels = listimages.AsEnumerable();
+            }
             ItemVM.CreatedBy = model.LendItem.User;
-            ItemVM.CurrentUserwithID = ItemVM.CreatedBy.UserName + " (" + ItemVM.CreatedBy.Id + ")";
 
             //stick all to LendVM
             vm.CreatedBy = model.User;
-            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
             vm.SelectedLendUser = model.LendUser;
             vm.SelectedLendItem = ItemVM;
             if (lrVM.Id != 0)
@@ -112,8 +113,8 @@ namespace WhoLends.Controllers
         // GET: Lends/Create
         public virtual ActionResult Create()
         {
-            ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            var dbUser = _userRepository.GetUserByEmail(Auser.Email);
+            ApplicationUser auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var dbUser = _userRepository.GetUserByEmail(auser.Email);
             
             //check lenditems quanitty / availability
             var lenditems = _mapper.Map<IEnumerable<LendItemViewModel>>(_lendItemRepository.GetLendItems().OrderBy(d=>d.Id)).ToList();
@@ -131,8 +132,7 @@ namespace WhoLends.Controllers
             {
                 From = DateTime.Now,
                 LendItemsList = sortedItemList,
-                UserList = _userRepository.GetUsers(),
-                CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
+                UserList = _userRepository.GetUsers()
             };
 
             return View(viewmodel);

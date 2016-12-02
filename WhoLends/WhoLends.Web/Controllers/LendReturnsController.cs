@@ -13,7 +13,6 @@ namespace WhoLends.Web.Controllers
     public partial class LendReturnsController : Controller
     {
         private ILendRepository _lendRepository;
-        private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
         private ILendReturnRepository _lendreturnRepository;
         private IMapper _mapper;
@@ -21,7 +20,7 @@ namespace WhoLends.Web.Controllers
         public LendReturnsController()
         {
             _lendRepository = new LendRepository(new Entities());
-            _lendItemRepository = new LendItemRepository(new Entities());
+            new LendItemRepository(new Entities());
             _userRepository = new UserRepository(new Entities());
             _lendreturnRepository = new LendReturnRepository(new Entities());
 
@@ -49,7 +48,6 @@ namespace WhoLends.Web.Controllers
                 CreatedBy = General.GetCurrentUser(_userRepository)
             };
             lendReturnVm.UserId = lendReturnVm.CreatedBy.Id;
-            lendReturnVm.CurrentUserwithID = lendReturnVm.CreatedBy.UserName + " (" + lendReturnVm.UserId + ")";
             
             return View(lendReturnVm);
         }
@@ -65,6 +63,7 @@ namespace WhoLends.Web.Controllers
                 lendReturnVM.UserId = General.GetCurrentUser(_userRepository).Id;
                 lendReturnVM.CreatedBy = General.GetCurrentUser(_userRepository);
                 lendReturnVM.CreatedAt = DateTime.Now;
+                lendReturnVM.FileId = null;
 
                 //process Attached Images
                 if (uploadfile != null)
@@ -92,18 +91,7 @@ namespace WhoLends.Web.Controllers
 
             return View(lendReturnVM);
         }
-
-
-        //improve - load return-partial view from here
-        //[ChildActionOnly]
-        //public virtual PartialViewResult GetReturn(int lrId)
-        //{
-        //    var model = _lendreturnRepository.GetReturnById(lrId);
-        //    LendReturnViewModel lrVM = Mapper.Map<LendReturn, LendReturnViewModel>(model);
-
-        //    return PartialView("~/Views/LendReturns/_LendReturnDetail.cshtml", lrVM);
-        //}
-
+        
         #region not used code
 
         // GET: LendReturn/Details/5

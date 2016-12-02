@@ -6,14 +6,13 @@ Issues:
 -
 
 Tasks:
+- Create Return: missing "Ersteller"
+- create Lend: msising "Ersteller"
 - Testing & Refactoring
-- Delete Lend View: missing fields "Ausleiher", "Ersteller"
-- Remove obsolete filling of "CurrentUserwithID" when AutoMapper works proper
 - Multiline fields: handling on view (display)
-- Lend Index Load Logic (best practice)
-- Lend Item Index Load logic (best practice)
 - Notification System (E-Mail)
 - UI Notification System (Bootstrap Popups) - FK Verletzungen (Item löschen das Ausgeleiht ist)
+
 
 ===============
 DONE:
@@ -31,7 +30,12 @@ Issues:
 - (done) LendReturn loses Images on the way to _Shared View
 
 Tasks:
-- (done) - AutoMapper Configs refactoring through all objects
+- (done) create return: handle no image case
+- (done) Remove obsolete filling of "CurrentUserwithID" when AutoMapper works proper
+- (done) Lend Index Load Logic (best practice)
+- (done) Lend Item Index Load logic (best practice)
+- (done) Delete Lend View: missing fields "Ausleiher", "Ersteller"
+- (done) AutoMapper Configs refactoring through all objects
 - (done) Phase 2: improve DB Layer - to code first models
 - (done) Grid Column Filter
 - (done) styling DateTimePicker

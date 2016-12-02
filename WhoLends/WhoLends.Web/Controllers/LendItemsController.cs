@@ -59,17 +59,19 @@ namespace WhoLends.Controllers
 
             LendItemViewModel vm = _mapper.Map<LendItem, LendItemViewModel>(model);
             vm.CreatedBy = model.User;
-            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
-            vm.Description = model.Description.Replace("\r\n", ", ");
+            vm.Description = model.Description;
 
             //get images
-            var lenditemImages = _fileRepository.GetFileById(vm.FileId);
-            List<FileViewModel> listimages = new List<FileViewModel>();
-            FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
-            listimages.Add(itemFileVM);
+            if (vm.FileId != null)
+            {
+                var lenditemImages = _fileRepository.GetFileById(vm.FileId.Value);
+                List<FileViewModel> listimages = new List<FileViewModel>();
+                FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
+                listimages.Add(itemFileVM);
 
-            //add images to Item VM
-            vm.ItemImageViewModels = listimages.AsEnumerable();
+                //add images to Item VM
+                vm.ItemImageViewModels = listimages.AsEnumerable();
+            }
 
             return View(vm);
         }
@@ -80,10 +82,7 @@ namespace WhoLends.Controllers
             ApplicationUser Auser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
 
-            var viewmodel = new LendItemViewModel()
-            {
-                CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
-            };
+            var viewmodel = new LendItemViewModel();
             return View(viewmodel);
         }
 
@@ -105,6 +104,7 @@ namespace WhoLends.Controllers
                 lenditemmodel.UserId = dbUser.Id;
                 lenditemmodel.User = lendItemVM.CreatedBy;
                 lenditemmodel.Avialable = lenditemmodel.Quantity;
+                lenditemmodel.FileId = null;
 
                 //process Attached Images
                 if (uploadfile != null)
@@ -197,18 +197,20 @@ namespace WhoLends.Controllers
             
             LendItemViewModel vm = _mapper.Map<LendItem, LendItemViewModel>(model);
             vm.CreatedBy = model.User;
-            vm.CurrentUserwithID = model.User.UserName + " (" + model.User.Id + ")";
-            vm.Description = model.Description.Replace("\r\n", ", ");
+            vm.Description = model.Description;
 
             //get images
-            var lenditemImages = _fileRepository.GetFileById(vm.FileId);
-            List<FileViewModel> listimages = new List<FileViewModel>();
-            FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
-            listimages.Add(itemFileVM);
+            if (vm.FileId != null)
+            {
+                var lenditemImages = _fileRepository.GetFileById(vm.FileId.Value);
+                List<FileViewModel> listimages = new List<FileViewModel>();
+                FileViewModel itemFileVM = _mapper.Map<File, FileViewModel>(lenditemImages);
+                listimages.Add(itemFileVM);
 
-            //add images to Item VM
-            vm.ItemImageViewModels = listimages.AsEnumerable();
-            
+                //add images to Item VM
+                vm.ItemImageViewModels = listimages.AsEnumerable();
+            }
+
             return View(vm);
         }
 

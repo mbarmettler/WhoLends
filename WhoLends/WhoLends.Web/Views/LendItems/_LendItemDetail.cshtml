@@ -1,4 +1,6 @@
-﻿@model WhoLends.ViewModels.LendItemViewModel
+﻿@using AutoMapper.Execution
+@using WhoLends.Web.Helpers
+@model WhoLends.ViewModels.LendItemViewModel
 
 <div>
     <div class="row">
@@ -32,9 +34,6 @@
                 @Html.DisplayNameFor(model => model.CustomerId)
             </dt>
             <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dt>
                 @Html.DisplayNameFor(model => model.Quantity)
             </dt>
             <dt>
@@ -46,6 +45,9 @@
             <dt>
                 @Html.DisplayNameFor(model => model.CreatedBy)
             </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
         </div>
         <div class="col-xs-6 col-md-3">
             <dd>
@@ -53,9 +55,6 @@
             </dd>
             <dd>
                 @Html.DisplayFor(model => model.CustomerId)
-            </dd>
-            <dd>
-                @Html.DisplayFor(model => model.Description)
             </dd>
             <dd>
                 @Html.DisplayFor(model => model.Quantity)
@@ -68,6 +67,9 @@
             </dd>
             <dd>
                 @Html.DisplayFor(model => model.CurrentUserwithID)
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
             </dd>
         </div>
     </div>
