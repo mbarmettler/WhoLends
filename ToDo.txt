@@ -3,8 +3,7 @@ ToDo
 ===============
 
 Issues:
-- LendReturn loses "CreatedBy" Infos zu Ersteller
-- LendReturn loses Images on the way to _Shared View
+-
 
 Tasks:
 - Testing & Refactoring
@@ -28,6 +27,8 @@ Issues:
 - (done) save Lend to DB (Id FK exception) 
 - (done) Edit LendItem
 - (done) Edit Lend
+- (done) LendReturn loses "CreatedBy" Infos zu Ersteller
+- (done) LendReturn loses Images on the way to _Shared View
 
 Tasks:
 - (done) - AutoMapper Configs refactoring through all objects
