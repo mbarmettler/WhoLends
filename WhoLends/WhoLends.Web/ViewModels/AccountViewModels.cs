@@ -102,6 +102,11 @@ namespace WhoLends.ViewModels
         public string Email { get; set; }
     }
 
+    public class UserViewModel
+    {
+        
+    }
+
     #region not used yet
     public class ForgotViewModel
     {

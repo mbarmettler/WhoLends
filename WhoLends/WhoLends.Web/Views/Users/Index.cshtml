@@ -1,0 +1,25 @@
+﻿@using GridMvc.Html
+@model IEnumerable<WhoLends.Data.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+    @Html.Grid(Model).Columns(
+            columns =>
+            {
+                columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
+                columns.Add(c => c.Id).Titled("ID");
+                columns.Add(c => c.UserName).Titled("Username");
+                columns.Add(c => c.Role.Name).Titled("Rolle");
+                columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default fa fa-pencil" }));
+                columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
+            }).WithPaging(10).Sortable(true)
+</div>

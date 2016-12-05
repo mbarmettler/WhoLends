@@ -1,7 +1,4 @@
 ﻿using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -109,8 +106,7 @@ namespace WhoLends.Controllers
                     return View(model);
             }
         }
-
-
+        
         //
         // GET: /Account/Register
         [AllowAnonymous]
