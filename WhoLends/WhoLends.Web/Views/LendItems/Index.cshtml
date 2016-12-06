@@ -1,4 +1,5 @@
-﻿@using WhoLends.ViewModels;
+﻿@using System.Configuration
+@using WhoLends.ViewModels;
 @using GridMvc.Html
 
 @model List<LendItemViewModel>
@@ -8,28 +9,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Ausleihgegenstände</h2>
-
-<p>
-    @Html.ActionLink("Erstellen", "Create")
-</p>
-
 
 @* jquery grid demo http://www.ok-soft-gmbh.com/jqGrid/Lince81.htm *@
 
-<div>
-    @Html.Grid(Model).Columns(
-    columns =>
-    {
-        columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
-        columns.Add(c => c.Id).Titled("ID");
-        columns.Add(c => c.CustomerId).Titled("interne ID").Filterable(true);
-        columns.Add(c => c.Name).Titled("Name").Filterable(true);
-        columns.Add(c => c.Quantity).Titled("Anzahl").Filterable(true);
-        columns.Add(c => c.Avialable).Titled("Verfügbar").Filterable(true);
-        columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
-        columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
-        columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default fa fa-pencil" }));
-        columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
-    }).WithPaging(5).Sortable(true)
-</div>
+<h2>Ausleihgegenstände</h2>
+
+@* check if Admin Rights or not *@
+@if (ConfigurationManager.AppSettings["CurrentUserRole"].Equals("1"))
+{
+    <p>
+        @Html.ActionLink("Erstellen", "Create")
+    </p>
+
+    <div>
+        @Html.Grid(Model).Columns(
+            columns =>
+            {
+                columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
+                columns.Add(c => c.Id).Titled("ID");
+                columns.Add(c => c.CustomerId).Titled("interne ID").Filterable(true);
+                columns.Add(c => c.Name).Titled("Name").Filterable(true);
+                columns.Add(c => c.Quantity).Titled("Anzahl").Filterable(true);
+                columns.Add(c => c.Avialable).Titled("Verfügbar").Filterable(true);
+                columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
+                columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);
+                columns.Add().Titled("Edit").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Edit", new { id = c.Id }, new { @class = "btn btn-default fa fa-pencil" }));
+                columns.Add().Titled("Delete").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Delete", new { id = c.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" }));
+            }).WithPaging(5).Sortable(true)
+    </div>
+}
+else
+{
+    <div>
+        @Html.Grid(Model).Columns(
+            columns =>
+            {
+                columns.Add().Titled("Detail").Encoded(false).Sanitized(false).RenderValueAs(c => @Html.ActionLink(" ", "Details", new { id = c.Id }, new { @class = "btn btn-primary glyphicon glyphicon-search" }));
+                columns.Add(c => c.Id).Titled("ID");
+                columns.Add(c => c.CustomerId).Titled("interne ID").Filterable(true);
+                columns.Add(c => c.Name).Titled("Name").Filterable(true);
+                columns.Add(c => c.Quantity).Titled("Anzahl").Filterable(true);
+                columns.Add(c => c.Avialable).Titled("Verfügbar").Filterable(true);
+                columns.Add(c => c.CreatedAt).Titled("Erstellt am").Filterable(true);
+                columns.Add(c => c.CreatedBy.UserName).Titled("Erstellt von").Filterable(true);                
+            }).WithPaging(5).Sortable(true)
+    </div>
+}

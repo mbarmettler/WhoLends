@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,12 +28,17 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @if (Request.IsAuthenticated)
+                    @if(Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Lends", "Index", "Lends")</li>
                         <li>@Html.ActionLink("LendsItems", "Index", "LendItems")</li>
-                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+
+                        if (ConfigurationManager.AppSettings["CurrentUserRole"].Equals("1"))
+                        {
+                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                        }
                     }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

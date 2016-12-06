@@ -1,4 +1,7 @@
-﻿@using WhoLends.ViewModels;
+﻿@using System.Configuration
+@using System.Web.UI.WebControls
+@using WhoLends.Data
+@using WhoLends.ViewModels;
 
 @model LendViewModel
 
@@ -8,9 +11,12 @@
 }
 
 <h2>
-    <a href="@Url.Action("Edit", "Lends", new {  id = Model.Id })">
-        <span class="glyphicon fa fa-pencil" aria-hidden="true"></span>
-    </a>
+    @if (ConfigurationManager.AppSettings["CurrentUserRole"].Equals("1"))
+    {
+        <a href="@Url.Action("Edit", "Lends", new {id = Model.Id})">
+            <span class="glyphicon fa fa-pencil" aria-hidden="true"></span>
+        </a>
+    }
     Ausleihung #@Html.DisplayFor(model => model.Id)
 </h2>
 

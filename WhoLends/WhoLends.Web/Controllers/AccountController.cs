@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -95,6 +96,9 @@ namespace WhoLends.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //add current User Role to webconfig
+                    var user = _userRepository.GetUserByEmail(model.Email);
+                    ConfigurationManager.AppSettings["CurrentUserRole"] = user.RoleId.ToString();
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -139,13 +143,13 @@ namespace WhoLends.Controllers
                     newUserLogin.RoleId = 2;
 
                     _userRepository.InsertUser(newUserLogin);
-                    
+                   
                     // Subject and multipart/alternative Body
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
                     Mailer.SendRegistrationConfirmation(newUserLogin, callbackUrl);
-                    
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
