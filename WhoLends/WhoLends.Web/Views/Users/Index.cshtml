@@ -1,12 +1,14 @@
 ﻿@using GridMvc.Html
-@model IEnumerable<WhoLends.Data.User>
+@using WhoLends.ViewModels
+
+@model List<UserViewModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>User</h2>
 
 <p>
     @Html.ActionLink("Create User", "Register", "Account")

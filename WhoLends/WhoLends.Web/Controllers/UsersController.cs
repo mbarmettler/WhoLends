@@ -1,39 +1,58 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using AutoMapper;
 using WhoLends.Data;
+using WhoLends.ViewModels;
+using WhoLends.Web.DAL;
 
 namespace WhoLends.Web.Controllers
 {
-    public class UsersController : Controller
+    public partial class UsersController : Controller
     {
         private Entities db = new Entities();
 
-        // GET: Users
-        public ActionResult Index()
+        private IUserRepository _userRepository;
+        private IMapper _mapper;
+
+        public UsersController()
         {
-            var user = db.User.Include(u => u.Role);
-            return View(user.ToList());
+            _userRepository = new UserRepository(new Entities());
+            new LendReturnRepository(new Entities());
+
+            _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
+        }
+
+        // GET: Users
+        public virtual ActionResult Index()
+        {
+            IEnumerable<User> _user = _userRepository.GetUsers();
+
+            List<UserViewModel> viewModelList = _mapper.Map<IEnumerable<User>, IEnumerable<UserViewModel>>(_user).ToList();
+            return View(viewModelList);
         }
 
         // GET: Users/Details/5
-        public ActionResult Details(int? id)
+        public virtual ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            User model = _userRepository.GetUserById(id.Value);
+            UserViewModel vm = _mapper.Map<User, UserViewModel>(model);
+
+            if (model == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(vm);
         }
 
         // GET: Users/Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             ViewBag.RoleId = new SelectList(db.Role, "Id", "Name");
             return View();
@@ -44,7 +63,7 @@ namespace WhoLends.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,LockoutEndDateUtc,LockoutEnabled,UserName,RoleId")] User user)
+        public virtual ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,LockoutEndDateUtc,LockoutEnabled,UserName,RoleId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -58,19 +77,20 @@ namespace WhoLends.Web.Controllers
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = _userRepository.GetUserById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction(Actions.Index());
             }
-            User user = db.User.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.RoleId = new SelectList(db.Role, "Id", "Name", user.RoleId);
-            return View(user);
+
+            var lenditems = _mapper.Map<IEnumerable<RoleViewModel>>(_userRepository.GetRoles()).ToList();
+
+            UserViewModel vm = _mapper.Map<User, UserViewModel>(model);
+            vm.RoleList = lenditems;
+
+            return View(vm);
         }
 
         // POST: Users/Edit/5
@@ -78,20 +98,23 @@ namespace WhoLends.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,LockoutEndDateUtc,LockoutEnabled,UserName,RoleId")] User user)
+        public virtual ActionResult Edit(UserViewModel userVM)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.RoleId = new SelectList(db.Role, "Id", "Name", user.RoleId);
-            return View(user);
+            //get data from DB
+            var model = _userRepository.GetUserById(userVM.Id);
+
+            var updatedUsermodel = _mapper.Map<UserViewModel, User>(userVM);
+
+            //updating values to model
+            model.RoleId = updatedUsermodel.RoleId;
+
+            _userRepository.UpdateUser(model);
+
+            return RedirectToAction("Index");
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
+        public virtual ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -108,11 +131,21 @@ namespace WhoLends.Web.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
-            User user = db.User.Find(id);
-            db.User.Remove(user);
-            db.SaveChanges();
+            try
+            {
+                //update availablity of LendItem
+                var model = _userRepository.GetUserById(id);
+
+                //Delete Lend
+                _userRepository.DeleteUser(model.Id);
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+                return RedirectToAction("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 

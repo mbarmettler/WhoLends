@@ -1,4 +1,6 @@
-﻿@model WhoLends.Data.User
+﻿@using WhoLends.ViewModels;
+
+@model UserViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -45,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RoleId, "RoleId", new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownList("RoleId", null, new {@class = "form-control"})
+                @Html.DropDownListFor(model => model.RoleId, new SelectList(Model.RoleList, "id","Name","-select-"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RoleId, "", new {@class = "text-danger"})
             </div>
         </div>

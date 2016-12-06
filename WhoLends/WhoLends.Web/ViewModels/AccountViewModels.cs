@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WhoLends.Data;
 
 namespace WhoLends.ViewModels
 {
@@ -104,7 +106,23 @@ namespace WhoLends.ViewModels
 
     public class UserViewModel
     {
-        
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
+        public DateTime? LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public string UserName { get; set; }
+        public int RoleId { get; set; }
+
+        public IEnumerable<RoleViewModel> RoleList { get; set; }
+        public virtual RoleViewModel Role { get; set; }
+    }
+
+    public class RoleViewModel
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 
     #region not used yet
