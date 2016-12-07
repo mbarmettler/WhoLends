@@ -14,6 +14,7 @@ Tasks:
 - Notification System (E-Mail)
 - UI Notification System (Bootstrap Popups) 
 	- FK Verletzungen (Item löschen das Ausgeleiht ist)
+- Edit Views: make global layout (header sorting)
 
 ===============
 DONE:
