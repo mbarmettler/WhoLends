@@ -1,6 +1,4 @@
-﻿@using AutoMapper.Execution
-@using WhoLends.Web.Helpers
-@model WhoLends.ViewModels.LendItemViewModel
+﻿@model WhoLends.ViewModels.LendItemViewModel
 
 <div>
     <div class="row">
@@ -17,7 +15,7 @@
             foreach (var im in Model.ItemImageViewModels)
             {
                 <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
+                    <a href="data:image;base64,@Convert.ToBase64String(im.Content)" class="thumbnail" data-lightbox="@im.FileName">
                         <img src="data:image;base64,@Convert.ToBase64String(im.Content)" />
                     </a>
                 </div>

@@ -37,15 +37,20 @@ namespace WhoLends
                     "~/Content/Gridmvc.css"
                     ));
 
+            bundles.Add(new ScriptBundle("~/bundles/lightbox").Include(
+                   "~/Scripts/lightbox-2.6.js"
+                    ));
+
             //styles
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-datetimepicker.css",
-                      "~/Content/site.css",
-                      "~/Content/Gridmvc.css",
-                      "~/Content/jquery.jqGrid/ui.jqgrid.css",
-                      "~/Content/font-awesome.css"));            
+                                "~/Content/bootstrap.css",
+                                "~/Content/bootstrap-datetimepicker.css",
+                                "~/Content/site.css",
+                                "~/Content/Gridmvc.css",
+                                "~/Content/font-awesome.css",
+                                "~/Content/lightbox.css",
+                                "~/Content/lightbox.min.css"));            
         }
     }
 }
