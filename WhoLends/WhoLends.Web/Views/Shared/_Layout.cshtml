@@ -23,7 +23,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 @*<img src="~/Content/img/rm_logo.jpg" width="200" class="navbar-brand"/>*@
-                @Html.ActionLink("WhoLends", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <a href="@Url.Action("Index", "Home", new { @class = "navbar-brand"})">
+                    <span class="fa fa-cubes fa-2x" aria-hidden="true" style="margin-top: 12px; margin-left: 5px;"></span>
+                </a>
+                @*@Html.ActionLink("WhoLends", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
