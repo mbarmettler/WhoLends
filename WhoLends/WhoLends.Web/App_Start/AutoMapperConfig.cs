@@ -17,6 +17,10 @@ namespace WhoLends.Web
                 cfg.CreateMap<File, FileViewModel>()
                     .ReverseMap();
 
+                cfg.CreateMap<User, UserViewModel>().ReverseMap();
+
+                cfg.CreateMap<Role, RoleViewModel>().ReverseMap();
+
                 cfg.CreateMap<Lend, LendViewModel>()
                     .ForMember(x => x.CurrentUserwithID, y => y.MapFrom(d => d.User.UserName + " (" + d.UserId + ")"))
                     .ForMember(x => x.CreatedBy, y => y.MapFrom(d => d.User))
