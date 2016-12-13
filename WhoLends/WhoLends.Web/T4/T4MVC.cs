@@ -33,6 +33,8 @@ public static partial class MVC
     public static WhoLends.Web.Controllers.LendReturnsController LendReturns = new WhoLends.Web.Controllers.T4MVC_LendReturnsController();
     public static WhoLends.Controllers.LendsController Lends = new WhoLends.Controllers.T4MVC_LendsController();
     public static WhoLends.Controllers.ManageController Manage = new WhoLends.Controllers.T4MVC_ManageController();
+    public static WhoLends.Web.Controllers.UsersController Users = new WhoLends.Web.Controllers.T4MVC_UsersController();
+    public static T4MVC.NotificationsController Notifications = new T4MVC.NotificationsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

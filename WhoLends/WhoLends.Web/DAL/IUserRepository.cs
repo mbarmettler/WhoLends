@@ -13,5 +13,9 @@ namespace WhoLends.Web.DAL
         void DeleteUser(int userId);
         void UpdateUser(User user);
         void Save();
+
+        //Role specific Interfaces
+        Role GetUserRoleByUserId(int userId);
+        IEnumerable<Role> GetRoles();
     }
 }

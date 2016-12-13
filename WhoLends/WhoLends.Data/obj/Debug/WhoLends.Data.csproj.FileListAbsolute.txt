@@ -14,6 +14,6 @@ D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\bin\Debug\EntityFramework.dll
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\bin\Debug\EntityFramework.SqlServer.dll
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\bin\Debug\EntityFramework.xml
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\bin\Debug\EntityFramework.SqlServer.xml
+D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\obj\Debug\WhoLends.Data.csprojResolveAssemblyReference.cache
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\obj\Debug\WhoLends.Data.dll
 D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\obj\Debug\WhoLends.Data.pdb
-D:\PRV\GitHub\WhoLends\WhoLends\WhoLends.Data\obj\Debug\WhoLends.Data.csprojResolveAssemblyReference.cache

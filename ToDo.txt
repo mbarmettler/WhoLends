@@ -3,16 +3,18 @@ ToDo
 ===============
 
 Issues:
--
+- User Update User Infos to DB
 
 Tasks:
 - Create Return: missing "Ersteller"
 - create Lend: msising "Ersteller"
+- create General "User" Property - to check for Role
 - Testing & Refactoring
 - Multiline fields: handling on view (display)
 - Notification System (E-Mail)
 - UI Notification System (Bootstrap Popups) 
 	- FK Verletzungen (Item löschen das Ausgeleiht ist)
+- Edit Views: make global layout (header sorting)
 
 ===============
 DONE:

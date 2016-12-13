@@ -5,7 +5,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using WhoLends.Data;
 using WhoLends.ViewModels;
+using WhoLends.Web.DAL;
 
 namespace WhoLends.Controllers
 {
@@ -14,6 +16,8 @@ namespace WhoLends.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        private IUserRepository _userRepository;
 
         public ManageController() { }
 
@@ -120,6 +124,7 @@ namespace WhoLends.Controllers
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }

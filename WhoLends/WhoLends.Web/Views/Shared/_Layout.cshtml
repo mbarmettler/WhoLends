@@ -1,14 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0">*@
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=1">
     <title>@ViewBag.Title - WhoLends</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquerygrid")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/lightbox")
     @Scripts.Render("~/bundles/mvcGrid")
     @RenderSection("scripts", required: false)
 </head>
@@ -22,15 +24,24 @@
                     <span class="icon-bar"></span>
                 </button>
                 @*<img src="~/Content/img/rm_logo.jpg" width="200" class="navbar-brand"/>*@
-                @Html.ActionLink("WhoLends", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <a href="@Url.Action("Index", "Home", new { @class = "navbar-brand"})">
+                    <span class="fa fa-cubes fa-2x" aria-hidden="true" style="margin-top: 12px; margin-left: 5px;"></span>
+                </a>
+                @*@Html.ActionLink("WhoLends", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @if (Request.IsAuthenticated)
+                    @if(Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Lends", "Index", "Lends")</li>
-                        <li>@Html.ActionLink("LendsItem", "Index", "LendItems")</li>
+                        <li>@Html.ActionLink("LendsItems", "Index", "LendItems")</li>
+
+                        if (ConfigurationManager.AppSettings["CurrentUserRole"].Equals("1"))
+                        {
+                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

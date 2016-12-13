@@ -25,6 +25,12 @@ namespace WhoLends.Web.DAL
             return context.User.Find(userId);
         }
 
+        public Role GetUserRoleByUserId(int userId)
+        {
+            var userroleId = context.User.Find(userId).RoleId;
+            return context.Role.Find(userroleId);
+        }
+
         public User GetUserByEmail(string email)
         {
             return GetUsers().Where(user => user.Email.Equals(email)).FirstOrDefault();
@@ -75,6 +81,11 @@ namespace WhoLends.Web.DAL
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public IEnumerable<Role> GetRoles()
+        {
+            return context.Role.ToList();
         }
     }
 }

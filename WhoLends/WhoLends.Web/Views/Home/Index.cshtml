@@ -3,23 +3,33 @@
 }
 
 <div class="jumbotron">
-    <h1>WhoLends - WL</h1>
-    @*<p class="lead"></p>*@
+    <h1>
+        <span class="fa fa-cubes fa-2x" aria-hidden="true" style="margin-top: 12px;"></span>
+        WhoLends - WL
+    </h1>
+    <p class="lead"><br/></p>
     <p>
-        @Html.ActionLink("zur Übersicht »", "../Lends/Index", null, new { @class = "btn btn-primary btn-lg" })
+        @Html.ActionLink("zur Übersicht »", "../Lends/Index", null, new {@class = "btn btn-primary btn-lg"})
     </p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Einführung</h2>
+        <h2>
+            <i class="fa fa-info-circle fa-1g" aria-hidden="true"></i>
+            Einführung
+        </h2>
         <p>
             WhoLends (kurz WL) bietet die Möglichkeit Ausleihgegenstände zu verwalten und langfristig zu beobachten.
         </p>
-        <p><a class="btn btn-default" href="#">weiterlesen &raquo;</a></p>
+        <p><a class="btn btn-default" href="#">weiterlesen &raquo;</a>
+        </p>
     </div>
     <div class="col-md-4">
-        <h2>Verwaltung</h2>
+        <h2>
+            <i class="fa fa-database fa-1g" aria-hidden="true"></i>
+            Verwaltung
+        </h2>
         <p>
             Einfache und übersichtliche Verwaltung und Überwachung von Inventar Gegenständen.
         </p>
