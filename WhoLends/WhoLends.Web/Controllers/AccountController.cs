@@ -150,6 +150,8 @@ namespace WhoLends.Controllers
 
                     Mailer.SendRegistrationConfirmation(newUserLogin, callbackUrl);
 
+                    this.AddInfoMessage("Erfolgreich Registriert - bitte Account per E-Mail bestätigen.");
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
