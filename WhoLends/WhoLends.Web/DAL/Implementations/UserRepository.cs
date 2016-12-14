@@ -39,6 +39,7 @@ namespace WhoLends.Web.DAL
         public void UpdateUser(User user)
         {
             context.Entry(user).State = EntityState.Modified;
+            Save();
         }
 
         public void InsertUser(User user)
@@ -51,6 +52,7 @@ namespace WhoLends.Web.DAL
         {
             User user = context.User.Find(userId);
             context.User.Remove(user);
+            Save();
         }
 
         public void Save()

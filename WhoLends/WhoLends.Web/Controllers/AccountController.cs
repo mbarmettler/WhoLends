@@ -92,7 +92,7 @@ namespace WhoLends.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);       
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);       
             switch (result)
             {
                 case SignInStatus.Success:
@@ -172,11 +172,9 @@ namespace WhoLends.Controllers
             
             //for DB Update
             var userObj = UserManager.FindById(userId);
-
             var user = _userRepository.GetUserByEmail(userObj.Email);
             user.EmailConfirmed = true;
             _userRepository.UpdateUser(user);
-            _userRepository.Save();
             //
 
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
@@ -208,7 +206,7 @@ namespace WhoLends.Controllers
                 }
 
                 // Subject and multipart/alternative Body
-                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
                 Mailer.SendPasswordReset(user, callbackUrl);
@@ -253,9 +251,15 @@ namespace WhoLends.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
+                //update to DB
+                var DBuser = _userRepository.GetUserByEmail(user.Email);
+                DBuser.PasswordHash = user.PasswordHash;
+                _userRepository.UpdateUser(DBuser);
+
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
