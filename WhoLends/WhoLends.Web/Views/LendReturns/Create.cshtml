@@ -56,13 +56,13 @@
             @Html.LabelFor(model => model.SetComplete, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 <div class="btn-group" data-toggle="buttons" style="padding-bottom:10px">
-                    <label class="btn btn-primary">
+                    <label class="btn btn-success-outline ">
                         @Html.RadioButtonFor(model => model.SetComplete, "True", new { name = "searchType" }) Ja
                     </label>
-                    <label class="btn btn-primary active">
+                    <label class="btn btn-warning-outline active">
                         @Html.RadioButtonFor(model => model.SetComplete, "null", new { name = "searchType" }) Unsicher
                     </label>
-                    <label class="btn btn-primary">
+                    <label class="btn btn-danger-outline">
                         @Html.RadioButtonFor(model => model.SetComplete, "False", new { name = "searchType" }) Nein
                     </label>
                 </div>
