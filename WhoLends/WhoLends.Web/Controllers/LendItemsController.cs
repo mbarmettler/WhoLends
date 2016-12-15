@@ -78,6 +78,8 @@ namespace WhoLends.Controllers
             var dbUser = _userRepository.GetUserByEmail(Auser.Email);
 
             var viewmodel = new LendItemViewModel();
+            viewmodel.CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")";
+
             return View(viewmodel);
         }
 

@@ -124,7 +124,8 @@ namespace WhoLends.Controllers
             {
                 From = DateTime.Now,
                 LendItemsList = sortedItemList,
-                UserList = _userRepository.GetUsers()
+                UserList = _userRepository.GetUsers(),
+                CurrentUserwithID = dbUser.UserName + " (" + dbUser.Id + ")"
             };
 
             return View(viewmodel);
