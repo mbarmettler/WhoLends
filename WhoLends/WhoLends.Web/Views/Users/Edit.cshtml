@@ -56,7 +56,7 @@
             @Html.LabelFor(model => model, "Passwort", new {@class = "control-label col-md-2"})
             <dd>
                 <ul class="pager" style="margin-top: 0px;">
-                    <li class="previous">@Html.ActionLink("ändern", "ChangePassword", "Manage")</li>
+                    <li class="previous">@Html.ActionLink("zurücksetzen", "ForgotPassword", "Account", new ForgotPasswordViewModel() { Email = Model.Email }, null)</li>
                 </ul>
             </dd>
         </div>

@@ -107,6 +107,8 @@ namespace WhoLends.Web.Controllers
 
             //updating values to model
             model.RoleId = updatedUsermodel.RoleId;
+            model.Email = updatedUsermodel.Email;
+            model.UserName = updatedUsermodel.UserName;
 
             _userRepository.UpdateUser(model);
 
