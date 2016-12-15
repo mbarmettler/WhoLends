@@ -168,13 +168,6 @@ namespace WhoLends.Controllers
 
                 model.FileId = lendItemVM.FileId;
             }
-            else
-            {
-                if (updatedlineitemmodel.FileId != 0)
-                {
-                    model.FileId = updatedlineitemmodel.FileId;
-                }
-            }
             
             _lendItemRepository.UpdateLendItem(model);
             
