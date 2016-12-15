@@ -3,8 +3,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web;
 using System.Web.Mvc;
 using WhoLends.Data;
@@ -143,37 +146,51 @@ namespace WhoLends.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(LendItemViewModel lendItemVM, HttpPostedFileBase uploadfile)
         {
-            //get data from DB
-            var model = _lendItemRepository.GetLendItemByID(lendItemVM.Id);
-
-            //convert vm into Model for comparing / updating values
-            var updatedlineitemmodel = _mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
-
-            model.Id = updatedlineitemmodel.Id;
-            model.Name = updatedlineitemmodel.Name;
-            model.Quantity = updatedlineitemmodel.Quantity;
-            model.Description = updatedlineitemmodel.Description;
-            model.CustomerId = updatedlineitemmodel.CustomerId;
-            model.Condition = updatedlineitemmodel.Condition;
-            
-            //process Attached Images
-            if (uploadfile != null)
+            if (ModelState.IsValid)
             {
-                lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
+                //get data from DB
+                var model = _lendItemRepository.GetLendItemByID(lendItemVM.Id);
 
-                //update lenditem - file ID (only for one image)
-                var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
-                if (firstOrDefault != null)
+                //convert vm into Model for comparing / updating values
+                var updatedlineitemmodel = _mapper.Map<LendItemViewModel, LendItem>(lendItemVM);
+
+                model.Id = updatedlineitemmodel.Id;
+                model.Name = updatedlineitemmodel.Name;
+                model.Description = updatedlineitemmodel.Description;
+                model.CustomerId = updatedlineitemmodel.CustomerId;
+                model.Condition = updatedlineitemmodel.Condition;
+
+                if (updatedlineitemmodel.Quantity < model.Quantity && (model.Quantity - model.Avialable) > updatedlineitemmodel.Quantity)
                 {
-                    lendItemVM.FileId = firstOrDefault.Id;
+                    ModelState.AddModelError("availability", "es sind bereits Ausleihungen getätigt worden für diesen Gegenstand");
+                    return View(lendItemVM);
+                }
+                else
+                {
+                    model.Quantity = updatedlineitemmodel.Quantity;
                 }
 
-                model.FileId = lendItemVM.FileId;
+                //process Attached Images
+                if (uploadfile != null)
+                {
+                    lendItemVM.ItemImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
+
+                    //update lenditem - file ID (only for one image)
+                    var firstOrDefault = lendItemVM.ItemImageViewModels.FirstOrDefault();
+                    if (firstOrDefault != null)
+                    {
+                        lendItemVM.FileId = firstOrDefault.Id;
+                    }
+
+                    model.FileId = lendItemVM.FileId;
+                }
+            
+                _lendItemRepository.UpdateLendItem(model);
+            
+                return RedirectToAction("Index");
             }
-            
-            _lendItemRepository.UpdateLendItem(model);
-            
-            return RedirectToAction("Index");
+
+            return View(lendItemVM);
         }
 
         // LendItems/Delete/5

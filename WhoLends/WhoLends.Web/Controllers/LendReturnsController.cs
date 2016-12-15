@@ -13,16 +13,17 @@ namespace WhoLends.Web.Controllers
     public partial class LendReturnsController : Controller
     {
         private ILendRepository _lendRepository;
+        private ILendItemRepository _lendItemRepository;
         private IUserRepository _userRepository;
-        private ILendReturnRepository _lendreturnRepository;
+        private ILendReturnRepository _lendReturnRepository;
         private IMapper _mapper;
 
         public LendReturnsController()
         {
             _lendRepository = new LendRepository(new Entities());
-            new LendItemRepository(new Entities());
+            _lendItemRepository = new LendItemRepository(new Entities());
             _userRepository = new UserRepository(new Entities());
-            _lendreturnRepository = new LendReturnRepository(new Entities());
+            _lendReturnRepository = new LendReturnRepository(new Entities());
 
             _mapper = AutoMapperConfig._mapperConfiguration.CreateMapper();
         }
@@ -66,7 +67,7 @@ namespace WhoLends.Web.Controllers
                 lendReturnVM.CreatedAt = DateTime.Now;
                 lendReturnVM.FileId = null;
 
-                //process Attached Images
+                //process Return Attached Images
                 if (uploadfile != null)
                 {
                     lendReturnVM.ReturnImageViewModels = ImageInsert.InsertImages(uploadfile).AsEnumerable();
@@ -78,7 +79,7 @@ namespace WhoLends.Web.Controllers
                 }
 
                 var model = _mapper.Map<LendReturnViewModel, LendReturn>(lendReturnVM);
-                _lendreturnRepository.InsertReturn(model);
+                _lendReturnRepository.InsertReturn(model);
 
                 //get Lend and update it
                 var lendmodel = _lendRepository.GetLendByID(model.LendId);
@@ -86,6 +87,15 @@ namespace WhoLends.Web.Controllers
                 lendmodel.To = DateTime.Now;
 
                 _lendRepository.UpdateLend(lendmodel);
+
+                //get LendItem and update availability
+                if (model.SetComplete != null && model.SetComplete.Value)
+                {
+                    var lenditemmodel = _lendItemRepository.GetLendItemByID(lendmodel.LendItemId);
+                    lenditemmodel.Avialable ++;
+
+                    _lendItemRepository.UpdateLendItem(lenditemmodel);
+                }
 
                 return RedirectToAction("..\\Lends\\Index");
             }

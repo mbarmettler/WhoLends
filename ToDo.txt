@@ -6,9 +6,11 @@ Issues:
 - User Update User Infos to DB
 
 Tasks:
+- improve Availability of Item: if changing Quantity, change availability
 - Return concept: how to free the items availability after Return? Set complete j/n?
 - create General "User" Property - to check for Role (currently in web.config)
 - Multiline fields: handling on view (display)
+- Exception Handling and Feedback to UI (Logger)
 - remove MDF File (localdb) and only use WL DB
 - Notification System (E-Mail)
 - UI Notification System (Bootstrap Popups) 
