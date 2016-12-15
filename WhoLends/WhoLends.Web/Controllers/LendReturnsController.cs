@@ -48,6 +48,7 @@ namespace WhoLends.Web.Controllers
                 CreatedBy = General.GetCurrentUser(_userRepository)
             };
             lendReturnVm.UserId = lendReturnVm.CreatedBy.Id;
+            lendReturnVm.CurrentUserwithID = lendReturnVm.CreatedBy.UserName + " (" + lendReturnVm.CreatedBy.Id + ")";
             
             return View(lendReturnVm);
         }

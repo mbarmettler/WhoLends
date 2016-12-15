@@ -6,7 +6,7 @@ Issues:
 - User Update User Infos to DB
 
 Tasks:
-- Create Return: missing "Ersteller"
+- Return concept: how to free the items availability after Return? Set complete j/n?
 - create General "User" Property - to check for Role (currently in web.config)
 - Multiline fields: handling on view (display)
 - remove MDF File (localdb) and only use WL DB
@@ -32,6 +32,7 @@ Issues:
 - (done) LendReturn loses Images on the way to _Shared View
 
 Tasks:
+- (done) Create Return: missing "Ersteller"
 - (done) create Lend: msising "Ersteller"
 - (done) create return: handle no image case
 - (done) Remove obsolete filling of "CurrentUserwithID" when AutoMapper works proper
