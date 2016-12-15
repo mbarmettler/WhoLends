@@ -65,17 +65,25 @@
     <br/>
     <!-- LendItem Area -->
     <div class="row">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Lend Item</div>
-            <br />
-            <div class="container">
-                @Html.Partial("~/Views/LendItems/_LendItemDetail.cshtml", Model.SelectedLendItem)
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Lend Item</a>
+                <a class="pull-right" data-toggle="collapse" data-target="#collapse1">
+                    <span class="fa fa-plus"></span>
+                </a>
             </div>
-            <br />
+            <br/>
+            <div id="collapse1" class="panel-collapse" role="tabpanel">
+                <div class="panel-body">
+                    @Html.Partial("~/Views/LendItems/_LendItemDetail.cshtml", Model.SelectedLendItem)
+                </div>
+                <br/>
+            </div>
         </div>
     </div>
 
-    <br />
+    <br/>
+
     <!-- LendReturn Area -->
     <div class="row">
         <div class="panel panel-success">
