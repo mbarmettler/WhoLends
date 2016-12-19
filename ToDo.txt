@@ -7,6 +7,8 @@ Issues:
 
 Tasks:
 - improve Availability of Item: if changing Quantity, change availability
+- LendItem can have * LendItems
+- Print & Export component
 - Return concept: how to free the items availability after Return? Set complete j/n?
 - create General "User" Property - to check for Role (currently in web.config)
 - Multiline fields: handling on view (display)

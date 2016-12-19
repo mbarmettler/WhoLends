@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DependcyItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="LendItemId" Type="int" Nullable="false" />
+          <Property Name="DependendItemdId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="File">
           <Key>
             <PropertyRef Name="Id" />
@@ -40,6 +48,7 @@
           <Property Name="CreatedAt" Type="datetime" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="FileId" Type="int" />
+          <Property Name="DependcyItemId" Type="int" />
         </EntityType>
         <EntityType Name="LendReturn">
           <Key>
@@ -82,6 +91,18 @@
             </Principal>
             <Dependent Role="Lend">
               <PropertyRef Name="LenderUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LendItem_DependcyItems">
+          <End Role="DependcyItems" Type="Self.DependcyItems" Multiplicity="0..1" />
+          <End Role="LendItem" Type="Self.LendItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DependcyItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LendItem">
+              <PropertyRef Name="DependcyItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -184,6 +205,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="DependcyItems" EntityType="Self.DependcyItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lend" EntityType="Self.Lend" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LendItem" EntityType="Self.LendItem" Schema="dbo" store:Type="Tables" />
@@ -193,6 +215,10 @@
           <AssociationSet Name="FK_LenderUser" Association="Self.FK_LenderUser">
             <End Role="User" EntitySet="User" />
             <End Role="Lend" EntitySet="Lend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LendItem_DependcyItems" Association="Self.FK_LendItem_DependcyItems">
+            <End Role="DependcyItems" EntitySet="DependcyItems" />
+            <End Role="LendItem" EntitySet="LendItem" />
           </AssociationSet>
           <AssociationSet Name="FK_LendItemFile" Association="Self.FK_LendItemFile">
             <End Role="File" EntitySet="File" />
@@ -300,6 +326,11 @@
             <End Role="File" EntitySet="File" />
             <End Role="LendReturn" EntitySet="LendReturn" />
           </AssociationSet>
+          <EntitySet Name="DependcyItems" EntityType="Model.DependcyItems" />
+          <AssociationSet Name="FK_LendItem_DependcyItems" Association="Model.FK_LendItem_DependcyItems">
+            <End Role="DependcyItems" EntitySet="DependcyItems" />
+            <End Role="LendItem" EntitySet="LendItem" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="LendItem">
           <Key>
@@ -317,6 +348,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="FileId" Type="Int32" />
           <NavigationProperty Name="File" Relationship="Model.FK_LendItemFile" FromRole="LendItem" ToRole="File" />
+          <Property Name="DependcyItemId" Type="Int32" />
+          <NavigationProperty Name="DependcyItems" Relationship="Model.FK_LendItem_DependcyItems" FromRole="LendItem" ToRole="DependcyItems" />
         </EntityType>
         <EntityType Name="Lend">
           <Key>
@@ -474,6 +507,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DependcyItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="LendItemId" Type="Int32" Nullable="false" />
+          <Property Name="DependendItemdId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LendItem" Relationship="Model.FK_LendItem_DependcyItems" FromRole="DependcyItems" ToRole="LendItem" />
+        </EntityType>
+        <Association Name="FK_LendItem_DependcyItems">
+          <End Type="Model.DependcyItems" Role="DependcyItems" Multiplicity="0..1" />
+          <End Type="Model.LendItem" Role="LendItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DependcyItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LendItem">
+              <PropertyRef Name="DependcyItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -519,7 +573,8 @@
     <EntitySetMapping Name="LendItem">
       <EntityTypeMapping TypeName="IsTypeOf(Model.LendItem)">
         <MappingFragment StoreEntitySet="LendItem">
-          <ScalarProperty Name="Avialable" ColumnName="Avialable" />
+          <ScalarProperty Name="DependcyItemId" ColumnName="DependcyItemId" />
+                <ScalarProperty Name="Avialable" ColumnName="Avialable" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -554,6 +609,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="DependcyItems">
+            <EntityTypeMapping TypeName="Model.DependcyItems">
+              <MappingFragment StoreEntitySet="DependcyItems">
+                <ScalarProperty Name="DependendItemdId" ColumnName="DependendItemdId" />
+                <ScalarProperty Name="LendItemId" ColumnName="LendItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

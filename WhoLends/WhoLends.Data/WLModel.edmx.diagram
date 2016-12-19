@@ -21,6 +21,8 @@
         <AssociationConnector Association="Model.FK_LendReturn" />
         <AssociationConnector Association="Model.FK_LendItemFile" />
         <AssociationConnector Association="Model.FK_LendReturnFile" />
+        <EntityTypeShape EntityType="Model.DependcyItems" Width="1.5" PointX="5.375" PointY="0.875" />
+        <AssociationConnector Association="Model.FK_LendItem_DependcyItems" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
